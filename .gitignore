@@ -1,0 +1,6 @@
+**.DS_Store
+**.sql
+package-lock.json
+node_modules/
+build/
+npm-debug.log*
