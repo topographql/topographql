@@ -18,6 +18,8 @@
     "@babel/preset-react": "^7.9.4",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "babel-loader": "^8.1.0",
     "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
@@ -26,7 +28,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "express": "^4.17.1",
     "nodemon": "^2.0.2",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
@@ -35,6 +36,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
