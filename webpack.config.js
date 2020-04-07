@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     mode: process.env.NODE_ENV, 
     entry: {
-      index: ['./client/index.js'],
+      index: ['./client/index.tsx'],
     },
     output: { 
       filename: 'bundle.js',
@@ -12,14 +12,14 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.jsx?/,
-          loader: 'babel-loader',
-          exclude: path.resolve(__dirname, 'node_modules'),
-          query: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
         },
       ]
+    },
+    resolve: {
+        extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
     },
     devServer: {
       historyApiFallback: true,
