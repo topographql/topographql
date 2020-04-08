@@ -1,3 +1,21 @@
 * {
-    color: red;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin: 0;
 }
+
+#wrapper {
+    display: flex;
+}
+#toolbar-container {
+  background-color: rgb(226, 226, 226);
+  display: flex;
+  flex: 1;
+  height: 100vh;
+}
+
+#visualizer-container {
+    flex: 3.5;
+    height: 100vh;
+}
+
