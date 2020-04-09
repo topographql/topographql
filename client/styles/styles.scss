@@ -1,3 +1,6 @@
+$wflightblue: #f0f0f0;
+$wfblue: rgb(33, 151, 33);
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,7 +10,7 @@
     display: flex;
 }
 #control-panel-container {
-  background-color: rgb(226, 226, 226);
+  background-color: $wflightblue;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -15,30 +18,30 @@
 }
 
 #visualizer-container {
-    border: 1px solid grey;
+    border: 1px solid $wfblue;
     flex: 3.5;
     height: 100vh;
 }
 
 #loadserver {
-    border: 1px solid grey;
+    border: 1px solid $wfblue;
     flex: 1;
     display: flex;
-    wrapper {
+    form {
         margin: auto;
     }
 }
 
 #submitquery {
-    border: 1px solid grey;
+    border: 1px solid $wfblue;
     flex: 2;
     display: flex;
-    wrapper {
+    form {
         margin: auto;
     }
 }
 
 #tracedisplay {
-    border: 1px solid grey;
+    border: 1px solid $wfblue;
     flex: 2;
 }

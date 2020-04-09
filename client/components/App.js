@@ -14,22 +14,23 @@ class App extends React.Component {
     this.onSubmitQuery = this.onSubmitQuery.bind(this)
   }
 
+  //onchange handler for both endpoint and query submit 
   onChange(e) {
-    //onchange handler for both endpoint and query submit 
     this.setState({ [e.target.name]: e.target.value });
   }
 
   onSubmitEndpoint(e) {
     //do something with endpoint
-    e.preventDefault();
     const { endpoint } = this.state;
+    e.preventDefault();
     console.log(endpoint)
   }
 
   onSubmitQuery(e) {
     //do something with query
+    const { query } = this.state
     e.preventDefault();
-    console.log('q')
+    console.log(query)
   }
 
   render() {
