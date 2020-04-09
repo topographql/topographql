@@ -1,11 +1,18 @@
 import React from 'react';
 
-function LoadServer() {
+function LoadServer(props) {
   return (
       <div id="loadserver">
-         Load Server
+        <wrapper>
+          <form>
+            <label>Enter your GraphQL endpoint</label>
+            <br/>
+            <input onChange={props.onChange} type='text' name="endpoint"></input>
+            <button type="submit">Submit</button>
+          </form>
+        </wrapper>
       </div>
-  )
+  );
 }
 
-export default LoadServer
+export default LoadServer;

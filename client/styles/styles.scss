@@ -1,5 +1,4 @@
 * {
-    border: 1px solid black;
     box-sizing: border-box;
     margin: 0;
 }
@@ -7,15 +6,39 @@
 #wrapper {
     display: flex;
 }
-#toolbar-container {
+#control-panel-container {
   background-color: rgb(226, 226, 226);
   display: flex;
+  flex-direction: column;
   flex: 1;
   height: 100vh;
 }
 
 #visualizer-container {
+    border: 1px solid grey;
     flex: 3.5;
     height: 100vh;
 }
 
+#loadserver {
+    border: 1px solid grey;
+    flex: 1;
+    display: flex;
+    wrapper {
+        margin: auto;
+    }
+}
+
+#submitquery {
+    border: 1px solid grey;
+    flex: 2;
+    display: flex;
+    wrapper {
+        margin: auto;
+    }
+}
+
+#tracedisplay {
+    border: 1px solid grey;
+    flex: 2;
+}

@@ -5,7 +5,7 @@ function VisualizerContainer() {
       <div id="visualizer-container">
          Visualizer Container
       </div>
-  )
+  );
 }
 
-export default VisualizerContainer
+export default VisualizerContainer;
