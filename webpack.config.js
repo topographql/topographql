@@ -9,17 +9,38 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.jsx?/,
-        loader: 'babel-loader',
-        exclude: path.resolve(__dirname, 'node_modules'),
-        query: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader',
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
         },
       },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: /(node_modules)/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   devServer: {
     historyApiFallback: true,

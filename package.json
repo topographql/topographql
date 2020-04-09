@@ -14,8 +14,12 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "babel-loader": "^8.1.0",
     "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
@@ -25,13 +29,20 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "nodemon": "^2.0.2",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "css-loader": "^3.5.1",
     "express": "^4.17.1",
+    "node-sass": "^4.13.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "sass-loader": "^8.0.2",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.1.3"
   }
 }

@@ -1,0 +1,47 @@
+$wflightblue: #f0f0f0;
+$wfblue: rgb(33, 151, 33);
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#wrapper {
+    display: flex;
+}
+#control-panel-container {
+  background-color: $wflightblue;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+}
+
+#visualizer-container {
+    border: 1px solid $wfblue;
+    flex: 3.5;
+    height: 100vh;
+}
+
+#loadserver {
+    border: 1px solid $wfblue;
+    flex: 1;
+    display: flex;
+    form {
+        margin: auto;
+    }
+}
+
+#submitquery {
+    border: 1px solid $wfblue;
+    flex: 2;
+    display: flex;
+    form {
+        margin: auto;
+    }
+}
+
+#tracedisplay {
+    border: 1px solid $wfblue;
+    flex: 2;
+}
