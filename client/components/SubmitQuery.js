@@ -4,7 +4,7 @@ function SubmitQuery(props) {
   return (
       <div id="submitquery">
           <wrapper>
-            <form>
+            <form onSubmitQuery={props.onSubmitQuery}>
               <label>Submit a Query</label>
               <br/>
               <textarea onChange={props.onChange} name="query" rows="15" cols="40"></textarea>
