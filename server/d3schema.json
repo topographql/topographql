@@ -1,0 +1,358 @@
+{
+  "nodes": [
+    {
+      "name": "Query&",
+      "type": "Type"
+    },
+    {
+      "name": "info&Query",
+      "type": "field"
+    },
+    {
+      "name": "info&Query",
+      "type": "field"
+    },
+    {
+      "name": "teams&Query",
+      "type": "field"
+    },
+    {
+      "name": "players&Query",
+      "type": "field"
+    },
+    {
+      "name": "games&Query",
+      "type": "field"
+    },
+    {
+      "name": "fixtures&Query",
+      "type": "field"
+    },
+    {
+      "name": "Info&",
+      "type": "Type"
+    },
+    {
+      "name": "caption&Info",
+      "type": "field"
+    },
+    {
+      "name": "league&Info",
+      "type": "field"
+    },
+    {
+      "name": "year&Info",
+      "type": "field"
+    },
+    {
+      "name": "currentMatchday&Info",
+      "type": "field"
+    },
+    {
+      "name": "numberOfMatchdays&Info",
+      "type": "field"
+    },
+    {
+      "name": "numberOfTeams&Info",
+      "type": "field"
+    },
+    {
+      "name": "numberOfGames&Info",
+      "type": "field"
+    },
+    {
+      "name": "lastUpdated&Info",
+      "type": "field"
+    },
+    {
+      "name": "Team&",
+      "type": "Type"
+    },
+    {
+      "name": "id&Team",
+      "type": "field"
+    },
+    {
+      "name": "name&Team",
+      "type": "field"
+    },
+    {
+      "name": "code&Team",
+      "type": "field"
+    },
+    {
+      "name": "shortName&Team",
+      "type": "field"
+    },
+    {
+      "name": "squadMarketValue&Team",
+      "type": "field"
+    },
+    {
+      "name": "flag&Team",
+      "type": "field"
+    },
+    {
+      "name": "Player&",
+      "type": "Type"
+    },
+    {
+      "name": "name&Player",
+      "type": "field"
+    },
+    {
+      "name": "position&Player",
+      "type": "field"
+    },
+    {
+      "name": "jerseyNumber&Player",
+      "type": "field"
+    },
+    {
+      "name": "dateOfBirth&Player",
+      "type": "field"
+    },
+    {
+      "name": "nationality&Player",
+      "type": "field"
+    },
+    {
+      "name": "contractUntil&Player",
+      "type": "field"
+    },
+    {
+      "name": "marketValue&Player",
+      "type": "field"
+    },
+    {
+      "name": "Fixture&",
+      "type": "Type"
+    },
+    {
+      "name": "date&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "status&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "matchday&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "homeTeamName&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "awayTeamName&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "result&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "result&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "odds&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "round&Fixture",
+      "type": "field"
+    },
+    {
+      "name": "Result&",
+      "type": "Type"
+    },
+    {
+      "name": "goalsHomeTeam&Result",
+      "type": "field"
+    },
+    {
+      "name": "goalsAwayTeam&Result",
+      "type": "field"
+    }
+  ],
+  "links": [
+    {
+      "source": "info&Query",
+      "target": "Info&"
+    },
+    {
+      "source": "Query&",
+      "target": "info&Query"
+    },
+    {
+      "source": "Query&",
+      "target": "info&Query"
+    },
+    {
+      "source": "teams&Query",
+      "target": "Team&"
+    },
+    {
+      "source": "Query&",
+      "target": "teams&Query"
+    },
+    {
+      "source": "players&Query",
+      "target": "Player&"
+    },
+    {
+      "source": "Query&",
+      "target": "players&Query"
+    },
+    {
+      "source": "games&Query",
+      "target": "Fixture&"
+    },
+    {
+      "source": "Query&",
+      "target": "games&Query"
+    },
+    {
+      "source": "fixtures&Query",
+      "target": "Fixture&"
+    },
+    {
+      "source": "Query&",
+      "target": "fixtures&Query"
+    },
+    {
+      "source": "Info&",
+      "target": "caption&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "league&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "year&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "currentMatchday&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "numberOfMatchdays&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "numberOfTeams&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "numberOfGames&Info"
+    },
+    {
+      "source": "Info&",
+      "target": "lastUpdated&Info"
+    },
+    {
+      "source": "Team&",
+      "target": "id&Team"
+    },
+    {
+      "source": "Team&",
+      "target": "name&Team"
+    },
+    {
+      "source": "Team&",
+      "target": "code&Team"
+    },
+    {
+      "source": "Team&",
+      "target": "shortName&Team"
+    },
+    {
+      "source": "Team&",
+      "target": "squadMarketValue&Team"
+    },
+    {
+      "source": "Team&",
+      "target": "flag&Team"
+    },
+    {
+      "source": "Player&",
+      "target": "name&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "position&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "jerseyNumber&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "dateOfBirth&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "nationality&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "contractUntil&Player"
+    },
+    {
+      "source": "Player&",
+      "target": "marketValue&Player"
+    },
+    {
+      "source": "Fixture&",
+      "target": "date&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "status&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "matchday&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "homeTeamName&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "awayTeamName&Fixture"
+    },
+    {
+      "source": "result&Fixture",
+      "target": "Result&"
+    },
+    {
+      "source": "Fixture&",
+      "target": "result&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "result&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "odds&Fixture"
+    },
+    {
+      "source": "Fixture&",
+      "target": "round&Fixture"
+    },
+    {
+      "source": "Result&",
+      "target": "goalsHomeTeam&Result"
+    },
+    {
+      "source": "Result&",
+      "target": "goalsAwayTeam&Result"
+    }
+  ]
+}
