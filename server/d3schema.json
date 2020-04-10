@@ -1,358 +1,214 @@
 {
   "nodes": [
     {
-      "name": "Query&",
+      "name": "RootQueryType&",
       "type": "Type"
     },
     {
-      "name": "info&Query",
+      "name": "person&RootQueryType",
       "type": "field"
     },
     {
-      "name": "info&Query",
+      "name": "person&RootQueryType",
       "type": "field"
     },
     {
-      "name": "teams&Query",
+      "name": "people&RootQueryType",
       "type": "field"
     },
     {
-      "name": "players&Query",
-      "type": "field"
-    },
-    {
-      "name": "games&Query",
-      "type": "field"
-    },
-    {
-      "name": "fixtures&Query",
-      "type": "field"
-    },
-    {
-      "name": "Info&",
+      "name": "Person&",
       "type": "Type"
     },
     {
-      "name": "caption&Info",
+      "name": "id&Person",
       "type": "field"
     },
     {
-      "name": "league&Info",
+      "name": "name&Person",
       "type": "field"
     },
     {
-      "name": "year&Info",
+      "name": "mass&Person",
       "type": "field"
     },
     {
-      "name": "currentMatchday&Info",
+      "name": "hair_color&Person",
       "type": "field"
     },
     {
-      "name": "numberOfMatchdays&Info",
+      "name": "skin_color&Person",
       "type": "field"
     },
     {
-      "name": "numberOfTeams&Info",
+      "name": "eye_color&Person",
       "type": "field"
     },
     {
-      "name": "numberOfGames&Info",
+      "name": "birth_year&Person",
       "type": "field"
     },
     {
-      "name": "lastUpdated&Info",
+      "name": "gender&Person",
       "type": "field"
     },
     {
-      "name": "Team&",
+      "name": "species_id&Person",
+      "type": "field"
+    },
+    {
+      "name": "species_id&Person",
+      "type": "field"
+    },
+    {
+      "name": "height&Person",
+      "type": "field"
+    },
+    {
+      "name": "Species&",
       "type": "Type"
     },
     {
-      "name": "id&Team",
+      "name": "id&Species",
       "type": "field"
     },
     {
-      "name": "name&Team",
+      "name": "name&Species",
       "type": "field"
     },
     {
-      "name": "code&Team",
+      "name": "classification&Species",
       "type": "field"
     },
     {
-      "name": "shortName&Team",
+      "name": "average_height&Species",
       "type": "field"
     },
     {
-      "name": "squadMarketValue&Team",
+      "name": "average_lifespan&Species",
       "type": "field"
     },
     {
-      "name": "flag&Team",
+      "name": "hair_colors&Species",
       "type": "field"
     },
     {
-      "name": "Player&",
-      "type": "Type"
-    },
-    {
-      "name": "name&Player",
+      "name": "skin_colors&Species",
       "type": "field"
     },
     {
-      "name": "position&Player",
+      "name": "eye_colors&Species",
       "type": "field"
     },
     {
-      "name": "jerseyNumber&Player",
-      "type": "field"
-    },
-    {
-      "name": "dateOfBirth&Player",
-      "type": "field"
-    },
-    {
-      "name": "nationality&Player",
-      "type": "field"
-    },
-    {
-      "name": "contractUntil&Player",
-      "type": "field"
-    },
-    {
-      "name": "marketValue&Player",
-      "type": "field"
-    },
-    {
-      "name": "Fixture&",
-      "type": "Type"
-    },
-    {
-      "name": "date&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "status&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "matchday&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "homeTeamName&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "awayTeamName&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "result&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "result&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "odds&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "round&Fixture",
-      "type": "field"
-    },
-    {
-      "name": "Result&",
-      "type": "Type"
-    },
-    {
-      "name": "goalsHomeTeam&Result",
-      "type": "field"
-    },
-    {
-      "name": "goalsAwayTeam&Result",
+      "name": "language&Species",
       "type": "field"
     }
   ],
   "links": [
     {
-      "source": "info&Query",
-      "target": "Info&"
+      "source": "person&RootQueryType",
+      "target": "Person&"
     },
     {
-      "source": "Query&",
-      "target": "info&Query"
+      "source": "RootQueryType&",
+      "target": "person&RootQueryType"
     },
     {
-      "source": "Query&",
-      "target": "info&Query"
+      "source": "RootQueryType&",
+      "target": "person&RootQueryType"
     },
     {
-      "source": "teams&Query",
-      "target": "Team&"
+      "source": "people&RootQueryType",
+      "target": "Person&"
     },
     {
-      "source": "Query&",
-      "target": "teams&Query"
+      "source": "RootQueryType&",
+      "target": "people&RootQueryType"
     },
     {
-      "source": "players&Query",
-      "target": "Player&"
+      "source": "Person&",
+      "target": "id&Person"
     },
     {
-      "source": "Query&",
-      "target": "players&Query"
+      "source": "Person&",
+      "target": "name&Person"
     },
     {
-      "source": "games&Query",
-      "target": "Fixture&"
+      "source": "Person&",
+      "target": "mass&Person"
     },
     {
-      "source": "Query&",
-      "target": "games&Query"
+      "source": "Person&",
+      "target": "hair_color&Person"
     },
     {
-      "source": "fixtures&Query",
-      "target": "Fixture&"
+      "source": "Person&",
+      "target": "skin_color&Person"
     },
     {
-      "source": "Query&",
-      "target": "fixtures&Query"
+      "source": "Person&",
+      "target": "eye_color&Person"
     },
     {
-      "source": "Info&",
-      "target": "caption&Info"
+      "source": "Person&",
+      "target": "birth_year&Person"
     },
     {
-      "source": "Info&",
-      "target": "league&Info"
+      "source": "Person&",
+      "target": "gender&Person"
     },
     {
-      "source": "Info&",
-      "target": "year&Info"
+      "source": "species_id&Person",
+      "target": "Species&"
     },
     {
-      "source": "Info&",
-      "target": "currentMatchday&Info"
+      "source": "Person&",
+      "target": "species_id&Person"
     },
     {
-      "source": "Info&",
-      "target": "numberOfMatchdays&Info"
+      "source": "Person&",
+      "target": "species_id&Person"
     },
     {
-      "source": "Info&",
-      "target": "numberOfTeams&Info"
+      "source": "Person&",
+      "target": "height&Person"
     },
     {
-      "source": "Info&",
-      "target": "numberOfGames&Info"
+      "source": "Species&",
+      "target": "id&Species"
     },
     {
-      "source": "Info&",
-      "target": "lastUpdated&Info"
+      "source": "Species&",
+      "target": "name&Species"
     },
     {
-      "source": "Team&",
-      "target": "id&Team"
+      "source": "Species&",
+      "target": "classification&Species"
     },
     {
-      "source": "Team&",
-      "target": "name&Team"
+      "source": "Species&",
+      "target": "average_height&Species"
     },
     {
-      "source": "Team&",
-      "target": "code&Team"
+      "source": "Species&",
+      "target": "average_lifespan&Species"
     },
     {
-      "source": "Team&",
-      "target": "shortName&Team"
+      "source": "Species&",
+      "target": "hair_colors&Species"
     },
     {
-      "source": "Team&",
-      "target": "squadMarketValue&Team"
+      "source": "Species&",
+      "target": "skin_colors&Species"
     },
     {
-      "source": "Team&",
-      "target": "flag&Team"
+      "source": "Species&",
+      "target": "eye_colors&Species"
     },
     {
-      "source": "Player&",
-      "target": "name&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "position&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "jerseyNumber&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "dateOfBirth&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "nationality&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "contractUntil&Player"
-    },
-    {
-      "source": "Player&",
-      "target": "marketValue&Player"
-    },
-    {
-      "source": "Fixture&",
-      "target": "date&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "status&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "matchday&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "homeTeamName&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "awayTeamName&Fixture"
-    },
-    {
-      "source": "result&Fixture",
-      "target": "Result&"
-    },
-    {
-      "source": "Fixture&",
-      "target": "result&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "result&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "odds&Fixture"
-    },
-    {
-      "source": "Fixture&",
-      "target": "round&Fixture"
-    },
-    {
-      "source": "Result&",
-      "target": "goalsHomeTeam&Result"
-    },
-    {
-      "source": "Result&",
-      "target": "goalsAwayTeam&Result"
+      "source": "Species&",
+      "target": "language&Species"
     }
   ]
 }

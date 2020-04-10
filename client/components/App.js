@@ -71,6 +71,12 @@ class App extends React.Component {
     //do something with query
     const { query } = this.state
     e.preventDefault();
+
+    fetch(this.state.endpoint, {
+      method: "Post",
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({"query": this.state.query })
+    });
     console.log(query);
   }
 
