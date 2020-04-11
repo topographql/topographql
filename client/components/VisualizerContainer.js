@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import { render } from 'react-dom';
@@ -8,30 +9,29 @@ class VisualizerContainer extends Component {
   }
 
   drawChart() {
-    d3.json("../public/d3schemaWC.json", (data) => {
+    d3.json('../public/d3schemaWC.json', (data) => {
       const nodes = {};
       const { links } = data;
 
       console.log(nodes, links);
 
       links.forEach((link) => {
-        link.source =
-          nodes[link.source] || (nodes[link.source] = { name: link.source });
-        link.target =
-          nodes[link.target] || (nodes[link.target] = { name: link.target });
+        link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
+        link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
       });
 
       const w = 960;
       const h = 500;
 
-      const force = d3.forceSimulation()
+      const force = d3.layout
+        .force()
         .nodes(d3.values(nodes))
-      // .links(links)
-      // .size([w, h])
-      // .linkDistance(60)
-      // .charge(-300)
-      // .on('tick', tick)
-      // .start();
+        .links(links)
+        .size([w, h])
+        .linkDistance(60)
+        .charge(-300)
+        .on('tick', tick)
+        .start();
 
       const svg = d3
         .select('#myD3')
@@ -59,7 +59,7 @@ class VisualizerContainer extends Component {
       const path = svg
         .append('svg:g')
         .selectAll('path')
-        // .data(force.links())
+        .data(force.links())
         .enter()
         .append('svg:path')
         .attr('class', (d) => 'link child')
@@ -71,7 +71,7 @@ class VisualizerContainer extends Component {
         .data(force.nodes())
         .enter()
         .append('svg:circle')
-        .attr('r', 6)
+        .attr('r', 6);
       // .call(force.drag);
 
       const text = svg
