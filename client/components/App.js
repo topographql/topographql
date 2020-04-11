@@ -15,7 +15,8 @@ class App extends React.Component {
     this.state = {
       endpoint: '',
       query: '',
-      filepath: ''
+      d3introspectdata: {},
+      d3querydata: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -46,14 +47,15 @@ class App extends React.Component {
     }).then(res => res.json())
       // .then(res => JSON.stringify(res, null, 2))
       .then(data => {
-        fetch('/getschema', {
+        fetch('/gql/getschema', {
           method: "Post",
           headers: { 'Content-Type': 'application/json' }, 
           body: JSON.stringify(data),
         })
-          .then(filepath => this.setState({filepath: filepath}))
-        });
-    }
+          .then(res => res.json())
+          .then(data => this.setState({ d3introspectdata: data }))
+      });
+  }
 
   //   const uri = this.state.endpoint;
   //   const link = new HttpLink({ uri });
@@ -89,7 +91,8 @@ class App extends React.Component {
           onSubmitQuery={this.onSubmitQuery}
         />
         <VisualizerContainer 
-          filepath={this.state.filepath}
+          d3introspectdata={ this.state.d3introspectdata }
+          d3querydata = { this.state.d3querydata }
         />
       </div>
     );
