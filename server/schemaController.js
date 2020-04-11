@@ -23,7 +23,6 @@ schemaController.convertSchema = (req, res, next) => {
   // Stores the file path for future middleware to access to implement in d3
   // res.locals.path = path.resolve(__dirname, 'd3schema.json');
   res.locals.d3json = d3Json;
-  console.log(d3Json);
   return next();
 };
 
