@@ -20,7 +20,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader'
+        loader: 'source-map-loader',
       },
       {
         test: /\.(js|jsx)$/,
@@ -28,15 +28,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.s[ac]ss$/i,
         exclude: /(node_modules)/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      }
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
   },
   resolve: {
@@ -47,7 +47,7 @@ module.exports = {
     publicPath: '/build/',
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     proxy: {
-      '/': 'http://localhost:3000',
+      '/users': 'http://localhost:3000',
     },
   },
 };

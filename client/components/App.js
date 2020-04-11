@@ -17,12 +17,12 @@ class App extends React.Component {
       query: '',
       filepath: ''
     };
-    this.onChange = this.onChange.bind(this)
-    this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this)
-    this.onSubmitQuery = this.onSubmitQuery.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
+    this.onSubmitQuery = this.onSubmitQuery.bind(this);
   }
 
-  //onchange handler for both endpoint and query submit 
+  //onchange handler for both endpoint and query submit
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -69,7 +69,7 @@ class App extends React.Component {
 
   onSubmitQuery(e) {
     //do something with query
-    const { query } = this.state
+    const { query } = this.state;
     e.preventDefault();
 
     fetch(this.state.endpoint, {
