@@ -88,7 +88,9 @@ class App extends React.Component {
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
         />
-        <VisualizerContainer />
+        <VisualizerContainer 
+          filepath={this.state.filepath}
+        />
       </div>
     );
   }
