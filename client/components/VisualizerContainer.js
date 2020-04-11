@@ -8,9 +8,112 @@ class VisualizerContainer extends Component {
   }
 
   drawChart() {
-    d3.json('../public/d3schemaWC.json', (data) => {
+    const hardData = {
+      links: [
+        {
+          source: 'info',
+          target: 'Info',
+        },
+        {
+          source: 'Query',
+          target: 'info',
+        },
+        {
+          source: 'teams',
+          target: 'Team',
+        },
+        {
+          source: 'Query',
+          target: 'teams',
+        },
+        {
+          source: 'players',
+          target: 'Player',
+        },
+        {
+          source: 'Query',
+          target: 'players',
+        },
+        {
+          source: 'games',
+          target: 'Fixture',
+        },
+        {
+          source: 'Query',
+          target: 'games',
+        },
+        {
+          source: 'fixtures',
+          target: 'Fixture',
+        },
+        {
+          source: 'Query',
+          target: 'fixtures',
+        },
+        {
+          source: 'Info',
+          target: 'caption',
+        },
+        {
+          source: 'Info',
+          target: 'league',
+        },
+        {
+          source: 'Info',
+          target: 'year',
+        },
+        {
+          source: 'Info',
+          target: 'currentMatchday',
+        },
+        {
+          source: 'Info',
+          target: 'numberOfMatchdays',
+        },
+        {
+          source: 'Info',
+          target: 'numberOfTeams',
+        },
+        {
+          source: 'Info',
+          target: 'numberOfGames',
+        },
+        {
+          source: 'Info',
+          target: 'lastUpdated',
+        },
+        {
+          source: 'Team',
+          target: 'id',
+        },
+        {
+          source: 'Team',
+          target: 'name',
+        },
+        {
+          source: 'Team',
+          target: 'code',
+        },
+        {
+          source: 'Team',
+          target: 'shortName',
+        },
+        {
+          source: 'Team',
+          target: 'squadMarketValue',
+        },
+        {
+          source: 'Team',
+          target: 'flag',
+        },
+      ],
+    };
+
+    // d3.json('../public/d3schemaWC.json', (data) => {
+    //   console.log(data);
+      console.log(hardData)
       const nodes = {};
-      const { links } = data;
+      const { links } = hardData;
 
       links.forEach((link) => {
         link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
@@ -105,7 +208,7 @@ class VisualizerContainer extends Component {
 
         text.attr('transform', (d) => `translate(${d.x},${d.y})`);
       }
-    });
+    // });
   }
 
   render() {
