@@ -19,9 +19,11 @@ schemaController.convertSchema = (req, res, next) => {
   const cleanedSchema = cleanSchema(sourceSchema);
   const d3Json = schemaToD3(cleanedSchema);
   // Writes and saves the JSON file into root folder
-  fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
+  // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
   // Stores the file path for future middleware to access to implement in d3
-  res.locals.path = path.resolve(__dirname, 'd3schema.json');
+  // res.locals.path = path.resolve(__dirname, 'd3schema.json');
+  res.locals.d3json = d3Json;
+  console.log(d3Json);
   return next();
 };
 
