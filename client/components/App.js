@@ -91,7 +91,8 @@ class App extends React.Component {
           onSubmitQuery={this.onSubmitQuery}
         />
         <VisualizerContainer 
-          filepath={this.state.filepath}
+          d3introspectdata={ this.state.d3introspectdata }
+          d3querydata = { this.state.d3querydata }
         />
       </div>
     );
