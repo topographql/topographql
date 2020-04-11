@@ -47,7 +47,7 @@ module.exports = {
     publicPath: '/build/',
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     proxy: {
-      '/users': 'http://localhost:3000',
+      '/': 'http://localhost:3000',
     },
   },
 };

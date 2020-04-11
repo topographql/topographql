@@ -1,0 +1,214 @@
+{
+  "nodes": [
+    {
+      "name": "RootQueryType&",
+      "type": "Type"
+    },
+    {
+      "name": "person&RootQueryType",
+      "type": "field"
+    },
+    {
+      "name": "person&RootQueryType",
+      "type": "field"
+    },
+    {
+      "name": "people&RootQueryType",
+      "type": "field"
+    },
+    {
+      "name": "Person&",
+      "type": "Type"
+    },
+    {
+      "name": "id&Person",
+      "type": "field"
+    },
+    {
+      "name": "name&Person",
+      "type": "field"
+    },
+    {
+      "name": "mass&Person",
+      "type": "field"
+    },
+    {
+      "name": "hair_color&Person",
+      "type": "field"
+    },
+    {
+      "name": "skin_color&Person",
+      "type": "field"
+    },
+    {
+      "name": "eye_color&Person",
+      "type": "field"
+    },
+    {
+      "name": "birth_year&Person",
+      "type": "field"
+    },
+    {
+      "name": "gender&Person",
+      "type": "field"
+    },
+    {
+      "name": "species_id&Person",
+      "type": "field"
+    },
+    {
+      "name": "species_id&Person",
+      "type": "field"
+    },
+    {
+      "name": "height&Person",
+      "type": "field"
+    },
+    {
+      "name": "Species&",
+      "type": "Type"
+    },
+    {
+      "name": "id&Species",
+      "type": "field"
+    },
+    {
+      "name": "name&Species",
+      "type": "field"
+    },
+    {
+      "name": "classification&Species",
+      "type": "field"
+    },
+    {
+      "name": "average_height&Species",
+      "type": "field"
+    },
+    {
+      "name": "average_lifespan&Species",
+      "type": "field"
+    },
+    {
+      "name": "hair_colors&Species",
+      "type": "field"
+    },
+    {
+      "name": "skin_colors&Species",
+      "type": "field"
+    },
+    {
+      "name": "eye_colors&Species",
+      "type": "field"
+    },
+    {
+      "name": "language&Species",
+      "type": "field"
+    }
+  ],
+  "links": [
+    {
+      "source": "person&RootQueryType",
+      "target": "Person&"
+    },
+    {
+      "source": "RootQueryType&",
+      "target": "person&RootQueryType"
+    },
+    {
+      "source": "RootQueryType&",
+      "target": "person&RootQueryType"
+    },
+    {
+      "source": "people&RootQueryType",
+      "target": "Person&"
+    },
+    {
+      "source": "RootQueryType&",
+      "target": "people&RootQueryType"
+    },
+    {
+      "source": "Person&",
+      "target": "id&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "name&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "mass&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "hair_color&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "skin_color&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "eye_color&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "birth_year&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "gender&Person"
+    },
+    {
+      "source": "species_id&Person",
+      "target": "Species&"
+    },
+    {
+      "source": "Person&",
+      "target": "species_id&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "species_id&Person"
+    },
+    {
+      "source": "Person&",
+      "target": "height&Person"
+    },
+    {
+      "source": "Species&",
+      "target": "id&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "name&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "classification&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "average_height&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "average_lifespan&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "hair_colors&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "skin_colors&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "eye_colors&Species"
+    },
+    {
+      "source": "Species&",
+      "target": "language&Species"
+    }
+  ]
+}
