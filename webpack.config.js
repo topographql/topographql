@@ -20,7 +20,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader'
+        loader: 'source-map-loader',
       },
       {
         test: /\.(js|jsx)$/,
@@ -28,15 +28,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.s[ac]ss$/i,
         exclude: /(node_modules)/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      }
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
   },
   resolve: {
