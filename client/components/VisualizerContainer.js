@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import { render } from 'react-dom';
 
 class VisualizerContainer extends Component {
   componentDidMount() {
@@ -12,8 +11,6 @@ class VisualizerContainer extends Component {
     d3.json('../public/d3schemaWC.json', (data) => {
       const nodes = {};
       const { links } = data;
-
-      console.log(nodes, links);
 
       links.forEach((link) => {
         link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
