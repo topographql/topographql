@@ -22,7 +22,7 @@ schemaController.convertSchema = (req, res, next) => {
   // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
   // Stores the file path for future middleware to access to implement in d3
   // res.locals.path = path.resolve(__dirname, 'd3schema.json');
-  res.locals.schema = sourceSchema.data;
+  res.locals.schema = buildClientSchema(sourceSchema.data);
   res.locals.d3json = d3Json;
   return next();
 };
