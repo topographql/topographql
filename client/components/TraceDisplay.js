@@ -52,7 +52,7 @@ class TraceDisplay extends Component {
     };
 
     const width = 960 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const height = 250 - margin.top - margin.bottom;
 
     const svg = d3.select('#tracerD3').append('svg')
       .attr('width', width + margin.left + margin.right)
@@ -65,7 +65,7 @@ class TraceDisplay extends Component {
       .domain([0, d3.max(data, (d) => d.value)]);
 
     const y = d3.scale.ordinal()
-      .rangeRoundBands([height, 0], 0.1)
+      .rangeRoundBands([height, 0], 0.85)
       .domain(data.map((d) => d.name));
 
     // make y axis to show bar names
