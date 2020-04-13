@@ -1,7 +1,6 @@
 import React from 'react';
 import LoadServer from './LoadServer';
 import SubmitQuery from './SubmitQuery';
-import TraceDisplay from './TraceDisplay';
 
 function ControlPanelContainer(props) {
   return (
@@ -16,7 +15,6 @@ function ControlPanelContainer(props) {
           query={props.query}
           schema={props.schema}
          />
-         <TraceDisplay />
       </div>
   );
 }
