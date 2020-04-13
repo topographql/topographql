@@ -5,29 +5,30 @@ import * as d3 from 'd3';
 class VisualizerContainer extends Component {
   constructor() {
     super();
-    
   }
 
   componentDidMount() {
     // console.log(this.props.d3introspectdata)
     // this.drawChart();
   }
-  
+
   componentDidUpdate() {
-    if(this.props.d3introspectdata.links) {
+    if (this.props.d3introspectdata.links) {
       console.log('drawing chart');
       this.drawChart();
-    } 
+    }
   }
 
   drawChart() {
     const nodes = {};
 
     const { links } = this.props.d3introspectdata; // add object passed from state here
-    
+
     links.forEach((link) => {
-      link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
-      link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
+      link.source =
+        nodes[link.source] || (nodes[link.source] = { name: link.source });
+      link.target =
+        nodes[link.target] || (nodes[link.target] = { name: link.target });
     });
 
     const w = 960;
@@ -82,7 +83,7 @@ class VisualizerContainer extends Component {
       .enter()
       .append('svg:circle')
       .attr('r', 6);
-      // .call(force.drag);
+    // .call(force.drag);
 
     const text = svg
       .append('svg:g')

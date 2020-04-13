@@ -8,7 +8,6 @@ import { getIntrospectionQuery } from 'graphql';
 // import { HttpLink } from 'apollo-link-http';
 import gql from 'graphql-tag';
 
-
 class App extends React.Component {
   constructor() {
     super();
@@ -30,30 +29,31 @@ class App extends React.Component {
 
   onSubmitEndpoint(e) {
     const query2 = gql`
-   {
-    person (id: 1) {
-      name
-      mass
-    }
-  }
-  `;
+      {
+        person(id: 1) {
+          name
+          mass
+        }
+      }
+    `;
     //do something with endpoint
     const { endpoint } = this.state;
     e.preventDefault();
     fetch(this.state.endpoint, {
-      method: "Post",
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": getIntrospectionQuery() })
-    }).then(res => res.json())
+      method: 'Post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: getIntrospectionQuery() }),
+    })
+      .then((res) => res.json())
       // .then(res => JSON.stringify(res, null, 2))
-      .then(data => {
+      .then((data) => {
         fetch('/gql/getschema', {
-          method: "Post",
-          headers: { 'Content-Type': 'application/json' }, 
+          method: 'Post',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         })
-          .then(res => res.json())
-          .then(data => this.setState({ d3introspectdata: data }))
+          .then((res) => res.json())
+          .then((data) => this.setState({ d3introspectdata: data }));
       });
   }
 
@@ -75,24 +75,24 @@ class App extends React.Component {
     e.preventDefault();
 
     fetch(this.state.endpoint, {
-      method: "Post",
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": this.state.query })
+      method: 'Post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: this.state.query }),
     });
     console.log(query);
   }
 
   render() {
     return (
-      <div id='wrapper'>
+      <div id="wrapper">
         <ControlPanelContainer
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
         />
-        <VisualizerContainer 
-          d3introspectdata={ this.state.d3introspectdata }
-          d3querydata = { this.state.d3querydata }
+        <VisualizerContainer
+          d3introspectdata={this.state.d3introspectdata}
+          d3querydata={this.state.d3querydata}
         />
       </div>
     );
