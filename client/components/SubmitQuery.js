@@ -1,33 +1,37 @@
 import React from 'react';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 
-import 'codemirror/addon/hint/show-hint';
-import 'codemirror/addon/lint/lint';
-import 'codemirror-graphql/hint';
-import 'codemirror-graphql/lint';
-import 'codemirror-graphql/mode';
+import '../styles/codemirror.css';
 
 
 function SubmitQuery(props) {
   //codemirror-graphql options
+  // const options = {
+  //   mode: 'graphql',
+  //   lint: {
+  //     schema: props.schema,
+  //   },
+  //   hintOptions: {
+  //     schema: props.schema,
+  //   },
+  // };
+
   const options = {
-    mode: 'graphql',
-    lint: {
-      schema: props.schema,
-    },
-    hintOptions: {
-      schema: props.schema,
-    },
+    mode: 'javascript',
+    theme: 'dracula',
+    lineNumbers: true
   };
 
   return (
       <div id="submitquery">
         <CodeMirror
+          className="codemirror"
           value={props.query}
           options={options}
           onChange={props.onChange}
         />
-        <button onClick={props.onSubmitQuery}>Submit Query</button>
+        <br/>
+        <button onClick={props.onSubmitQuery}> Submit </button>
       </div>
   );
 }
