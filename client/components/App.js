@@ -1,13 +1,14 @@
 import React from 'react';
-import ControlPanelContainer from './ControlPanelContainer';
-import VisualizerContainer from './VisualizerContainer';
-//import { gql } from 'apollo-boost';
+// import { gql } from 'apollo-boost';
 import { getIntrospectionQuery } from 'graphql';
-
 // import { execute, makePromise } from 'apollo-link';
 // import { HttpLink } from 'apollo-link-http';
 import gql from 'graphql-tag';
-
+import * as d3 from 'd3';
+import TraceDisplay from './TraceDisplay';
+import ControlPanelContainer from './ControlPanelContainer';
+import VisualizerContainer from './VisualizerContainer';
+import drawChart from './drawintrochart.js';
 
 class App extends React.Component {
   constructor() {
@@ -23,7 +24,7 @@ class App extends React.Component {
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
   }
 
-  //onchange handler for both endpoint and query submit
+  // onchange handler for both endpoint and query submit
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -37,7 +38,7 @@ class App extends React.Component {
     }
   }
   `;
-    //do something with endpoint
+    // do something with endpoint
     const { endpoint } = this.state;
     e.preventDefault();
     fetch(this.state.endpoint, {
@@ -53,7 +54,11 @@ class App extends React.Component {
           body: JSON.stringify(data),
         })
           .then(res => res.json())
-          .then(data => this.setState({ d3introspectdata: data }))
+          .then(data => {
+            this.setState({ d3introspectdata: data })
+            d3.select("svg").remove()
+            drawChart(this.state.d3introspectdata);
+          })
       });
   }
 
@@ -70,14 +75,14 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
-    //do something with query
+    // do something with query
     const { query } = this.state;
     e.preventDefault();
 
     fetch(this.state.endpoint, {
-      method: "Post",
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": this.state.query })
+      method: 'Post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: this.state.query }),
     });
     console.log(query);
   }
@@ -90,10 +95,13 @@ class App extends React.Component {
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
         />
-        <VisualizerContainer 
-          d3introspectdata={ this.state.d3introspectdata }
-          d3querydata = { this.state.d3querydata }
-        />
+        <div id="wrapper-2">
+          <VisualizerContainer
+            d3introspectdata={ this.state.d3introspectdata }
+            d3querydata = { this.state.d3querydata }
+          />
+          <TraceDisplay />
+        </div>
       </div>
     );
   }
