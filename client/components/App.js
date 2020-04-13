@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       endpoint: '',
       query: '',
+      schema: {},
       d3introspectdata: {},
       d3querydata: {},
     };
@@ -53,10 +54,7 @@ class App extends React.Component {
           body: JSON.stringify(data),
         })
           .then(res => res.json())
-          .then(data => {
-            console.log(data.schema)
-            this.setState({ d3introspectdata: data.d3json })
-          });
+          .then(data => this.setState({ schema: data.schema, d3introspectdata: data.d3json }));
       });
   }
 
@@ -92,6 +90,8 @@ class App extends React.Component {
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
+          query={this.state.query}
+          schema={this.state.schema}
         />
         <VisualizerContainer 
           d3introspectdata={ this.state.d3introspectdata }

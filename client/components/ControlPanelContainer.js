@@ -6,13 +6,15 @@ import TraceDisplay from './TraceDisplay';
 function ControlPanelContainer(props) {
   return (
       <div id="control-panel-container">
-         <LoadServer 
+         <LoadServer
           onChange={props.onChange}
-          onSubmitEndpoint={props.onSubmitEndpoint} 
+          onSubmitEndpoint={props.onSubmitEndpoint}
          />
-         <SubmitQuery 
+         <SubmitQuery
           onChange={props.onChange}
           onSubmitQuery={props.onSubmitQuery}
+          query={props.query}
+          schema={props.schema}
          />
          <TraceDisplay />
       </div>
