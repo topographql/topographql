@@ -6,21 +6,21 @@ import '../styles/codemirror.css';
 
 function SubmitQuery(props) {
   //codemirror-graphql options
-  // const options = {
-  //   mode: 'graphql',
-  //   lint: {
-  //     schema: props.schema,
-  //   },
-  //   hintOptions: {
-  //     schema: props.schema,
-  //   },
-  // };
-
   const options = {
-    mode: 'javascript',
-    theme: 'dracula',
-    lineNumbers: true
+    mode: 'graphql',
+    lint: {
+      schema: props.schema,
+    },
+    hintOptions: {
+      schema: props.schema,
+    },
   };
+
+  // const options = {
+  //   mode: 'javascript',
+  //   theme: 'dracula',
+  //   lineNumbers: true
+  // };
 
   return (
       <div id="submitquery">
@@ -28,7 +28,7 @@ function SubmitQuery(props) {
           className="codemirror"
           value={props.query}
           options={options}
-          onChange={props.onChange}
+          onChange={(editor, data, value) => props.onChangeQuery(value)}
         />
         <br/>
         <button onClick={props.onSubmitQuery}> Submit </button>

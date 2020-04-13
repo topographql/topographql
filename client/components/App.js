@@ -21,12 +21,18 @@ class App extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
+    this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
   }
 
   //onchange handler for both endpoint and query submit
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  // couldn't get onChange above to work with code mirror
+  onChangeQuery(text) {
+    this.setState({ query: text });
   }
 
   onSubmitEndpoint(e) {
@@ -90,6 +96,7 @@ class App extends React.Component {
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
+          onChangeQuery={this.onChangeQuery}
           query={this.state.query}
           schema={this.state.schema}
         />

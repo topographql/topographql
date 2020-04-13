@@ -11,7 +11,7 @@ function ControlPanelContainer(props) {
           onSubmitEndpoint={props.onSubmitEndpoint}
          />
          <SubmitQuery
-          onChange={props.onChange}
+          onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
           query={props.query}
           schema={props.schema}
