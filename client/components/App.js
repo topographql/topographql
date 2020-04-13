@@ -53,7 +53,10 @@ class App extends React.Component {
           body: JSON.stringify(data),
         })
           .then(res => res.json())
-          .then(data => this.setState({ d3introspectdata: data }))
+          .then(data => {
+            console.log(data.schema)
+            this.setState({ d3introspectdata: data.d3json })
+          });
       });
   }
 
