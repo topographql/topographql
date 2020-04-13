@@ -97,13 +97,13 @@ class VisualizerContainer extends Component {
       .attr('x', 8)
       .attr('y', '.31em')
       .attr('class', 'shadow')
-      .text((d) => d.name.split('&')[0]);
+     // .text((d) => d.name.split('&')[0]);
 
     text
       .append('svg:text')
       .attr('x', 8)
       .attr('y', '.31em')
-      .text((d) => d.name.split('&')[0]);
+     // .text((d) => d.name.split('&')[0]);
 
     // Use elliptical arc path segments to doubly-encode directionality.
     function tick() {

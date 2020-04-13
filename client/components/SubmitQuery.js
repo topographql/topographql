@@ -1,7 +1,13 @@
 import React from 'react';
-import { UnControlled as CodeMirror } from 'react-codemirror2';
 
 import '../styles/codemirror.css';
+
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/lint/lint';
+import 'codemirror-graphql/hint';
+import 'codemirror-graphql/mode';
+
+import { UnControlled as ReactCodeMirror } from 'react-codemirror2';
 
 
 function SubmitQuery(props) {
@@ -24,7 +30,7 @@ function SubmitQuery(props) {
 
   return (
       <div id="submitquery">
-        <CodeMirror
+        <ReactCodeMirror
           className="codemirror"
           value={props.query}
           options={options}
