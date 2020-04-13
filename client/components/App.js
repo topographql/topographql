@@ -61,15 +61,11 @@ class App extends React.Component {
           body: JSON.stringify(data),
         })
           .then(res => res.json())
-<<<<<<< HEAD
-          .then(data => this.setState({ schema: data.schema, d3introspectdata: data.d3json }));
-=======
           .then(data => {
-            this.setState({ d3introspectdata: data })
-            d3.select("svg").remove()
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json })
+            d3.select("svg").remove();
             drawChart(this.state.d3introspectdata);
-          })
->>>>>>> dev
+          });
       });
   }
 
