@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const schemaController = require('./schemaController.js');
+const queryController = require('./queryController.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -17,6 +18,11 @@ app.get('/', (req, res) => {
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.post('/gql/getschema', schemaController.convertSchema, (req, res, next) => {
+  res.status(200).json(res.locals.d3json);
+});
+
+// Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
+app.post('/gql/getquery', schemaController.convertSchema, (req, res, next) => {
   res.status(200).json(res.locals.d3json);
 });
 

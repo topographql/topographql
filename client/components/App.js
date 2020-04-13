@@ -45,15 +45,14 @@ class App extends React.Component {
       headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify({"query": getIntrospectionQuery() })
     }).then(res => res.json())
-      // .then(res => JSON.stringify(res, null, 2))
       .then(data => {
         fetch('/gql/getschema', {
           method: "Post",
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.data),
         })
           .then(res => res.json())
-          .then(data => this.setState({ d3introspectdata: data }))
+          .then(data => this.setState({ d3introspectdata: data }));
       });
   }
 
@@ -78,8 +77,18 @@ class App extends React.Component {
       method: "Post",
       headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify({"query": this.state.query })
-    });
-    console.log(query);
+    })
+      .then(res => res.json())
+      .then(data => {
+        fetch('/gql/getquery', {
+          method: "Post",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.data),
+        })
+          .then(res => res.json())
+          .then(data => this.setState({ d3querydata: data }))
+          .then(data => console.log(data));
+      });
   }
 
   render() {

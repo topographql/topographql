@@ -12,19 +12,19 @@ class VisualizerContainer extends Component {
     // console.log(this.props.d3introspectdata)
     // this.drawChart();
   }
-  
+
   componentDidUpdate() {
-    if(this.props.d3introspectdata.links) {
+    if (this.props.d3introspectdata.links) {
       console.log('drawing chart');
       this.drawChart();
-    } 
+    }
   }
 
   drawChart() {
     const nodes = {};
 
     const { links } = this.props.d3introspectdata; // add object passed from state here
-    
+
     links.forEach((link) => {
       link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
       link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });

@@ -1,14 +1,3 @@
-const { getIntrospectionQuery } = require ('graphql');
-const { buildClientSchema } = require ('graphql');
-const { buildSchema } = require ('graphql');
-const { printSchema } = require ('graphql');
-const fs = require('fs');
-const path = require('path');
-// const graphURL = "https://worldcup-graphql.now.sh/";
-// const graphURL = "https://polaris.shopify.com/api";
-const graphURL = "https://graphql-pokemon.now.sh/";
-const fetch = require('node-fetch');
-
 const schemaController = {};
 
 // converts schema into an object of Types and their respective fields (along with references to other Types)
@@ -40,8 +29,8 @@ schemaController.convertSchema = (req, res, next) => {
   Result: [ 'goalsHomeTeam', 'goalsAwayTeam' ]
 }
 */
-function cleanSchema(sourceSchema) {
-  const schemaTypes = sourceSchema.data.__schema.types;
+const cleanSchema = (sourceSchema) => {
+  const schemaTypes = sourceSchema.__schema.types;
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
   // iterate only through relevant types (tables)
@@ -95,7 +84,7 @@ function cleanSchema(sourceSchema) {
 
 */
 
-function schemaToD3(cleanedSchema) {
+const schemaToD3 = (cleanedSchema) => {
   const d3Json = {};
   const nodesArray = [];
   const linksArray = [];
