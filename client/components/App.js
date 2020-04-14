@@ -39,7 +39,6 @@ class App extends React.Component {
   }
 
   onSubmitEndpoint(e) {
-<<<<<<< HEAD
     const { endpoint } = this.state;
     e.preventDefault();
     fetch(this.state.endpoint, {
@@ -59,40 +58,6 @@ class App extends React.Component {
             this.setState({ schema: data.schema, d3introspectdata: data.d3json })
             d3.select('svg').remove();
             drawNetworkGraph(this.state.d3introspectdata);
-=======
-    const query2 = gql`
-      {
-        person(id: 1) {
-          name
-          mass
-        }
-      }
-    `;
-    // do something with endpoint
-    const { endpoint } = this.state;
-    e.preventDefault();
-    fetch(this.state.endpoint, {
-      method: 'Post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: getIntrospectionQuery() }),
-    })
-      .then((res) => res.json())
-      // .then(res => JSON.stringify(res, null, 2))
-      .then((data) => {
-        fetch('/gql/getschema', {
-          method: 'Post',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            this.setState({
-              schema: data.schema,
-              d3introspectdata: data.d3json,
-            });
-            d3.select('svg').remove();
-            drawChart(this.state.d3introspectdata);
->>>>>>> danResponsiveBranchWork
           });
       });
   }
@@ -153,12 +118,8 @@ class App extends React.Component {
         />
         <div id="wrapper-2">
           <VisualizerContainer
-<<<<<<< HEAD
-            d3introspectdata={ this.state.d3introspectdata }
-=======
             d3introspectdata={this.state.d3introspectdata}
             d3querydata={this.state.d3querydata}
->>>>>>> danResponsiveBranchWork
           />
           <TraceDisplay />
         </div>

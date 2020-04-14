@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-=======
-const { getIntrospectionQuery } = require('graphql');
-const { buildClientSchema } = require('graphql');
-const { buildSchema } = require('graphql');
-const { printSchema } = require('graphql');
-const fs = require('fs');
-const path = require('path');
-// const graphURL = "https://worldcup-graphql.now.sh/";
-// const graphURL = "https://polaris.shopify.com/api";
-const graphURL = 'https://graphql-pokemon.now.sh/';
-const fetch = require('node-fetch');
->>>>>>> danResponsiveBranchWork
 
 const { buildClientSchema } = require('graphql');
 const schemaController = {};
@@ -129,13 +116,6 @@ const schemaToD3 = (cleanedSchema) => {
       let nodeSource = {};
       let nodeTarget = {};
       if (typeof cleanedSchema[key][i] !== 'object') {
-<<<<<<< HEAD
-=======
-        const node = {};
-        node.name = cleanedSchema[key][i] + '&' + key;
-        node.type = 'field';
-        nodesArray.push(node);
->>>>>>> danResponsiveBranchWork
         // create links from each Type to their fields
         const link = {};
         nodeSource.name = key + '&';
@@ -145,7 +125,6 @@ const schemaToD3 = (cleanedSchema) => {
         nodeTarget.type = "field";
         link.target = nodeTarget;
         linksArray.push(link);
-<<<<<<< HEAD
       } 
       else {
         // Create link from field to current Type
@@ -157,13 +136,6 @@ const schemaToD3 = (cleanedSchema) => {
         nodeTarget.type = 'field';
         linkType.target = nodeTarget;
         linksArray.push(linkType);
-=======
-      } else {
-        const node = {};
-        node.name = fieldName[0] + '&' + key;
-        node.type = 'field';
-        nodesArray.push(node);
->>>>>>> danResponsiveBranchWork
         // Create link from fields to other Types
         const linkField = {};
         nodeSource = {};
