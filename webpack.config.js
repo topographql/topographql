@@ -17,11 +17,11 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader',
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -50,13 +50,18 @@ module.exports = {
           //   modifyVars: themeVariables,
           //   root: path.resolve(__dirname, './')
           // }
-
         ],
+      },
+      {
+        // https://github.com/graphql/graphql-js/issues/1272
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
       },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.webpack.js', '.web.js', '.mjs', '.json'],
   },
   devServer: {
     historyApiFallback: true,

@@ -12,6 +12,7 @@ import Header from './Header';
 import drawNetworkGraph from './drawNetworkGraph.js';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
+
 class App extends React.Component {
   constructor() {
     super();
@@ -45,7 +46,7 @@ class App extends React.Component {
     fetch(this.state.endpoint, {
       method: "Post",
       headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": getIntrospectionQuery() })
+      body: JSON.stringify({"query": getIntrospectionQuery()})
     }).then(res => res.json())
       .then(data => {
         fetch('/gql/getschema', {
@@ -76,6 +77,7 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
+    console.log(this.state.query)
     e.preventDefault();
 
     fetch(this.state.endpoint, {
