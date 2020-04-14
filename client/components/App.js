@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       endpoint: '',
       query: '',
+      querydata: {},
       schema: {},
       d3introspectdata: {},
       d3querydata: {},
@@ -53,12 +54,11 @@ class App extends React.Component {
       headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify({"query": getIntrospectionQuery() })
     }).then(res => res.json())
-      // .then(res => JSON.stringify(res, null, 2))
       .then(data => {
         fetch('/gql/getschema', {
           method: "Post",
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.data),
         })
           .then(res => res.json())
           .then(data => {
@@ -82,16 +82,27 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
-    // do something with query
-    const { query } = this.state;
     e.preventDefault();
 
     fetch(this.state.endpoint, {
-      method: 'Post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: this.state.query }),
-    });
-    console.log(query);
+      method: "Post",
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({"query": this.state.query })
+    })
+      .then(res => res.json())
+      // stores the original result from posting a query into state
+      .then(querydata => this.setState({ querydata: querydata }))
+      .then(res => console.log('state', this.state.querydata))
+      .then(data => {
+        fetch('/gql/getquery', {
+          method: "Post",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        })
+          .then(res => res.json())
+          //store the d3 file of the query results into state
+          .then(data => this.setState({ d3querydata: data }))
+      });
   }
 
   render() {

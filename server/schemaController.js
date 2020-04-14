@@ -1,14 +1,5 @@
-const { getIntrospectionQuery } = require ('graphql');
-const { buildClientSchema } = require ('graphql');
-const { buildSchema } = require ('graphql');
-const { printSchema } = require ('graphql');
-const fs = require('fs');
-const path = require('path');
-// const graphURL = "https://worldcup-graphql.now.sh/";
-// const graphURL = "https://polaris.shopify.com/api";
-const graphURL = "https://graphql-pokemon.now.sh/";
-const fetch = require('node-fetch');
 
+const { buildClientSchema } = require('graphql');
 const schemaController = {};
 
 // converts schema into an object of Types and their respective fields (along with references to other Types)
@@ -22,7 +13,7 @@ schemaController.convertSchema = (req, res, next) => {
   // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
   // Stores the file path for future middleware to access to implement in d3
   // res.locals.path = path.resolve(__dirname, 'd3schema.json');
-  res.locals.schema = buildClientSchema(sourceSchema.data);
+  res.locals.schema = buildClientSchema(sourceSchema);
   res.locals.d3json = d3Json;
   return next();
 };
@@ -41,8 +32,9 @@ schemaController.convertSchema = (req, res, next) => {
   Result: [ 'goalsHomeTeam', 'goalsAwayTeam' ]
 }
 */
-function cleanSchema(sourceSchema) {
-  const schemaTypes = sourceSchema.data.__schema.types;
+const cleanSchema = (sourceSchema) => {
+  const schemaTypes = sourceSchema.__schema.types;
+  console.log('types', schemaTypes);
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
   // iterate only through relevant types (tables)
@@ -76,7 +68,7 @@ function cleanSchema(sourceSchema) {
     }
   }
   return types;
-}
+};
 
 // schemaToD3 converts the "cleaned" schema into a JSON file for d3 in format:
 
@@ -96,7 +88,7 @@ function cleanSchema(sourceSchema) {
 
 */
 
-function schemaToD3(cleanedSchema) {
+const schemaToD3 = (cleanedSchema) => {
   const d3Json = {};
   const nodesArray = [];
   const linksArray = [];
@@ -144,7 +136,7 @@ function schemaToD3(cleanedSchema) {
   d3Json.nodes = nodesArray;
   d3Json.links = linksArray;
   return d3Json;
-}
+};
 
 
 module.exports = schemaController;
