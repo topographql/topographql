@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       endpoint: '',
       query: '',
+      querydata: {},
       d3introspectdata: {},
       d3querydata: {},
     };
@@ -69,8 +70,6 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
-    //do something with query
-    const { query } = this.state;
     e.preventDefault();
 
     fetch(this.state.endpoint, {
@@ -79,6 +78,9 @@ class App extends React.Component {
       body: JSON.stringify({"query": this.state.query })
     })
       .then(res => res.json())
+      // stores the original result from posting a query into state
+      .then(querydata => this.setState({ querydata: querydata }))
+      .then(res => console.log(this.state.querydata))
       .then(data => {
         fetch('/gql/getquery', {
           method: "Post",
@@ -86,6 +88,7 @@ class App extends React.Component {
           body: JSON.stringify(data.data),
         })
           .then(res => res.json())
+          //store the d3 file of the query results into state
           .then(data => this.setState({ d3querydata: data }))
           .then(data => console.log(data));
       });
