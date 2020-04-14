@@ -88,17 +88,18 @@ class App extends React.Component {
       // stores the original result from posting a query into state
       .then(querydata => this.setState({ querydata: querydata }))
       .then(res => {
-        const converted = convertTraceData(this.state.querydata)
+        const converted = convertTraceData(this.state.querydata);
         d3.select('svg').remove();
-        drawTracerGraph(converted)
+        drawTracerGraph(converted);
       })
       .then(data => {
         fetch('/gql/getquery', {
           method: "Post",
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify(this.state.querydata),
         })
           .then(res => res.json())
+          .then(data => console.log(data))
           // store the d3 file of the query results into state
           .then(data => {
             this.setState({ d3querydata: data })
@@ -108,7 +109,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id='wrapper'>
+      <div id="wrapper">
         <ControlPanelContainer
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
@@ -119,7 +120,8 @@ class App extends React.Component {
         />
         <div id="wrapper-2">
           <VisualizerContainer
-            d3introspectdata={ this.state.d3introspectdata }
+            d3introspectdata={this.state.d3introspectdata}
+            d3querydata={this.state.d3querydata}
           />
           <TraceDisplay />
         </div>
