@@ -30,7 +30,7 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
             plugins: [
-              ['import', { libraryName: "antd", style: true }],
+              ['import', { libraryName: 'antd', style: true }],
             ],
           },
         },
@@ -43,14 +43,14 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-          { loader: "less-loader", options: { javascriptEnabled: true } },
-            // options: {
-            //   modifyVars: themeVariables,
-            //   root: path.resolve(__dirname, './')
-            // }
-          
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'less-loader', options: { javascriptEnabled: true } },
+          // options: {
+          //   modifyVars: themeVariables,
+          //   root: path.resolve(__dirname, './')
+          // }
+
         ],
       },
     ],
@@ -64,8 +64,8 @@ module.exports = {
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     proxy: {
       '/users': 'http://localhost:3000',
-      "/gql/getschema": {
-        target: "http://localhost:3000",
+      '/gql/getschema': {
+        target: 'http://localhost:3000',
       },
     },
   },

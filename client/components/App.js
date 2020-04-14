@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
+import Header from './Header';
 import drawNetworkGraph from './drawNetworkGraph.js';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
@@ -106,21 +107,25 @@ class App extends React.Component {
 
   render() {
     return (
-     // <Header />
-      <div id='wrapper'>
-        <ControlPanelContainer
+      <div>
+        <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
-          onSubmitQuery={this.onSubmitQuery}
-          onChangeQuery={this.onChangeQuery}
-          query={this.state.query}
-          schema={this.state.schema}
         />
-        <div id="wrapper-2">
-          <VisualizerContainer
-            d3introspectdata={ this.state.d3introspectdata }
+        <div id='flex-wrapper-1'>
+          <ControlPanelContainer
+            onChange={this.onChange}
+            onSubmitQuery={this.onSubmitQuery}
+            onChangeQuery={this.onChangeQuery}
+            query={this.state.query}
+            schema={this.state.schema}
           />
-          <TraceDisplay />
+          <div id="flex-wrapper-2">
+            <VisualizerContainer
+              d3introspectdata={ this.state.d3introspectdata }
+            />
+            <TraceDisplay />
+          </div>
         </div>
       </div>
     );

@@ -14,6 +14,8 @@ function SubmitQuery(props) {
   //codemirror-graphql options
   const options = {
     mode: 'graphql',
+    theme: 'dracula',
+    lineNumbers: true,
     lint: {
       schema: props.schema,
     },
@@ -22,11 +24,6 @@ function SubmitQuery(props) {
     },
   };
 
-  // const options = {
-  //   mode: 'javascript',
-  //   theme: 'dracula',
-  //   lineNumbers: true
-  // };
 
   return (
       <div id="submitquery">
