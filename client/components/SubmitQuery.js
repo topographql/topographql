@@ -69,7 +69,7 @@ class SubmitQuery extends React.Component {
   // };
   componentDidMount() {
     const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), {
-      value: this.props.query,
+      //value: this.props.query,
       lineNumbers: true,
       tabSize: 2,
       mode: 'graphql',
@@ -89,9 +89,11 @@ class SubmitQuery extends React.Component {
       },
     });
     if (editor) {
-      editor.on('change', this.props.onChangeQuery);
+      editor.on('change', (editor) => this.props.onChangeQuery(editor.getValue()));
     }
   }
+
+
 
   render() {
     return (
