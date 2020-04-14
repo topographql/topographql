@@ -1,3 +1,5 @@
+
+const { buildClientSchema } = require('graphql');
 const schemaController = {};
 
 // converts schema into an object of Types and their respective fields (along with references to other Types)
@@ -11,6 +13,7 @@ schemaController.convertSchema = (req, res, next) => {
   // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
   // Stores the file path for future middleware to access to implement in d3
   // res.locals.path = path.resolve(__dirname, 'd3schema.json');
+  res.locals.schema = buildClientSchema(sourceSchema);
   res.locals.d3json = d3Json;
   return next();
 };
@@ -31,6 +34,7 @@ schemaController.convertSchema = (req, res, next) => {
 */
 const cleanSchema = (sourceSchema) => {
   const schemaTypes = sourceSchema.__schema.types;
+  console.log('types', schemaTypes);
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
   // iterate only through relevant types (tables)

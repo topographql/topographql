@@ -17,17 +17,24 @@ class App extends React.Component {
       endpoint: '',
       query: '',
       querydata: {},
+      schema: {},
       d3introspectdata: {},
       d3querydata: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
+    this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
   }
 
   // onchange handler for both endpoint and query submit
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  // couldn't get onChange above to work with code mirror
+  onChangeQuery(text) {
+    this.setState({ query: text });
   }
 
   onSubmitEndpoint(e) {
@@ -55,10 +62,10 @@ class App extends React.Component {
         })
           .then(res => res.json())
           .then(data => {
-            this.setState({ d3introspectdata: data })
-            d3.select("svg").remove()
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json })
+            d3.select("svg").remove();
             drawChart(this.state.d3introspectdata);
-          })
+          });
       });
   }
 
@@ -85,7 +92,7 @@ class App extends React.Component {
       .then(res => res.json())
       // stores the original result from posting a query into state
       .then(querydata => this.setState({ querydata: querydata }))
-      .then(res => console.log(this.state.querydata))
+      .then(res => console.log('state', this.state.querydata))
       .then(data => {
         fetch('/gql/getquery', {
           method: "Post",
@@ -95,7 +102,6 @@ class App extends React.Component {
           .then(res => res.json())
           //store the d3 file of the query results into state
           .then(data => this.setState({ d3querydata: data }))
-          .then(data => console.log(data));
       });
   }
 
@@ -106,6 +112,9 @@ class App extends React.Component {
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           onSubmitQuery={this.onSubmitQuery}
+          onChangeQuery={this.onChangeQuery}
+          query={this.state.query}
+          schema={this.state.schema}
         />
         <div id="wrapper-2">
           <VisualizerContainer

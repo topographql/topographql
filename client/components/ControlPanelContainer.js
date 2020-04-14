@@ -5,13 +5,15 @@ import SubmitQuery from './SubmitQuery';
 function ControlPanelContainer(props) {
   return (
       <div id="control-panel-container">
-         <LoadServer 
+         <LoadServer
           onChange={props.onChange}
           onSubmitEndpoint={props.onSubmitEndpoint}
          />
-         <SubmitQuery 
-          onChange={props.onChange}
+         <SubmitQuery
+          onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
+          query={props.query}
+          schema={props.schema}
          />
       </div>
   );
