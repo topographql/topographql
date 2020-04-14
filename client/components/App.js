@@ -9,6 +9,7 @@ import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import drawNetworkGraph from './drawNetworkGraph.js';
+import { drawTracerGraph } from './drawTracerGraph.js';
 
 class App extends React.Component {
   constructor() {
@@ -37,35 +38,26 @@ class App extends React.Component {
   }
 
   onSubmitEndpoint(e) {
-    const query2 = gql`
-   {
-    person (id: 1) {
-      name
-      mass
-    }
-  }
-  `;
-    // do something with endpoint
     const { endpoint } = this.state;
     e.preventDefault();
-    fetch(this.state.endpoint, {
-      method: "Post",
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": getIntrospectionQuery() })
-    }).then(res => res.json())
+    fetch(endpoint, {
+      method: 'Post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: getIntrospectionQuery() }),
+    }).then((res) => res.json())
       // .then(res => JSON.stringify(res, null, 2))
-      .then(data => {
+      .then((data) => {
         fetch('/gql/getschema', {
-          method: "Post",
-          headers: { 'Content-Type': 'application/json' }, 
+          method: 'Post',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         })
-          .then(res => res.json())
-          .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
             this.setState({ d3introspectdata: data });
-            d3.select("svg").remove();
-            drawNetworkGraph(this.state.d3introspectdata);
+            d3.select('svg').remove();
+            drawNetworkGraph(this.state.d3introspectdata.d3json);
           });
       });
   }
@@ -109,7 +101,6 @@ class App extends React.Component {
         <div id="wrapper-2">
           <VisualizerContainer
             d3introspectdata={ this.state.d3introspectdata }
-            d3querydata = { this.state.d3querydata }
           />
           <TraceDisplay />
         </div>

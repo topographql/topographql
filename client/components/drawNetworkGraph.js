@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
 const drawNetworkGraph = (data) => {
+  console.log(data)
   const nodes = {};
 
   const { links } = data; // add object passed from state here
