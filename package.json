@@ -48,7 +48,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "graphiql": "^0.17.5",
-    "graphql": "^15.0.0",
+    "graphql": "^14.6.0",
     "net": "^1.0.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",

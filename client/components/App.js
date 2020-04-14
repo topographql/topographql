@@ -11,6 +11,7 @@ import VisualizerContainer from './VisualizerContainer';
 import drawNetworkGraph from './drawNetworkGraph.js';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
+
 class App extends React.Component {
   constructor() {
     super();
@@ -44,7 +45,7 @@ class App extends React.Component {
     fetch(this.state.endpoint, {
       method: "Post",
       headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": getIntrospectionQuery() })
+      body: JSON.stringify({"query": getIntrospectionQuery()})
     }).then(res => res.json())
       .then(data => {
         fetch('/gql/getschema', {
@@ -55,7 +56,7 @@ class App extends React.Component {
           .then((res) => res.json())
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
-            this.setState({ schema: data.schema, d3introspectdata: data.d3json })
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json });
             d3.select('svg').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           });
@@ -75,6 +76,7 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
+    console.log(this.state.query)
     e.preventDefault();
 
     fetch(this.state.endpoint, {

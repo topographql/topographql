@@ -17,11 +17,11 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader',
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -37,10 +37,16 @@ module.exports = {
         exclude: /(node_modules)/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        // https://github.com/graphql/graphql-js/issues/1272
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.webpack.js', '.web.js', '.mjs', '.json'],
   },
   devServer: {
     historyApiFallback: true,
@@ -48,8 +54,8 @@ module.exports = {
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     proxy: {
       '/users': 'http://localhost:3000',
-      "/gql/getschema": {
-        target: "http://localhost:3000",
+      '/gql/getschema': {
+        target: 'http://localhost:3000',
       },
       "/gql/getquery": {
         target: "http://localhost:3000",
