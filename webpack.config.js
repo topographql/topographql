@@ -37,10 +37,15 @@ module.exports = {
         exclude: /(node_modules)/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.webpack.js', '.web.js', '.mjs', '.json'],
   },
   devServer: {
     historyApiFallback: true,
@@ -48,8 +53,8 @@ module.exports = {
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     proxy: {
       '/users': 'http://localhost:3000',
-      "/gql/getschema": {
-        target: "http://localhost:3000",
+      '/gql/getschema': {
+        target: 'http://localhost:3000',
       },
     },
   },

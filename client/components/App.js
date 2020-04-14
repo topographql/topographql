@@ -55,9 +55,9 @@ class App extends React.Component {
           .then((res) => res.json())
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
-            this.setState({ d3introspectdata: data });
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json });
             d3.select('svg').remove();
-            drawNetworkGraph(this.state.d3introspectdata.d3json);
+            drawNetworkGraph(this.state.d3introspectdata);
           });
       });
   }
