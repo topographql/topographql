@@ -97,9 +97,10 @@ class App extends React.Component {
         fetch('/gql/getquery', {
           method: "Post",
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify(this.state.querydata),
         })
           .then(res => res.json())
+          .then(data => console.log(data))
           // store the d3 file of the query results into state
           .then(data => {
             this.setState({ d3querydata: data })

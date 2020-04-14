@@ -72,6 +72,9 @@ module.exports = {
       '/gql/getschema': {
         target: 'http://localhost:3000',
       },
+      "/gql/getquery": {
+        target: "http://localhost:3000",
+      },
     },
   },
 };
