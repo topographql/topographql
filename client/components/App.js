@@ -8,7 +8,8 @@ import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
-import drawChart from './drawintrochart.js';
+import drawNetworkGraph from './drawNetworkGraph.js';
+import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
 class App extends React.Component {
   constructor() {
@@ -38,15 +39,6 @@ class App extends React.Component {
   }
 
   onSubmitEndpoint(e) {
-    const query2 = gql`
-   {
-    person (id: 1) {
-      name
-      mass
-    }
-  }
-  `;
-    // do something with endpoint
     const { endpoint } = this.state;
     e.preventDefault();
     fetch(this.state.endpoint, {
@@ -60,11 +52,12 @@ class App extends React.Component {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data.data),
         })
-          .then(res => res.json())
-          .then(data => {
-            this.setState({ schema: data.schema, d3introspectdata: data.d3json })
-            d3.select("svg").remove();
-            drawChart(this.state.d3introspectdata);
+          .then((res) => res.json())
+          .then((data) => {
+            // set state, delete previous svg and draw new svg passing in data
+            this.setState({ d3introspectdata: data });
+            d3.select('svg').remove();
+            drawNetworkGraph(this.state.d3introspectdata.d3json);
           });
       });
   }
@@ -92,7 +85,11 @@ class App extends React.Component {
       .then(res => res.json())
       // stores the original result from posting a query into state
       .then(querydata => this.setState({ querydata: querydata }))
-      .then(res => console.log('state', this.state.querydata))
+      .then(res => {
+        const converted = convertTraceData(this.state.querydata)
+        d3.select('svg').remove();
+        drawTracerGraph(converted)
+      })
       .then(data => {
         fetch('/gql/getquery', {
           method: "Post",
@@ -100,8 +97,10 @@ class App extends React.Component {
           body: JSON.stringify(data),
         })
           .then(res => res.json())
-          //store the d3 file of the query results into state
-          .then(data => this.setState({ d3querydata: data }))
+          // store the d3 file of the query results into state
+          .then(data => {
+            this.setState({ d3querydata: data })
+          });
       });
   }
 
@@ -119,7 +118,6 @@ class App extends React.Component {
         <div id="wrapper-2">
           <VisualizerContainer
             d3introspectdata={ this.state.d3introspectdata }
-            d3querydata = { this.state.d3querydata }
           />
           <TraceDisplay />
         </div>
