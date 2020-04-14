@@ -7,8 +7,8 @@ const drawNetworkGraph = (data) => {
   const { links } = data; // add object passed from state here
 
   links.forEach((link) => {
-    link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
-    link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
+    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name });
+    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name });
   });
 
   const w = 960;

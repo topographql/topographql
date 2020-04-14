@@ -22,7 +22,7 @@ app.post('/gql/getschema', schemaController.convertSchema, (req, res, next) => {
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
-app.post('/gql/getquery', queryController.convertSchema, (req, res, next) => {
+app.post('/gql/getquery', queryController.getQuery, (req, res, next) => {
   res.status(200).json(res.locals.d3json);
 });
 
