@@ -27,7 +27,7 @@ const drawNetworkGraph = (data) => {
   const svg = d3
     .select('#myD3')
     .append('svg:svg')
-    .attr('id', 'svgchart')
+    .attr('id', 'svg-network')
     .attr('width', w)
     .attr('height', h);
 
