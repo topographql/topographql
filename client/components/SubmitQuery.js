@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Button } from 'antd';
 import '../styles/codemirror.css';
 
 // import 'codemirror/addon/hint/show-hint';
@@ -33,8 +33,7 @@ function SubmitQuery(props) {
           options={options}
           onChange={(editor, data, value) => props.onChangeQuery(value)}
         />
-        <br/>
-        <button onClick={props.onSubmitQuery}> Submit </button>
+        <Button onClick={props.onSubmitQuery} >Submit</Button>
       </div>
   );
 }
