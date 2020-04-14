@@ -1,7 +1,8 @@
 import * as d3 from 'd3';
 
-
-const convertTraceData = (data) => {
+export const convertTraceData = (rData) => {
+  console.log("convert fired")
+  const data = rData.extensions.tracing.execution.resolvers;
   const result = [];
   data.forEach((obj) => {
     // create new obj and push it into result
@@ -23,9 +24,10 @@ const convertTraceData = (data) => {
   return result;
 };
 
-const drawTracerGraph = (data) => {
+export const drawTracerGraph = (rData) => {
+  console.log("draw fired")
   // sort bars based on value
-  data = data.sort((a, b) => d3.descending(a.name, b.name));
+  const data = rData.sort((a, b) => d3.descending(a.name, b.name));
 
   // set up svg using margin conventions - we'll need plenty of room on the left for labels
   const margin = {
@@ -90,5 +92,3 @@ const drawTracerGraph = (data) => {
       return `${d.value} µs`;
     });
 };
-
-export default drawTracerGraph;

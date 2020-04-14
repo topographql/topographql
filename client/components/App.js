@@ -9,7 +9,7 @@ import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import drawNetworkGraph from './drawNetworkGraph.js';
-import { drawTracerGraph } from './drawTracerGraph.js';
+import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
 class App extends React.Component {
   constructor() {
@@ -17,6 +17,7 @@ class App extends React.Component {
     this.state = {
       endpoint: '',
       query: '',
+      querydata: {},
       schema: {},
       d3introspectdata: {},
       d3querydata: {},
@@ -40,17 +41,16 @@ class App extends React.Component {
   onSubmitEndpoint(e) {
     const { endpoint } = this.state;
     e.preventDefault();
-    fetch(endpoint, {
-      method: 'Post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: getIntrospectionQuery() }),
-    }).then((res) => res.json())
-      // .then(res => JSON.stringify(res, null, 2))
-      .then((data) => {
+    fetch(this.state.endpoint, {
+      method: "Post",
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({"query": getIntrospectionQuery() })
+    }).then(res => res.json())
+      .then(data => {
         fetch('/gql/getschema', {
-          method: 'Post',
+          method: "Post",
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify(data.data),
         })
           .then((res) => res.json())
           .then((data) => {
@@ -75,16 +75,33 @@ class App extends React.Component {
   // }
 
   onSubmitQuery(e) {
-    // do something with query
-    const { query } = this.state;
     e.preventDefault();
 
     fetch(this.state.endpoint, {
-      method: 'Post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: this.state.query }),
-    });
-    console.log(query);
+      method: "Post",
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({"query": this.state.query })
+    })
+      .then(res => res.json())
+      // stores the original result from posting a query into state
+      .then(querydata => this.setState({ querydata: querydata }))
+      .then(res => {
+        const converted = convertTraceData(this.state.querydata)
+        d3.select('svg').remove();
+        drawTracerGraph(converted)
+      })
+      .then(data => {
+        fetch('/gql/getquery', {
+          method: "Post",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        })
+          .then(res => res.json())
+          // store the d3 file of the query results into state
+          .then(data => {
+            this.setState({ d3querydata: data })
+          });
+      });
   }
 
   render() {
