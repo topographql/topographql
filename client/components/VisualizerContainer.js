@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
-import * as d3 from 'd3';
 
 class VisualizerContainer extends Component {
+<<<<<<< HEAD
   constructor() {
     super();
     
@@ -119,6 +119,8 @@ class VisualizerContainer extends Component {
     }
   }
 
+=======
+>>>>>>> dev
   render() {
     return (
       <div id="visualizer-container">

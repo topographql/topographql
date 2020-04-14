@@ -4,6 +4,7 @@ $wfblue: rgb(33, 151, 33);
 * {
     box-sizing: border-box;
     margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 #wrapper {
@@ -17,10 +18,22 @@ $wfblue: rgb(33, 151, 33);
   height: 100vh;
 }
 
-#visualizer-container {
-    border: 1px solid $wfblue;
+#wrapper-2 {
     flex: 3.5;
+    display: flex;
+    flex-direction: column;
+}
+
+#visualizer-container {
+    flex: 2;
+    border: 1px solid $wfblue;
     height: 100vh;
+}
+
+#tracedisplay {
+    border: 1px solid $wfblue;
+    flex: 1;
+    overflow-y: auto;
 }
 
 #loadserver {
@@ -41,12 +54,9 @@ $wfblue: rgb(33, 151, 33);
     }
 }
 
-#tracedisplay {
-    border: 1px solid $wfblue;
-    flex: 2;
-}
 
-// ____________________ D3 _____________________
+
+// ____________________ D3 Network Graph _____________________
 
 path.link {
     fill: none;
@@ -86,3 +96,23 @@ text.shadow {
     stroke-width: 3px;
     stroke-opacity: .8;
     }
+
+    // ____________________ D3 Tracer Data _____________________
+
+.bar {
+    fill: grey;
+}
+
+.axis {
+    font-size: 8px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    display: none;
+}
+
+.label {
+    font-size: 8px;
+}
