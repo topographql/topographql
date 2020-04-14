@@ -2,10 +2,10 @@ import React from 'react';
 
 import '../styles/codemirror.css';
 
-import 'codemirror/addon/hint/show-hint';
-import 'codemirror/addon/lint/lint';
+// import 'codemirror/addon/hint/show-hint';
+// import 'codemirror/addon/lint/lint';
 //import 'codemirror-graphql/hint';
-import 'codemirror-graphql/mode';
+// import 'codemirror-graphql/mode';
 
 import { UnControlled as ReactCodeMirror } from 'react-codemirror2';
 

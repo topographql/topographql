@@ -7,15 +7,18 @@ $wfblue: rgb(33, 151, 33);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+#header {
+    
+}
 #wrapper {
     display: flex;
+    height: 100vh;
 }
 #control-panel-container {
   background-color: $wflightblue;
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100vh;
 }
 
 #wrapper-2 {
@@ -26,12 +29,13 @@ $wfblue: rgb(33, 151, 33);
 
 #visualizer-container {
     flex: 2;
-    border: 1px solid $wfblue;
     height: 100vh;
 }
 
 #tracedisplay {
-    border: 1px solid $wfblue;
+    margin: 20px;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 1.5px;
     flex: 1;
     overflow-y: auto;
 }

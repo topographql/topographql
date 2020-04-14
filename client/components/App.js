@@ -106,6 +106,7 @@ class App extends React.Component {
 
   render() {
     return (
+     // <Header />
       <div id='wrapper'>
         <ControlPanelContainer
           onChange={this.onChange}
