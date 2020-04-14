@@ -1,13 +1,12 @@
 import React from 'react';
+import { Input, Button } from 'antd';
 
 function LoadServer(props) {
   return (
       <div id="loadserver">
-        <form onSubmit={props.onSubmitEndpoint} >
-          <label>Enter your GraphQL endpoint</label>
-          <br/>
-          <input onChange={props.onChange} type='text' name="endpoint"></input>
-          <button type="submit">Submit</button>
+        <form>
+          <Input onChange={props.onChange} type='text' name="endpoint" placeholder="Enter your GraphQL endpoint" />
+          <Button type="primary" onClick={props.onSubmitEndpoint}>Submit</Button>
         </form>
       </div>
   );

@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
+import Header from './Header';
 import drawNetworkGraph from './drawNetworkGraph.js';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph.js';
 
@@ -57,7 +58,7 @@ class App extends React.Component {
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
             this.setState({ schema: data.schema, d3introspectdata: data.d3json });
-            d3.select('svg').remove();
+            d3.select('#svg-network').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           });
       });
@@ -88,9 +89,9 @@ class App extends React.Component {
       // stores the original result from posting a query into state
       .then(querydata => this.setState({ querydata: querydata }))
       .then(res => {
-        const converted = convertTraceData(this.state.querydata);
-        d3.select('svg').remove();
-        drawTracerGraph(converted);
+        const converted = convertTraceData(this.state.querydata)
+        d3.select('#svg-trace').remove();
+        drawTracerGraph(converted)
       })
       .then(data => {
         fetch('/gql/getquery', {
@@ -109,21 +110,25 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id="wrapper">
-        <ControlPanelContainer
+      <div>
+        <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
-          onSubmitQuery={this.onSubmitQuery}
-          onChangeQuery={this.onChangeQuery}
-          query={this.state.query}
-          schema={this.state.schema}
         />
-        <div id="wrapper-2">
-          <VisualizerContainer
-            d3introspectdata={this.state.d3introspectdata}
-            d3querydata={this.state.d3querydata}
+        <div id='flex-wrapper-1'>
+          <ControlPanelContainer
+            onChange={this.onChange}
+            onSubmitQuery={this.onSubmitQuery}
+            onChangeQuery={this.onChangeQuery}
+            query={this.state.query}
+            schema={this.state.schema}
           />
-          <TraceDisplay />
+          <div id="flex-wrapper-2">
+            <VisualizerContainer
+              d3introspectdata={ this.state.d3introspectdata }
+            />
+            <TraceDisplay />
+          </div>
         </div>
       </div>
     );

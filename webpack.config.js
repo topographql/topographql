@@ -29,6 +29,9 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: [
+              ['import', { libraryName: 'antd', style: true }],
+            ],
           },
         },
       },
@@ -36,6 +39,18 @@ module.exports = {
         test: /\.(css|s[ac]ss)$/i,
         exclude: /(node_modules)/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'less-loader', options: { javascriptEnabled: true } },
+          // options: {
+          //   modifyVars: themeVariables,
+          //   root: path.resolve(__dirname, './')
+          // }
+        ],
       },
       {
         // https://github.com/graphql/graphql-js/issues/1272

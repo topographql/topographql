@@ -1,5 +1,5 @@
-$wflightblue: #f0f0f0;
-$wfblue: rgb(33, 151, 33);
+$wflightblue: #dadada;
+$wfgrey: rgb(228, 228, 228);
 
 * {
     box-sizing: border-box;
@@ -7,54 +7,58 @@ $wfblue: rgb(33, 151, 33);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#wrapper {
-    display: flex;
-}
-#control-panel-container {
-  background-color: $wflightblue;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100vh;
-}
-
-#wrapper-2 {
-    flex: 3.5;
-    display: flex;
-    flex-direction: column;
-}
-
-#visualizer-container {
-    flex: 2;
-    border: 1px solid $wfblue;
+#flex-wrapper-1 {
+    display: flex; // flex's control pannel container and flex wrapper 2
     height: 100vh;
 }
+#control-panel-container {
+  //display: flex; // flex
+  height: 100%;
+  background-color: $wflightblue;
+  flex-direction: column;
+  flex: 1;
+}
 
-#tracedisplay {
-    border: 1px solid $wfblue;
-    flex: 1;
-    overflow-y: auto;
+#flex-wrapper-2 {
+    display: flex; // flex's visualizer containers and trace display
+    flex: 3.5;
+    flex-direction: column;
+    #visualizer-container {
+        flex: 2;
+        height: 100vh;
+    }
+    #tracedisplay {
+        margin: 20px;
+        border: 1px solid $wfgrey;
+        border-radius: 1.5px;
+        flex: 1;
+        overflow-y: auto;
+    }
 }
 
 #loadserver {
-    border: 1px solid $wfblue;
+    padding: 5px;
+    border: 1px solid $wfgrey;
     flex: 1;
-    display: flex;
+   // display: flex;
     form {
-        margin: auto;
+        display: flex;
+        Button {
+            margin: 0px 0px 0px 10px;
+        }
     }
 }
 
 #submitquery {
-    border: 1px solid $wfblue;
-    // flex: 2;
-    // display: flex;
-    form {
-        margin: auto;
+    border: 1px solid $wfgrey;
+    height: 100%;
+    .CodeMirror { 
+        height:80vh !important
+    }
+    Button {
+        margin: 5px;
     }
 }
-
-
 
 // ____________________ D3 Network Graph _____________________
 

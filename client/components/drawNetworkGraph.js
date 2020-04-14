@@ -27,14 +27,12 @@ const drawNetworkGraph = (data) => {
   const svg = d3
     .select('#myD3')
     .append('svg:svg')
-    .attr('id', 'svgchart')
-
-    //The code below makes the svg size variable
-    // .attr('width', w)
-    // .attr('height', h);
-    .attr('preserveAspectRatio', 'xMinYmin meet')
-    .attr('viewBox', '0 0 1000 1000')
-    .classed('svg-content', true);
+    .attr('id', 'svg-network')
+    .attr('width', w)
+    .attr('height', h);
+    // .attr('preserveAspectRatio', 'xMinYmin meet')
+    // .attr('viewBox', '0 0 1000 1000')
+    // .classed('svg-content', true);
 
   // Per-type markers, as they don't inherit styles.
   svg

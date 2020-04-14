@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import CodeMirror from 'codemirror';
 import '../styles/codemirror.css';
 // @import 'codemirror/lib/codemirror.css';
@@ -20,6 +21,9 @@ require('codemirror-graphql/info');
 require('codemirror-graphql/jump');
 require('codemirror-graphql/mode');
 
+// import 'codemirror/addon/hint/show-hint';
+// import 'codemirror/addon/lint/lint';
+//import 'codemirror-graphql/hint';
 // import 'codemirror/addon/hint/show-hint' ;
 // import 'codemirror/addon/comment/comment';
 // import 'codemirror/addon/edit/matchbrackets';
@@ -93,14 +97,11 @@ class SubmitQuery extends React.Component {
     }
   }
 
-
-
   render() {
     return (
       <div id="submitquery">
       <textarea id="queryeditor" rows="5" cols="50"></textarea>
-      <br/>
-      <button onClick={this.props.onSubmitQuery}> Submit </button>
+      <Button onClick={this.props.onSubmitQuery}>Submit</Button>
     </div>
     );
   }

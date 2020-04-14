@@ -41,6 +41,7 @@ export const drawTracerGraph = (rData) => {
   const height = Math.min(900, 20 * data.length);
 
   const svg = d3.select('#tracerD3').append('svg')
+    .attr('id', 'svg-trace')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
   // .attr("viewBox", `0 0 960 ${height}`)
