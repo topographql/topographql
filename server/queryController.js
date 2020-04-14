@@ -30,7 +30,7 @@ const cleanResults = (sourceResults) => {
   // Object to store all the paths / how many calls on that path
   const pathStorage = {};
   const queryCalls = tracerData.length;
-  console.log('tracer', tracerData);
+  // console.log('tracer', tracerData);
   // Store the root query path and initialize into pathStorage
   const root = tracerData[0].returnType[0] + '&';
   const tracerDetails = {};
