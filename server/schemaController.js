@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+=======
+const { getIntrospectionQuery } = require('graphql');
+const { buildClientSchema } = require('graphql');
+const { buildSchema } = require('graphql');
+const { printSchema } = require('graphql');
+const fs = require('fs');
+const path = require('path');
+// const graphURL = "https://worldcup-graphql.now.sh/";
+// const graphURL = "https://polaris.shopify.com/api";
+const graphURL = 'https://graphql-pokemon.now.sh/';
+const fetch = require('node-fetch');
+>>>>>>> danResponsiveBranchWork
 
 const { buildClientSchema } = require('graphql');
 const schemaController = {};
@@ -36,27 +49,42 @@ const cleanSchema = (sourceSchema) => {
   const schemaTypes = sourceSchema.__schema.types;
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
-  // iterate only through relevant types (tables)
-    if (schemaTypes[i].fields !== null && schemaTypes[i].name.indexOf('__') === -1) {
+    // iterate only through relevant types (tables)
+    if (
+      schemaTypes[i].fields !== null &&
+      schemaTypes[i].name.indexOf('__') === -1
+    ) {
       const fieldsList = [];
       // Iterate through the fields array of each type (table)
       for (let j = 0; j < schemaTypes[i].fields.length; j++) {
-        if (schemaTypes[i].fields[j].name && !schemaTypes[i].fields[j].isDeprecated) {
-          // checks if the type of a field references another Type 
+        if (
+          schemaTypes[i].fields[j].name &&
+          !schemaTypes[i].fields[j].isDeprecated
+        ) {
+          // checks if the type of a field references another Type
           if (schemaTypes[i].fields[j].type.kind === 'OBJECT') {
             const fieldsLink = {};
-            fieldsLink[schemaTypes[i].fields[j].name] = schemaTypes[i].fields[j].type.name;
+            fieldsLink[schemaTypes[i].fields[j].name] =
+              schemaTypes[i].fields[j].type.name;
             fieldsList.push(fieldsLink);
           }
           // checks if the type of a field is a list and references another Type
-          if (schemaTypes[i].fields[j].type.kind === 'LIST' && schemaTypes[i].fields[j].type.ofType.kind === 'OBJECT') {
+          if (
+            schemaTypes[i].fields[j].type.kind === 'LIST' &&
+            schemaTypes[i].fields[j].type.ofType.kind === 'OBJECT'
+          ) {
             const fieldsLink = {};
-            fieldsLink[schemaTypes[i].fields[j].name] = schemaTypes[i].fields[j].type.ofType.name;
+            fieldsLink[schemaTypes[i].fields[j].name] =
+              schemaTypes[i].fields[j].type.ofType.name;
             fieldsList.push(fieldsLink);
-          } else if (schemaTypes[i].fields[j].type.ofType && schemaTypes[i].fields[j].type.ofType.ofType) {
+          } else if (
+            schemaTypes[i].fields[j].type.ofType &&
+            schemaTypes[i].fields[j].type.ofType.ofType
+          ) {
             // creates a key-value pair of relationship between the field name and the Type if it points to another Type
             const fieldsLink = {};
-            fieldsLink[schemaTypes[i].fields[j].name] = schemaTypes[i].fields[j].type.ofType.ofType.name;
+            fieldsLink[schemaTypes[i].fields[j].name] =
+              schemaTypes[i].fields[j].type.ofType.ofType.name;
             fieldsList.push(fieldsLink);
           } else {
             fieldsList.push(schemaTypes[i].fields[j].name);
@@ -101,6 +129,13 @@ const schemaToD3 = (cleanedSchema) => {
       let nodeSource = {};
       let nodeTarget = {};
       if (typeof cleanedSchema[key][i] !== 'object') {
+<<<<<<< HEAD
+=======
+        const node = {};
+        node.name = cleanedSchema[key][i] + '&' + key;
+        node.type = 'field';
+        nodesArray.push(node);
+>>>>>>> danResponsiveBranchWork
         // create links from each Type to their fields
         const link = {};
         nodeSource.name = key + '&';
@@ -110,6 +145,7 @@ const schemaToD3 = (cleanedSchema) => {
         nodeTarget.type = "field";
         link.target = nodeTarget;
         linksArray.push(link);
+<<<<<<< HEAD
       } 
       else {
         // Create link from field to current Type
@@ -121,6 +157,13 @@ const schemaToD3 = (cleanedSchema) => {
         nodeTarget.type = 'field';
         linkType.target = nodeTarget;
         linksArray.push(linkType);
+=======
+      } else {
+        const node = {};
+        node.name = fieldName[0] + '&' + key;
+        node.type = 'field';
+        nodesArray.push(node);
+>>>>>>> danResponsiveBranchWork
         // Create link from fields to other Types
         const linkField = {};
         nodeSource = {};
@@ -138,6 +181,5 @@ const schemaToD3 = (cleanedSchema) => {
   d3Json.links = linksArray;
   return d3Json;
 };
-
 
 module.exports = schemaController;

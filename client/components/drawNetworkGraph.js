@@ -7,8 +7,15 @@ const drawNetworkGraph = (data) => {
   const { links } = data; // add object passed from state here
 
   links.forEach((link) => {
+<<<<<<< HEAD:client/components/drawNetworkGraph.js
     link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name });
     link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name });
+=======
+    link.source =
+      nodes[link.source] || (nodes[link.source] = { name: link.source });
+    link.target =
+      nodes[link.target] || (nodes[link.target] = { name: link.target });
+>>>>>>> danResponsiveBranchWork:client/components/drawintrochart.js
   });
 
   const w = 960;
@@ -28,8 +35,13 @@ const drawNetworkGraph = (data) => {
     .select('#myD3')
     .append('svg:svg')
     .attr('id', 'svgchart')
-    .attr('width', w)
-    .attr('height', h);
+
+    //The code below makes the svg size variable
+    // .attr('width', w)
+    // .attr('height', h);
+    .attr('preserveAspectRatio', 'xMinYmin meet')
+    .attr('viewBox', '0 0 1000 1000')
+    .classed('svg-content', true);
 
   // Per-type markers, as they don't inherit styles.
   svg
@@ -63,8 +75,8 @@ const drawNetworkGraph = (data) => {
     .data(force.nodes())
     .enter()
     .append('svg:circle')
-    .attr('r', 6);
-  // .call(force.drag);
+    .attr('r', 6)
+    .call(force.drag);
 
   const text = svg
     .append('svg:g')
