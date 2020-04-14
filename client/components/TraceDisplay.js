@@ -1102,11 +1102,12 @@ class TraceDisplay extends Component {
     };
 
     const width = 960 - margin.left - margin.right;
-    const height = window.innerHeight - margin.top - margin.bottom;
+    const height = Math.min(900, 20 * data.length);
 
     const svg = d3.select('#tracerD3').append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
+      //.attr("viewBox", `0 0 960 ${height}`)
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
