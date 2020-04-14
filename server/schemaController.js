@@ -106,7 +106,6 @@ const schemaToD3 = (cleanedSchema) => {
   const d3Json = {};
   const linksArray = [];
   const typesArray = Object.keys(cleanedSchema);
-  console.log('cleanSchema', cleanedSchema);
   // name each node with an & followed by the Type that the field belongs to, to solve for cases
   // where multiple fields have the same name across different Types
   // eslint-disable-next-line no-use-before-define
