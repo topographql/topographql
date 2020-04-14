@@ -38,6 +38,7 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
+        // https://github.com/graphql/graphql-js/issues/1272
         test: /\.mjs$/,
         include: /node_modules/,
         type: 'javascript/auto',
