@@ -34,7 +34,6 @@ schemaController.convertSchema = (req, res, next) => {
 */
 const cleanSchema = (sourceSchema) => {
   const schemaTypes = sourceSchema.__schema.types;
-  console.log('types', schemaTypes);
   const types = {};
   for (let i = 0; i < schemaTypes.length; i++) {
   // iterate only through relevant types (tables)
