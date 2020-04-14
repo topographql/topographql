@@ -64,7 +64,7 @@ const cleanSchema = (sourceSchema) => {
     }
   }
   return types;
-}
+};
 
 // schemaToD3 converts the "cleaned" schema into a JSON file for d3 in format:
 
@@ -132,7 +132,7 @@ const schemaToD3 = (cleanedSchema) => {
   d3Json.nodes = nodesArray;
   d3Json.links = linksArray;
   return d3Json;
-}
+};
 
 
 module.exports = schemaController;

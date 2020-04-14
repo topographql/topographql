@@ -27,6 +27,7 @@ queryController.getQuery = (req, res, next) => {
 
 const cleanResults = (sourceResults) => {
   const tracerData = sourceResults.extensions.tracing;
+  const queryData = sourceResults.data;
 
 
 };
