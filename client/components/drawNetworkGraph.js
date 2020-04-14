@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-const drawChart = (data) => {
+const drawNetworkGraph = (data) => {
   const nodes = {};
 
   const { links } = data; // add object passed from state here
@@ -100,4 +100,4 @@ const drawChart = (data) => {
   }
 };
 
-export default drawChart;
+export default drawNetworkGraph;

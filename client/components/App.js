@@ -8,7 +8,7 @@ import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
-import drawChart from './drawintrochart.js';
+import drawNetworkGraph from './drawNetworkGraph.js';
 
 class App extends React.Component {
   constructor() {
@@ -55,10 +55,11 @@ class App extends React.Component {
         })
           .then(res => res.json())
           .then(data => {
-            this.setState({ d3introspectdata: data })
-            d3.select("svg").remove()
-            drawChart(this.state.d3introspectdata);
-          })
+            // set state, delete previous svg and draw new svg passing in data
+            this.setState({ d3introspectdata: data });
+            d3.select("svg").remove();
+            drawNetworkGraph(this.state.d3introspectdata);
+          });
       });
   }
 
