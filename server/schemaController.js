@@ -1,12 +1,26 @@
+const { buildClientSchema, getIntrospectionQuery } = require('graphql');
+const fetch = require('node-fetch');
 
-const { buildClientSchema } = require('graphql');
 const schemaController = {};
+
+schemaController.introspect = (req, res, next) => {
+  fetch(req.body.endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({"query": getIntrospectionQuery()})
+  }).then((res) => res.json)
+    .then((data) => {
+      res.locals.introspectionResult = data.data;
+      console.log(res.locals.introspectionResult)
+      return next();
+    });
+};
 
 // converts schema into an object of Types and their respective fields (along with references to other Types)
 // output is in format e.g.:
 
 schemaController.convertSchema = (req, res, next) => {
-  const sourceSchema = req.body;
+  const sourceSchema = res.locals.introspectionResult;
   const cleanedSchema = cleanSchema(sourceSchema);
   const d3Json = schemaToD3(cleanedSchema);
   // Writes and saves the JSON file into root folder
