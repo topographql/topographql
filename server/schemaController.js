@@ -4,12 +4,14 @@ const fetch = require('node-fetch');
 const schemaController = {};
 
 schemaController.introspect = (req, res, next) => {
+  console.log(req.body.endpoint);
   fetch(req.body.endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({"query": getIntrospectionQuery()})
-  }).then((res) => res.json)
+  }).then((res) => res.json())
     .then((data) => {
+      console.log(data)
       res.locals.introspectionResult = data.data;
       console.log(res.locals.introspectionResult)
       return next();

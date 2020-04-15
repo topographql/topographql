@@ -44,10 +44,11 @@ class App extends React.Component {
     //   body: JSON.stringify({"query": getIntrospectionQuery()})
     // }).then(res => res.json())
     //   .then(data => {
+    //console.log(this.state.endpoint)
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state.endpoint),
+      body: JSON.stringify({ endpoint: this.state.endpoint }),
     })
       .then((res) => res.json())
       .then((data) => {
