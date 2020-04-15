@@ -54,6 +54,8 @@ class QueryResult extends Component {
       foldGutter: {
         minFoldSize: 4,
       },
+      lint: true,
+      gutters: ['CodeMirror-foldgutter'],
     };
 
     return (
