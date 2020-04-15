@@ -7,8 +7,8 @@ const drawNetworkGraph = (data) => {
   const { links } = copyData; // add object passed from state here
 
   links.forEach((link) => {
-    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name, h: link.highlighted, t: link.source.type });
-    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.highlighted, t: link.target.type });
+    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name, h: link.source.highlighted, t: link.source.type });
+    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.target.highlighted, t: link.target.type });
   });
 
   const w = 960;
@@ -59,7 +59,7 @@ const drawNetworkGraph = (data) => {
     .enter()
     .append('svg:path')
     .attr('class', (d) => {
-      if (d.highlighted) return 'link h-true';
+      if (d.source.h && d.target.h) return 'link h-true';
       return 'link h-false';
     })
     .attr('marker-end', () => 'url(#child)');
@@ -76,7 +76,7 @@ const drawNetworkGraph = (data) => {
     })
     .attr('r', (d) => {
       if (d.t === 'Type') return 10;
-      return 6
+      return 6;
     })
     .call(force.drag);
 
