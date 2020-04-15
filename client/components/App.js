@@ -52,7 +52,7 @@ class App extends React.Component {
         // set state, delete previous svg and draw new svg passing in data
         this.setState({ schema: data.schema, d3introspectdata: data.d3json });
         d3.select('#svg-network').remove();
-        drawNetworkGraph(this.state.d3introspectdata);   
+        drawNetworkGraph(this.state.d3introspectdata);
       });
   }
 
@@ -60,7 +60,8 @@ class App extends React.Component {
     e.preventDefault();
     const resetSchema = this.state.d3introspectdata;
     resetSchema.links.forEach((element) => {
-      element.highlighted = false;
+      element.source.highlighted = false;
+      element.target.highlighted = false;
     });
 
     fetch(this.state.endpoint, {

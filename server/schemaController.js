@@ -166,11 +166,12 @@ const createNode = (sourceName, sourceType, targetName, targetType) => {
   const nodeTarget = {};
   nodeSource.name = sourceName;
   nodeSource.type = sourceType;
+  nodeSource.highlighted = false;
   linkObj.source = nodeSource;
   nodeTarget.name = targetName;
   nodeTarget.type = targetType;
+  nodeTarget.highlighted = false;
   linkObj.target = nodeTarget;
-  linkObj.highlighted = false;
   return linkObj;
 };
 
