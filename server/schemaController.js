@@ -4,34 +4,44 @@ const fetch = require('node-fetch');
 const schemaController = {};
 
 schemaController.introspect = (req, res, next) => {
-  console.log(req.body.endpoint);
   fetch(req.body.endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({"query": getIntrospectionQuery()})
   }).then((res) => res.json())
     .then((data) => {
-      console.log(data)
       res.locals.introspectionResult = data.data;
-      console.log(res.locals.introspectionResult)
       return next();
-    });
+    })
+    .catch(() => next({
+      log: 'There was a problem running the introspection query',
+      status: 500,
+      message: { err: 'There was a problem running the introspection query' },
+    }));
 };
 
 // converts schema into an object of Types and their respective fields (along with references to other Types)
 // output is in format e.g.:
 
 schemaController.convertSchema = (req, res, next) => {
-  const sourceSchema = res.locals.introspectionResult;
-  const cleanedSchema = cleanSchema(sourceSchema);
-  const d3Json = schemaToD3(cleanedSchema);
-  // Writes and saves the JSON file into root folder
-  // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
-  // Stores the file path for future middleware to access to implement in d3
-  // res.locals.path = path.resolve(__dirname, 'd3schema.json');
-  res.locals.schema = buildClientSchema(sourceSchema);
-  res.locals.d3json = d3Json;
-  return next();
+  try {
+    const sourceSchema = res.locals.introspectionResult;
+    const cleanedSchema = cleanSchema(sourceSchema);
+    const d3Json = schemaToD3(cleanedSchema);
+    // Writes and saves the JSON file into root folder
+    // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
+    // Stores the file path for future middleware to access to implement in d3
+    // res.locals.path = path.resolve(__dirname, 'd3schema.json');
+    res.locals.schema = buildClientSchema(sourceSchema);
+    res.locals.d3json = d3Json;
+    return next();
+  } catch {
+    return next({
+      log: 'There was a problem converting the introspected schema',
+      status: 500,
+      message: { err: 'There was a problem converting the introspected schema' },
+    });
+  }
 };
 
 // cleanSchema cleans the schema received from the client's graphQL endpoint into format:
