@@ -11,7 +11,7 @@ function ControlPanelContainer(props) {
           query={props.query}
           schema={props.schema}
          />
-         {/* <QueryResult result={props.result}/> */}
+         <QueryResult result={props.result}/>
       </div>
   );
 }

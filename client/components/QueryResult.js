@@ -19,41 +19,50 @@ require('codemirror-graphql/hint');
 require('codemirror-graphql/lint');
 require('codemirror-graphql/info');
 require('codemirror-graphql/jump');
-require('codemirror-graphql/mode');
+require('codemirror-graphql/results/mode');
+
+import {UnControlled as CM} from 'react-codemirror2'
 
 class QueryResult extends Component {
-  constructor(props) {
-    super(props);
-    this.editor;
-  };
 
-  componentDidMount() {
-    this.editor = CodeMirror.fromTextArea(document.getElementById('queryresult'), {
+  
+  //   componentDidMount() {
+  //     this.editor = CodeMirror(document.getElementById('queryresult'), {
+  //       value: this.props.result || '',
+  //       lineWrapping: true,
+  //       readOnly: true,
+  //       tabSize: 2,
+  //       mode: 'graphql-results',
+  //       foldGutter: {
+  //         minFoldSize: 4,
+  //       },
+  //     });
+  //   }
+
+  //   componentDidUpdate(prevProps) {
+  //     if (this.props.results && this.props.result !== prevProps.result) {
+  //       this.editor.setValue(this.props.result);
+  //     }
+  //   }
+
+  render() {
+    const options = {
+      lineWrapping: true,
+      readOnly: true,
       tabSize: 2,
-      mode: 'graphql',
-      autoCloseBrackets: true,
-      matchBrackets: true,
-      showCursorWhenSelecting: true,
+      mode: 'graphql-results',
       foldGutter: {
         minFoldSize: 4,
       },
-    });
-  }
+    };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.result !== prevProps.result) {
-      this.editor.setValue(this.props.result);
-    }
-  }
-
-  render() {
     return (
-     <div>
-        <textarea id="queryresult" rows="5" cols="40"></textarea>
-     </div>
+      <CM
+        value={this.props.result || ''}
+        options={options}
+      />
     );
   }
-  
 }
 
 export default QueryResult;
