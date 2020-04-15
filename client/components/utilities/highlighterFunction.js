@@ -9,10 +9,15 @@ export const highlightQuery = (schemaCopy, queryPath) => {
     for (let i = 0; i < schemaCopy.links.length; i++) {
       // check for matches with the keys in the query path
       const pathSource = schemaCopy.links[i].source.name;
+      const pathTarget = schemaCopy.links[i].target.name
       const parentNodes = Object.keys(queryPath);
-      // highlights all parent nodes if they are the source node
+      // highlights all parent nodes if they are the source/target node
+      console.log('parent', parentNodes);
       if (parentNodes.includes(pathSource)) {
         schemaCopy.links[i].source.highlighted = true;
+      }
+      if (parentNodes.includes(pathTarget)) {
+        schemaCopy.links[i].target.highlighted = true;
       }
       // checks whether the schema target exists as a key in d3querydata 
       if (queryPath[pathSource] && queryPath[pathSource][schemaCopy.links[i].target.name]) {
