@@ -7,6 +7,7 @@ import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph';
+import QueryResult from './QueryResult';
 
 
 class App extends React.Component {
@@ -99,6 +100,7 @@ class App extends React.Component {
             schema={this.state.schema}
           />
           <div id="flex-wrapper-2">
+            <QueryResult result={JSON.stringify(this.state.querydata.data)}/>
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
             />
