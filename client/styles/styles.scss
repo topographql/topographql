@@ -1,5 +1,6 @@
-$wflightblue: #dadada;
+$wflightgrey: #dadada;
 $wfgrey: rgb(228, 228, 228);
+$base-green: green;
 
 * {
     box-sizing: border-box;
@@ -12,9 +13,8 @@ $wfgrey: rgb(228, 228, 228);
     height: 100vh;
 }
 #control-panel-container {
-  //display: flex; // flex
   height: 100%;
-  background-color: $wflightblue;
+  background-color: $wflightgrey;
   flex-direction: column;
   flex: 1;
 }
@@ -40,7 +40,6 @@ $wfgrey: rgb(228, 228, 228);
     padding: 5px;
     border: 1px solid $wfgrey;
     flex: 1;
-   // display: flex;
     form {
         display: flex;
         Button {
@@ -68,25 +67,29 @@ path.link {
     stroke-width: 1.5px;
 }
 
-marker#licensing {
-    fill: green;    
+path.link.h-false {
+    stroke: rgb(184, 184, 184);
 }
 
-path.link.licensing {
-    stroke: green;
-}
-
-path.link.resolved {
-    stroke-dasharray: 0,2 1;
-}
-
-path.link.child {
+path.link.h-true {
     stroke: green;
 }
 
 circle {
     fill: #ccc;
     stroke: #333;
+    stroke-width: 1.5px;
+}
+
+circle.circle-h-true {
+    fill: $base-green;
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+circle.circle-h-false {
+    fill: rgb(231, 231, 231);
+    stroke: rgb(148, 148, 148);
     stroke-width: 1.5px;
 }
 

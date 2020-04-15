@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 
 export const convertTraceData = (rData) => {
-  console.log("convert fired")
   const data = rData.extensions.tracing.execution.resolvers;
   const result = [];
   data.forEach((obj) => {
@@ -25,7 +24,6 @@ export const convertTraceData = (rData) => {
 };
 
 export const drawTracerGraph = (rData) => {
-  console.log("draw fired")
   // sort bars based on value
   const data = rData.sort((a, b) => d3.descending(a.name, b.name));
 

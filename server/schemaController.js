@@ -157,7 +157,6 @@ const schemaToD3 = (cleanedSchema) => {
     }
   }
   d3Json.links = linksArray;
-  console.log(cleanedSchema);
   return d3Json;
 };
 

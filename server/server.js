@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.post('/gql/getschema', schemaController.introspect, schemaController.convertSchema, (req, res, next) => {
+  console.dir(res.locals, { depth: null })
   res.status(200).json(res.locals);
 });
 
