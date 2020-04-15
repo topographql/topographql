@@ -8,6 +8,7 @@ import Header from './Header';
 import drawNetworkGraph from './drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './drawTracerGraph';
 import QueryResult from './QueryResult';
+import { highlightQuery } from './utilities/highlighterFunction.js';
 
 
 class App extends React.Component {
@@ -39,6 +40,8 @@ class App extends React.Component {
 
   onSubmitEndpoint(e) {
     e.preventDefault();
+    // clears previous query and query results from state
+    this.setState({query: {}, querydata: {}});
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,7 +52,7 @@ class App extends React.Component {
         // set state, delete previous svg and draw new svg passing in data
         this.setState({ schema: data.schema, d3introspectdata: data.d3json });
         d3.select('#svg-network').remove();
-        drawNetworkGraph(this.state.d3introspectdata);
+        drawNetworkGraph(this.state.d3introspectdata);   
       });
   }
 
@@ -85,23 +88,11 @@ class App extends React.Component {
             this.setState({ d3querydata: data });
           })
           // Updates d3 schema data with highlighted: true attributes based on query results
-          .then(data => {
-            console.log(this.state.d3introspectdata);
+          .then(() => {
             const schemaCopy = this.state.d3introspectdata;
             const queryPath = this.state.d3querydata;
-            if (schemaCopy.links.length) {
-              for (let i = 0; i < schemaCopy.links.length; i++) {
-                // check for matches with the keys in the query path
-                const pathSource = schemaCopy.links[i].source.name;
-                if (Object.keys(queryPath).includes(pathSource)) {
-                  // checks whether the schema target exists as a key in d3querydata 
-                  if (queryPath[pathSource][schemaCopy.links[i].target.name]) {
-                    schemaCopy.links[i].highlighted = true;
-                  }
-                }
-              }
-            }
-            this.setState({ d3introspectdata: schemaCopy });
+            const highlightedSchema = highlightQuery(schemaCopy, queryPath);
+            this.setState({ d3introspectdata: highlightedSchema });
             d3.select('#svg-network').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           });
