@@ -100,11 +100,29 @@ class App extends React.Component {
           body: JSON.stringify(this.state.querydata),
         })
           .then(res => res.json())
-          .then(data => console.log(data))
           // store the d3 file of the query results into state
           .then(data => {
-            this.setState({ d3querydata: data })
-          });
+            this.setState({ d3querydata: data });
+          })
+          // Updates d3 schema data with highlighted: true attributes based on query results
+          .then(data => {
+            const schemaCopy = this.state.d3introspectdata;
+            const queryPath = this.state.d3querydata;
+            if (schemaCopy.links.length) {
+              for (let i = 0; i < schemaCopy.links.length; i++) {
+                // check for matches with the keys in the query path
+                const pathSource = schemaCopy.links[i].source.name;
+                if (Object.keys(queryPath).includes(pathSource)) {
+                  // checks whether the schema target exists as a key in d3querydata 
+                  if (queryPath[pathSource][schemaCopy.links[i].target.name]) {
+                    schemaCopy.links[i].highlighted = true;
+                  }
+                }
+              }
+            }
+            this.setState({ d3introspectdata: schemaCopy});
+            console.log(this.state.d3introspectdata);
+          })
       });
   }
 

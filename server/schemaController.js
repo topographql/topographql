@@ -56,7 +56,7 @@ const cleanSchema = (sourceSchema) => {
             fieldsList.push(fieldsLink);
           }
           // checks if the type of a field is a list and references another Type
-          if (
+          else if (
             schemaTypes[i].fields[j].type.kind === 'LIST' &&
             schemaTypes[i].fields[j].type.ofType.kind === 'OBJECT'
           ) {
@@ -105,52 +105,48 @@ const cleanSchema = (sourceSchema) => {
 const schemaToD3 = (cleanedSchema) => {
   const d3Json = {};
   const linksArray = [];
-  const typesArray = Object.keys(cleanedSchema);
   // name each node with an & followed by the Type that the field belongs to, to solve for cases
   // where multiple fields have the same name across different Types
-  // eslint-disable-next-line no-use-before-define
+/* eslint-disable */
   for (let key in cleanedSchema) {
     for (let i = 0; i < cleanedSchema[key].length; i++) {
       const fieldName = Object.keys(cleanedSchema[key][i]);
-      let nodeSource = {};
-      let nodeTarget = {};
       if (typeof cleanedSchema[key][i] !== 'object') {
         // create links from each Type to their fields
-        const link = {};
-        nodeSource.name = key + '&';
-        nodeSource.type = "Type";
-        link.source = nodeSource;
-        nodeTarget.name = cleanedSchema[key][i]+ '&' + key;
-        nodeTarget.type = "field";
-        link.target = nodeTarget;
-        linksArray.push(link);
+        let sourceName = key + '&';
+        let targetName = cleanedSchema[key][i]+ '&' + key;
+        linksArray.push(createNode(sourceName, 'Type', targetName, 'field'))
       } 
+      // if an object
       else {
         // Create link from field to current Type
-        const linkType = {};
-        nodeSource.name = key + '&';
-        nodeSource.type = 'Type';
-        linkType.source = nodeSource;
-        nodeTarget.name = fieldName[0] + '&' + key;
-        nodeTarget.type = 'field';
-        linkType.target = nodeTarget;
-        linksArray.push(linkType);
+        let sourceName = key + '&';
+        let targetName = fieldName[0] + '&' + key;
+        linksArray.push(createNode(sourceName, 'Type', targetName, 'field'));
         // Create link from fields to other Types
-        const linkField = {};
-        nodeSource = {};
-        nodeSource.name = fieldName[0] + '&' + key;
-        nodeSource.type = 'field';
-        linkField.source = nodeSource;
-        nodeTarget = {};
-        nodeTarget.name = cleanedSchema[key][i][fieldName[0]] + '&';
-        nodeTarget.type = 'Type';
-        linkField.target = nodeTarget;
-        linksArray.push(linkField);
+        sourceName = fieldName[0] + '&' + key;
+        targetName = cleanedSchema[key][i][fieldName[0]] + '&';
+        linksArray.push(createNode(sourceName, 'field', targetName, 'Type'));
       }
     }
   }
   d3Json.links = linksArray;
+  console.log(cleanedSchema);
   return d3Json;
+};
+
+const createNode = (sourceName, sourceType, targetName, targetType) => {
+  const linkObj = {};
+  const nodeSource = {};
+  const nodeTarget = {};
+  nodeSource.name = sourceName;
+  nodeSource.type = sourceType;
+  linkObj.source = nodeSource;
+  nodeTarget.name = targetName;
+  nodeTarget.type = targetType;
+  linkObj.target = nodeTarget;
+  linkObj.highlighted = false;
+  return linkObj;
 };
 
 module.exports = schemaController;
