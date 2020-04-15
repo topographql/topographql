@@ -56,6 +56,7 @@ const queryToD3 = (sourceResults) => {
       pathStorage[pathSource][pathTarget] = tracerData[i].duration;
     }
   }
+  console.log(pathStorage);
   return pathStorage;
 };
 
