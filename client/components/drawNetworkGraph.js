@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 const drawNetworkGraph = (data) => {
-  const copyData = JSON.parse(JSON.stringify(data))
+  const copyData = JSON.parse(JSON.stringify(data));
   const nodes = {};
 
   const { links } = copyData; // add object passed from state here

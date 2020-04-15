@@ -34,7 +34,6 @@ schemaController.convertSchema = (req, res, next) => {
     // res.locals.path = path.resolve(__dirname, 'd3schema.json');
     res.locals.schema = buildClientSchema(sourceSchema);
     res.locals.d3json = d3Json;
-    console.dir(d3Json, { depth: null })
     return next();
   } catch {
     return next({
