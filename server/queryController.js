@@ -2,59 +2,62 @@ const queryController = {};
 
 
 /*
-Converts query data (including tracing extensions) into d3 compatible file
+Converts query data (including tracing extensions) into d3 comparable file
 * Input format e.g.:
 {
         "people": [
             {
                 "name": "Luke Skywalker"
             },
-            ...
+            ...,
           ],
           "extensions": {
             "tracing": {
               ...
             }
-*/
+          }
+}
 
+Output format e.g.:
+{Query& : [info&Query, duration]}
+*/
 queryController.getQuery = (req, res, next) => {
   const sourceResults = req.body;
-  const cleanedResults = cleanResults(sourceResults);
-  const d3Json = queryToD3(sourceResults);
-  res.locals.d3json = d3Json;
+  res.locals.d3querydata = queryToD3(sourceResults);
   return next();
 };
 
-const cleanResults = (sourceResults) => {
+
+/*
+Outputs an object that has path sources as keys, and values that are objects 
+which include the various path targets for each path source as well as duration
+E.g. format for querying person/name and species/name in StarWars schema
+{
+'RootQueryType&': { 'people&RootQueryType': 93927641 },
+'Person&': { 'name&Person': 5434, 'species_id&Person': 24122051 },
+'Species&': { 'name&Species': 6098 }
+}
+*/
+const queryToD3 = (sourceResults) => {
   const tracerData = sourceResults.extensions.tracing.execution.resolvers;
   // Object to store all the paths / how many calls on that path
   const pathStorage = {};
-  const queryCalls = tracerData.length;
-  // console.log('tracer', tracerData);
+  console.log('tracer', tracerData);
   // Store the root query path and initialize into pathStorage
-  const root = tracerData[0].returnType[0] + '&';
-  const tracerDetails = {};
-  
-  pathStorage.root = 1;
-  for (let i = 1; i < tracerData.length; i++) {
-    const path = tracerData[i].fieldName + '&' + tracerData[i].parentType;
-    if (!pathStorage.path) { 
-
-    } pathStorage.path = 1;
-
+  for (let i = 0; i < tracerData.length; i++) {
+    const pathSource = tracerData[i].parentType + '&';
+    const pathTarget = tracerData[i].fieldName + '&' + tracerData[i].parentType;
+  // check if the duration was greater than 1 microsecond (likelier to be database call)  
+    if (!pathStorage[pathSource]) {
+      const traceDetails = {};
+      traceDetails[pathTarget] = tracerData[i].duration;
+      pathStorage[pathSource] = traceDetails;
+    } else if (!pathStorage[pathSource][pathTarget]) {
+      pathStorage[pathSource][pathTarget] = tracerData[i].duration;
+    }
   }
-
-};
-
-const queryToD3 = (sourceResults) => {
-  
-
-
-
-
-
-  return sourceResults;
-
+  console.log(pathStorage);
+  return pathStorage;
 };
 
 module.exports = queryController;

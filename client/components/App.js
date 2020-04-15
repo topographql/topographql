@@ -14,12 +14,12 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      endpoint: '',
-      query: '',
-      querydata: {},
-      schema: {},
-      d3introspectdata: {},
-      d3querydata: {},
+      endpoint: '', // user's GraphQL endpoint
+      query: '', // user's query string
+      querydata: {}, // query results retrieved from server 
+      schema: {}, // introspected schema 
+      d3introspectdata: {}, // d3 file for introspected schema
+      d3querydata: {}, // d3 info for query data
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -55,6 +55,10 @@ class App extends React.Component {
 
   onSubmitQuery(e) {
     e.preventDefault();
+    const resetSchema = this.state.d3introspectdata;
+    resetSchema.links.forEach((element) => {
+      element.highlighted = false;
+    });
 
     fetch(this.state.endpoint, {
       method: 'POST',
@@ -76,11 +80,29 @@ class App extends React.Component {
           body: JSON.stringify(this.state.querydata),
         })
           .then(res => res.json())
-          .then(data => console.log(data))
           // store the d3 file of the query results into state
           .then(data => {
             this.setState({ d3querydata: data });
-          });
+          })
+          // Updates d3 schema data with highlighted: true attributes based on query results
+          .then(data => {
+            const schemaCopy = this.state.d3introspectdata;
+            const queryPath = this.state.d3querydata;
+            if (schemaCopy.links.length) {
+              for (let i = 0; i < schemaCopy.links.length; i++) {
+                // check for matches with the keys in the query path
+                const pathSource = schemaCopy.links[i].source.name;
+                if (Object.keys(queryPath).includes(pathSource)) {
+                  // checks whether the schema target exists as a key in d3querydata 
+                  if (queryPath[pathSource][schemaCopy.links[i].target.name]) {
+                    schemaCopy.links[i].highlighted = true;
+                  }
+                }
+              }
+            }
+            this.setState({ d3introspectdata: schemaCopy});
+            console.log(this.state.d3introspectdata);
+          })
       });
   }
 
