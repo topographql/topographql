@@ -114,9 +114,9 @@ class App extends React.Component {
             onChangeQuery={this.onChangeQuery}
             query={this.state.query}
             schema={this.state.schema}
+            result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
           <div id="flex-wrapper-2">
-            <QueryResult result={JSON.stringify(this.state.querydata.data, null, 2)}/>
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
             />
