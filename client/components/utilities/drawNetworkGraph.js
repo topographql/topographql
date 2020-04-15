@@ -11,8 +11,6 @@ const drawNetworkGraph = (data) => {
     link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.target.highlighted, t: link.target.type });
   });
 
-  console.log(links)
-
   const w = 960;
   const h = 500;
 
@@ -73,13 +71,12 @@ const drawNetworkGraph = (data) => {
     .enter()
     .append('svg:circle')
     .attr('class', (d) => {
-      console.log(d)
       if (d.h) return 'circle-h-true';
       return 'circle-h-false';
     })
     .attr('r', (d) => {
       if (d.t === 'Type') return 10;
-      return 6
+      return 6;
     })
     .call(force.drag);
 
