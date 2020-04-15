@@ -74,7 +74,10 @@ const drawNetworkGraph = (data) => {
       if (d.h) return 'circle-h-true';
       return 'circle-h-false';
     })
-    .attr('r', 6)
+    .attr('r', (d) => {
+      if (d.t === 'Type') return 10;
+      return 6
+    })
     .call(force.drag);
 
   const text = svg
