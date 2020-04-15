@@ -56,7 +56,7 @@ class SubmitQuery extends React.Component {
   render() {
     return (
       <div id="submitquery">
-      <textarea id="queryeditor" rows="5" cols="50"></textarea>
+      <textarea id="queryeditor" rows="2" cols="50"></textarea>
       <Button onClick={this.props.onSubmitQuery}>Submit</Button>
     </div>
     );
