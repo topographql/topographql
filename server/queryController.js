@@ -42,7 +42,6 @@ const queryToD3 = (sourceResults) => {
   const tracerData = sourceResults.extensions.tracing.execution.resolvers;
   // Object to store all the paths / how many calls on that path
   const pathStorage = {};
-  console.log('tracer', tracerData);
   // Store the root query path and initialize into pathStorage
   for (let i = 0; i < tracerData.length; i++) {
     const pathSource = tracerData[i].parentType + '&';
@@ -56,7 +55,6 @@ const queryToD3 = (sourceResults) => {
       pathStorage[pathSource][pathTarget] = tracerData[i].duration;
     }
   }
-  console.log(pathStorage);
   return pathStorage;
 };
 
