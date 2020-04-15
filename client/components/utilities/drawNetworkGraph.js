@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
 const drawNetworkGraph = (data) => {
-  console.log(data)
+  const copyData = JSON.parse(JSON.stringify(data));
   const nodes = {};
 
-  const { links } = data; // add object passed from state here
+  const { links } = copyData; // add object passed from state here
 
   links.forEach((link) => {
-    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name });
-    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name });
+    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name, h: link.highlighted, t: link.source.type });
+    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.highlighted, t: link.target.type });
   });
 
   const w = 960;
@@ -51,14 +51,18 @@ const drawNetworkGraph = (data) => {
     .append('svg:path')
     .attr('d', 'M0,-5L10,0L0,5');
 
+
   const path = svg
     .append('svg:g')
     .selectAll('path')
     .data(force.links())
     .enter()
     .append('svg:path')
-    .attr('class', (d) => 'link child')
-    .attr('marker-end', (d) => 'url(#child)');
+    .attr('class', (d) => {
+      if (d.highlighted) return 'link h-true';
+      return 'link h-false';
+    })
+    .attr('marker-end', () => 'url(#child)');
 
   const circle = svg
     .append('svg:g')
@@ -66,7 +70,14 @@ const drawNetworkGraph = (data) => {
     .data(force.nodes())
     .enter()
     .append('svg:circle')
-    .attr('r', 6)
+    .attr('class', (d) => {
+      if (d.h) return 'circle-h-true';
+      return 'circle-h-false';
+    })
+    .attr('r', (d) => {
+      if (d.t === 'Type') return 10;
+      return 6
+    })
     .call(force.drag);
 
   const text = svg
