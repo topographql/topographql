@@ -86,6 +86,7 @@ class App extends React.Component {
           })
           // Updates d3 schema data with highlighted: true attributes based on query results
           .then(data => {
+            console.log(this.state.d3introspectdata);
             const schemaCopy = this.state.d3introspectdata;
             const queryPath = this.state.d3querydata;
             if (schemaCopy.links.length) {
@@ -100,9 +101,10 @@ class App extends React.Component {
                 }
               }
             }
-            this.setState({ d3introspectdata: schemaCopy});
-            console.log(this.state.d3introspectdata);
-          })
+            this.setState({ d3introspectdata: schemaCopy });
+            d3.select('#svg-network').remove();
+            drawNetworkGraph(this.state.d3introspectdata);
+          });
       });
   }
 

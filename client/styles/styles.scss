@@ -68,24 +68,32 @@ path.link {
     stroke-width: 1.5px;
 }
 
-marker#licensing {
-    fill: green;    
+// marker#licensing {
+//     fill: green;    
+// }
+
+path.link.h-false {
+    stroke: rgb(184, 184, 184);
 }
 
-path.link.licensing {
-    stroke: green;
-}
-
-path.link.resolved {
-    stroke-dasharray: 0,2 1;
-}
-
-path.link.child {
+path.link.h-true {
     stroke: green;
 }
 
 circle {
     fill: #ccc;
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+circle.circle-h-true {
+    fill:green;
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+circle.circle-h-false {
+    fill: rgb(184, 184, 184);
     stroke: #333;
     stroke-width: 1.5px;
 }
@@ -100,6 +108,14 @@ text.shadow {
     stroke-width: 3px;
     stroke-opacity: .8;
     }
+
+
+
+circle.blue {
+    fill:blue;
+    stroke: #333;
+    stroke-width: 1.5px;
+}
 
     // ____________________ D3 Tracer Data _____________________
 
