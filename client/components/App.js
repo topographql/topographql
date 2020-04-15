@@ -5,8 +5,8 @@ import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
-import drawNetworkGraph from './drawNetworkGraph';
-import { drawTracerGraph, convertTraceData } from './drawTracerGraph';
+import drawNetworkGraph from './utilities/drawNetworkGraph';
+import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
 import QueryResult from './QueryResult';
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
