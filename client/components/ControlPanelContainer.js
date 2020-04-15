@@ -1,6 +1,5 @@
 import React from 'react';
 import SubmitQuery from './SubmitQuery';
-import QueryResult from './QueryResult';
 
 function ControlPanelContainer(props) {
   return (
@@ -11,7 +10,6 @@ function ControlPanelContainer(props) {
           query={props.query}
           schema={props.schema}
          />
-         <QueryResult result={props.result}/>
       </div>
   );
 }

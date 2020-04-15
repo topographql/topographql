@@ -5,16 +5,11 @@ import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
-<<<<<<< HEAD
-import drawNetworkGraph from './drawNetworkGraph';
-import { drawTracerGraph, convertTraceData } from './drawTracerGraph';
-
-=======
 import drawNetworkGraph from './utilities/drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
 import QueryResult from './QueryResult';
 import { highlightQuery } from './utilities/highlighterFunction.js';
->>>>>>> dev
+
 
 
 class App extends React.Component {
@@ -119,9 +114,9 @@ class App extends React.Component {
             onChangeQuery={this.onChangeQuery}
             query={this.state.query}
             schema={this.state.schema}
-            result={JSON.stringify(this.state.querydata.data)}
           />
           <div id="flex-wrapper-2">
+            <QueryResult result={JSON.stringify(this.state.querydata.data, null, 2)}/>
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
             />
