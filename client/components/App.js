@@ -18,8 +18,8 @@ class App extends React.Component {
     this.state = {
       endpoint: '', // user's GraphQL endpoint
       query: '', // user's query string
-      querydata: {}, // query results retrieved from server 
-      schema: {}, // introspected schema 
+      querydata: {}, // query results retrieved from server
+      schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
     };
