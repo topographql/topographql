@@ -15,7 +15,7 @@ class App extends React.Component {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
-      endpointError: null, // if endpoint fetched an error
+      endpointError: false, // if endpoint fetched an error
       query: '', // user's query string
       queryError: null, // if query fetched an error
       querydata: {}, // query results retrieved from server
