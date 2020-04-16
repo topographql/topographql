@@ -1,8 +1,7 @@
 import React from 'react';
-import SubmitQuery from './SubmitQuery';
-import QueryResult from './QueryResult';
-
 import { Input } from 'antd';
+import SubmitQuery from './SubmitQuery';
+
 const { TextArea } = Input;
 
 function ControlPanelContainer(props) {

@@ -46,8 +46,6 @@ function SubmitQuery(props) {
     },
   };
 
-  //const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-
   useEffect(() => {
     if (!editorMounted) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
