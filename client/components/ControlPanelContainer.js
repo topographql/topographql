@@ -8,14 +8,14 @@ const { TextArea } = Input;
 function ControlPanelContainer(props) {
   return (
       <div id="control-panel-container">
-         {/* <textarea id="queryeditor" rows="2" cols="50" placeholder="Enter your GraphQL query" ></textarea> */}
-        <TextArea id='queryeditor' rows={4} placeholder='Enter your GraphQL query'/>
-         <SubmitQuery
+        <TextArea id='queryeditor' rows={4} placeholder='GraphQL query'/>
+        <SubmitQuery
           onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
           query={props.query}
           schema={props.schema}
-         />
+          result={props.result}
+        />
       </div>
   );
 }

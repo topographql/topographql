@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import CodeMirror from 'codemirror';
 import '../styles/codemirror.css';
+import QueryResult from './QueryResult';
 
 // codemirror imports
 require('codemirror/addon/hint/show-hint');
@@ -24,7 +25,6 @@ require('codemirror-graphql/mode');
 
 function SubmitQuery(props) {
   const [editorMounted, setEditorMounted] = useState(false);
-  //const [editor, setEditor] = useState(null);
 
   const codeMirrorOptions = {
     lineNumbers: true,
@@ -58,9 +58,9 @@ function SubmitQuery(props) {
 
   return (
       <div id="submitquery">
-      {/* <textarea id="queryeditor" rows="2" cols="50"></textarea> */}
-      <Button onClick={props.onSubmitQuery}>Submit</Button>
-    </div>
+        <Button onClick={props.onSubmitQuery}>Submit</Button>
+        <QueryResult result={props.result}/>
+      </div>
   );
 }
 
