@@ -7,7 +7,6 @@ import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './utilities/drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
-
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
 class App extends React.Component {
@@ -21,12 +20,15 @@ class App extends React.Component {
       querydata: {}, // query results retrieved from server
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
-      d3querydata: {}, // d3 info for query data
+      d3querydata: {},
+      view: 'graph', // d3 info for query data
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
     this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
+    this.handleGraphView = this.handleGraphView.bind(this);
+    this.handleResultsView = this.handleResultsView.bind(this);
   }
 
   // onchange handler for endpoint input
@@ -37,6 +39,16 @@ class App extends React.Component {
   // onChange handler for CodeMirror
   onChangeQuery(text) {
     this.setState({ query: text });
+  }
+
+  handleGraphView() {
+    console.log('hiiiii')
+    this.setState({ view: 'graph' });
+  }
+
+  handleResultsView() {
+    console.log('hi')
+    this.setState({ view: 'results' });
   }
 
   onSubmitEndpoint(e) {
@@ -125,6 +137,10 @@ class App extends React.Component {
           <div id="flex-wrapper-2">
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
+              result={JSON.stringify(this.state.querydata.data, null, 2)}
+              handleGraphView={this.handleGraphView}
+              handleResultsView={this.handleResultsView}
+              view={this.state.view}
             />
             <TraceDisplay />
           </div>
