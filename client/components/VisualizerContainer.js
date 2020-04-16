@@ -3,15 +3,12 @@ import React from 'react';
 import QueryResult from './QueryResult';
 
 function VisualizerContainer(props) {
-  let view = props.view;
-  let display;
-  if (view === 'graph') display = <div id="myD3"></div>;
-  else display = <QueryResult result={props.result}/>;
+  console.log(props)
   return (
     <div id="visualizer-container">
-      <button onClick={props.handleGraphView}>Graph View</button>
-      <button onClick={props.handleResultsView}>Results View</button>
-      {display}
+      <button onClick={props.handleShowResults}>Results View</button>
+      <div id="myD3"></div>
+      { props.showResults ? <QueryResult result={props.result}/> : null }
     </div>
   );
 }
