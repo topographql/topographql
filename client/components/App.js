@@ -42,7 +42,7 @@ class App extends React.Component {
   onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
-    this.setState({query: {}, querydata: {}});
+    this.setState({ query: {}, querydata: {} });
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,7 +51,7 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         // set state, delete previous svg and draw new svg passing in data
-        this.setState({ schema: data.schema, d3introspectdata: data.d3json });
+        this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
       });

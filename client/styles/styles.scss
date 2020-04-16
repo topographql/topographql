@@ -12,9 +12,12 @@ $base-green: green;
     display: flex; // flex's control pannel container and flex wrapper 2
     height: 100vh;
 }
+
 #control-panel-container {
   height: 100%;
-  border: 1px solid $wfgrey;
+  border-bottom: 1px solid $wfgrey;
+  border-left: 1px solid $wfgrey;
+  border-right: 1px solid $wfgrey;
   background-color: $wflightgrey;
   flex-direction: column;
   flex: 1;
@@ -59,7 +62,7 @@ $base-green: green;
 
 #submitquery {
   
-    //height: 100%;
+
     Button {
         margin: 5px;
     }
