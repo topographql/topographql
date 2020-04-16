@@ -86,7 +86,6 @@ export const drawTracerGraph = (rData) => {
   // x position is 3 pixels to the right of the bar
     .attr('x', (d) => x(d.value) + 3)
     .text((d) => {
-      console.log(d.type);
       if (d.type === 'ms') return `${d.value} ms`;
       return `${d.value} µs`;
     });
