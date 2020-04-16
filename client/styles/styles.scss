@@ -12,11 +12,18 @@ $base-green: green;
     display: flex; // flex's control pannel container and flex wrapper 2
     height: 100vh;
 }
+
 #control-panel-container {
   height: 100%;
+  border-bottom: 1px solid $wfgrey;
+  border-left: 1px solid $wfgrey;
+  border-right: 1px solid $wfgrey;
   background-color: $wflightgrey;
   flex-direction: column;
   flex: 1;
+  .CodeMirror { 
+    height:80vh !important
+    }
 }
 
 #flex-wrapper-2 {
@@ -48,12 +55,14 @@ $base-green: green;
     }
 }
 
+#endpoint-err{
+    position: relative;
+    z-index: 1;
+}
+
 #submitquery {
-    border: 1px solid $wfgrey;
-    height: 100%;
-    .CodeMirror { 
-        height:80vh !important
-    }
+  
+
     Button {
         margin: 5px;
     }

@@ -1,8 +1,7 @@
+import { Button, Alert } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd';
 import CodeMirror from 'codemirror';
 import '../styles/codemirror.css';
-import QueryResult from './QueryResult';
 
 // codemirror imports
 require('codemirror/addon/hint/show-hint');
@@ -25,6 +24,8 @@ require('codemirror-graphql/mode');
 
 function SubmitQuery(props) {
   const [editorMounted, setEditorMounted] = useState(false);
+  const isError = props.queryError;
+  let errMessage;
 
   const codeMirrorOptions = {
     lineNumbers: true,
@@ -54,10 +55,14 @@ function SubmitQuery(props) {
     }
   }, [props.schema]);
 
+  // query error handling logic
+  if (isError === null) errMessage = null;
+  else if (isError) errMessage = <Alert message="Error Submitting Query" type="error" showIcon />;
+
   return (
       <div id="submitquery">
         <Button onClick={props.onSubmitQuery}>Submit</Button>
-        <QueryResult result={props.result}/>
+        {errMessage}
       </div>
   );
 }

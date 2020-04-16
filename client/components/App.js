@@ -7,17 +7,17 @@ import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './utilities/drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
-import QueryResult from './QueryResult';
+
 import { highlightQuery } from './utilities/highlighterFunction.js';
-
-
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
+      endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
+      queryError: null, // if query fetched an error
       querydata: {}, // query results retrieved from server
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
@@ -42,7 +42,7 @@ class App extends React.Component {
   onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
-    this.setState({query: {}, querydata: {}});
+    this.setState({ query: {}, querydata: {} });
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -51,9 +51,12 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         // set state, delete previous svg and draw new svg passing in data
-        this.setState({ schema: data.schema, d3introspectdata: data.d3json });
+        this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
+      })
+      .catch((err) => {
+        if (err) this.setState({ endpointError: true });
       });
   }
 
@@ -107,6 +110,7 @@ class App extends React.Component {
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
+          endpointError={this.state.endpointError}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
@@ -114,6 +118,7 @@ class App extends React.Component {
             onSubmitQuery={this.onSubmitQuery}
             onChangeQuery={this.onChangeQuery}
             query={this.state.query}
+            queryError={this.state.queryError}
             schema={this.state.schema}
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
