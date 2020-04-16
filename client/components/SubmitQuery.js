@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Alert } from 'antd';
 import CodeMirror from 'codemirror';
 import '../styles/codemirror.css';
 
@@ -54,10 +54,17 @@ class SubmitQuery extends React.Component {
   }
 
   render() {
+    // query error handling logic
+    const isError = this.props.queryError;
+    let errMessage;
+    if (isError === null) errMessage = null;
+    else if (isError) errMessage = <Alert message="Error Submitting Query" type="error" showIcon />;
+
     return (
       <div id="submitquery">
       <textarea id="queryeditor" rows="2" cols="50"></textarea>
       <Button onClick={this.props.onSubmitQuery}>Submit</Button>
+      {errMessage}
     </div>
     );
   }

@@ -10,8 +10,6 @@ import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
 import QueryResult from './QueryResult';
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
-
-
 class App extends React.Component {
   constructor() {
     super();
@@ -117,6 +115,7 @@ class App extends React.Component {
             onSubmitQuery={this.onSubmitQuery}
             onChangeQuery={this.onChangeQuery}
             query={this.state.query}
+            queryError={this.state.queryError}
             schema={this.state.schema}
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
