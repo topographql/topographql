@@ -54,6 +54,9 @@ class App extends React.Component {
         this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
+      })
+      .catch((err) => {
+        if (err) this.setState({ endpointError: true });
       });
   }
 
