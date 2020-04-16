@@ -27,6 +27,8 @@ class App extends React.Component {
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
     this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
+
+    this.postQuery = this.postQuery.bind(this);
   }
 
   // onchange handler for endpoint input
@@ -60,6 +62,44 @@ class App extends React.Component {
       });
   }
 
+  async postQuery() {
+    try {
+      const response = await fetch(this.state.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({"query": this.state.query }),
+      });
+      const querydata = await response.json();
+
+      this.setState({ querydata });
+      const converted = convertTraceData(querydata);
+      d3.select('#svg-trace').remove();
+      drawTracerGraph(converted);
+    } catch (err) {
+      this.setState({ querydata: err });
+    }
+  }
+
+  async updateD3WithQuery() {
+    try {
+      const response = await fetch('/gql/getquery', {
+        method: "Post",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.state.querydata),
+      });
+      const d3querydata = await response.json();
+      this.setState({ d3querydata });
+      const schemaCopy = this.state.d3introspectdata;
+      const queryPath = d3querydata;
+      const highlightedSchema = highlightQuery(schemaCopy, queryPath);
+      this.setState({ d3introspectdata: highlightedSchema });
+      d3.select('#svg-network').remove();
+      drawNetworkGraph(this.state.d3introspectdata);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   onSubmitQuery(e) {
     e.preventDefault();
     const resetSchema = this.state.d3introspectdata;
@@ -67,41 +107,7 @@ class App extends React.Component {
       element.source.highlighted = false;
       element.target.highlighted = false;
     });
-
-    fetch(this.state.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({"query": this.state.query })
-    })
-      .then((res) => res.json())
-      // stores the original result from posting a query into state
-      .then((querydata) => this.setState({ querydata }))
-      .then((res) => {
-        const converted = convertTraceData(this.state.querydata);
-        d3.select('#svg-trace').remove();
-        drawTracerGraph(converted);
-      })
-      .then(data => {
-        fetch('/gql/getquery', {
-          method: "Post",
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.state.querydata),
-        })
-          .then(res => res.json())
-          // store the d3 file of the query results into state
-          .then(data => {
-            this.setState({ d3querydata: data });
-          })
-          // Updates d3 schema data with highlighted: true attributes based on query results
-          .then(() => {
-            const schemaCopy = this.state.d3introspectdata;
-            const queryPath = this.state.d3querydata;
-            const highlightedSchema = highlightQuery(schemaCopy, queryPath);
-            this.setState({ d3introspectdata: highlightedSchema });
-            d3.select('#svg-network').remove();
-            drawNetworkGraph(this.state.d3introspectdata);
-          });
-      });
+    this.postQuery().then(this.updateD3WithQuery());
   }
 
   render() {
