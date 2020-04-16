@@ -1,7 +1,7 @@
 const { buildClientSchema, getIntrospectionQuery } = require('graphql');
 const fetch = require('node-fetch');
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
 const schemaController = {};
 
