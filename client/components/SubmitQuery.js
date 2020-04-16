@@ -23,7 +23,9 @@ require('codemirror-graphql/jump');
 require('codemirror-graphql/mode');
 
 function SubmitQuery(props) {
-  const [editor, setEditor] = useState(null);
+  const [editorMounted, setEditorMounted] = useState(false);
+  //const [editor, setEditor] = useState(null);
+
   const codeMirrorOptions = {
     lineNumbers: true,
     tabSize: 2,
@@ -47,8 +49,11 @@ function SubmitQuery(props) {
   //const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
 
   useEffect(() => {
-    setEditor(CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions));
-    if (editor) editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
+    if (!editorMounted) {
+      const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+      editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
+      setEditorMounted(true);
+    }
   }, [props.schema]);
 
   return (
