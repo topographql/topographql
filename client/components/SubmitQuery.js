@@ -57,7 +57,7 @@ function SubmitQuery(props) {
 
   // query error handling logic
   if (isError === null) errMessage = null;
-  else if (isError) errMessage = <Alert message="Error Submitting Query" type="error" showIcon />;
+  else if (isError) errMessage = <Alert message={`Error Submitting Query:  `} type="error" showIcon />;
 
   return (
       <div id="submitquery">

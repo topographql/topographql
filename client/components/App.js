@@ -71,12 +71,12 @@ class App extends React.Component {
       });
       const querydata = await response.json();
 
-      this.setState({ querydata });
+      this.setState({ querydata, queryError: null });
       const converted = convertTraceData(querydata);
       d3.select('#svg-trace').remove();
       drawTracerGraph(converted);
     } catch (err) {
-      this.setState({ querydata: err });
+      this.setState({ querydata: err, queryError: true });
     }
   }
 
@@ -126,7 +126,7 @@ class App extends React.Component {
             query={this.state.query}
             queryError={this.state.queryError}
             schema={this.state.schema}
-            result={JSON.stringify(this.state.querydata.data, null, 2)}
+            result={this.state.querydata}
           />
           <div id="flex-wrapper-2">
             <VisualizerContainer

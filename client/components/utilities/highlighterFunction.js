@@ -12,7 +12,7 @@ export const highlightQuery = (schemaCopy, queryPath) => {
       const pathTarget = schemaCopy.links[i].target.name
       const parentNodes = Object.keys(queryPath);
       // highlights all parent nodes if they are the source/target node
-      console.log('parent', parentNodes);
+      // console.log('parent', parentNodes);
       if (parentNodes.includes(pathSource)) {
         schemaCopy.links[i].source.highlighted = true;
       }
