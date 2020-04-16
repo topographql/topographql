@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import CodeMirror from 'codemirror';
 import '../styles/codemirror.css';
+import QueryResult from './QueryResult';
 
+// codemirror imports
 require('codemirror/addon/hint/show-hint');
 require('codemirror/addon/comment/comment');
 require('codemirror/addon/edit/matchbrackets');
@@ -21,46 +23,43 @@ require('codemirror-graphql/info');
 require('codemirror-graphql/jump');
 require('codemirror-graphql/mode');
 
-class SubmitQuery extends React.Component {
-  constructor(props) {
-    super(props);
-    this.currentQuery = props.query;
-  }
+function SubmitQuery(props) {
+  const [editorMounted, setEditorMounted] = useState(false);
 
-  componentDidMount() {
-    const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), {
-      //value: this.props.query,
-      lineNumbers: true,
-      tabSize: 2,
-      mode: 'graphql',
-      autoCloseBrackets: true,
-      matchBrackets: true,
-      showCursorWhenSelecting: true,
-      foldGutter: {
-        minFoldSize: 4,
-      },
-      lint: {
-        schema: this.props.schema,
-      },
-      hintOptions: {
-        schema: this.props.schema,
-        closeOnUnfocus: false,
-        completeSingle: false,
-      },
-    });
-    if (editor) {
-      editor.on('change', (editor) => this.props.onChangeQuery(editor.getValue()));
+  const codeMirrorOptions = {
+    lineNumbers: true,
+    tabSize: 2,
+    mode: 'graphql',
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    showCursorWhenSelecting: true,
+    foldGutter: {
+      minFoldSize: 4,
+    },
+    lint: {
+      schema: props.schema,
+    },
+    hintOptions: {
+      schema: props.schema,
+      closeOnUnfocus: false,
+      completeSingle: false,
+    },
+  };
+
+  useEffect(() => {
+    if (!editorMounted) {
+      const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+      editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
+      setEditorMounted(true);
     }
-  }
+  }, [props.schema]);
 
-  render() {
-    return (
+  return (
       <div id="submitquery">
-      <textarea id="queryeditor" rows="2" cols="50"></textarea>
-      <Button onClick={this.props.onSubmitQuery}>Submit</Button>
-    </div>
-    );
-  }
+        <Button onClick={props.onSubmitQuery}>Submit</Button>
+        <QueryResult result={props.result}/>
+      </div>
+  );
 }
 
 export default SubmitQuery;

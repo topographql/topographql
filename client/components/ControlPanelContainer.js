@@ -1,17 +1,20 @@
 import React from 'react';
+import { Input } from 'antd';
 import SubmitQuery from './SubmitQuery';
-import QueryResult from './QueryResult';
+
+const { TextArea } = Input;
 
 function ControlPanelContainer(props) {
   return (
       <div id="control-panel-container">
-         <SubmitQuery
+        <TextArea id='queryeditor' rows={4} placeholder='GraphQL query'/>
+        <SubmitQuery
           onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
           query={props.query}
           schema={props.schema}
-         />
-         <QueryResult result={props.result}/>
+          result={props.result}
+        />
       </div>
   );
 }
