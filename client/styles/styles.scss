@@ -48,6 +48,11 @@ $base-green: green;
     }
 }
 
+#endpoint-err{
+    position: relative;
+    z-index: 1;
+}
+
 #submitquery {
     border: 1px solid $wfgrey;
     height: 100%;

@@ -17,7 +17,9 @@ class App extends React.Component {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
+      endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
+      queryError: null, // if query fetched an error
       querydata: {}, // query results retrieved from server
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
@@ -107,6 +109,7 @@ class App extends React.Component {
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
+          endpointError={this.state.endpointError}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
