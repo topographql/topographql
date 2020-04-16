@@ -7,7 +7,7 @@ import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './utilities/drawNetworkGraph';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
-import QueryResult from './QueryResult';
+
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
 class App extends React.Component {
@@ -15,7 +15,7 @@ class App extends React.Component {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
-      endpointError: false, // if endpoint fetched an error
+      endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
       queryError: null, // if query fetched an error
       querydata: {}, // query results retrieved from server

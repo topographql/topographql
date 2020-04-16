@@ -14,9 +14,13 @@ $base-green: green;
 }
 #control-panel-container {
   height: 100%;
+  border: 1px solid $wfgrey;
   background-color: $wflightgrey;
   flex-direction: column;
   flex: 1;
+  .CodeMirror { 
+    height:80vh !important
+    }
 }
 
 #flex-wrapper-2 {
@@ -54,11 +58,8 @@ $base-green: green;
 }
 
 #submitquery {
-    border: 1px solid $wfgrey;
-    height: 100%;
-    .CodeMirror { 
-        height:80vh !important
-    }
+  
+    //height: 100%;
     Button {
         margin: 5px;
     }
