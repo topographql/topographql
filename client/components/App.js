@@ -66,6 +66,7 @@ class App extends React.Component {
     resetSchema.links.forEach((element) => {
       element.source.highlighted = false;
       element.target.highlighted = false;
+      element.target.parent = null; 
     });
 
     fetch(this.state.endpoint, {
@@ -99,6 +100,7 @@ class App extends React.Component {
             const highlightedSchema = highlightQuery(schemaCopy, queryPath);
             this.setState({ d3introspectdata: highlightedSchema });
             d3.select('#svg-network').remove();
+            console.log(this.state.d3introspectdata)
             drawNetworkGraph(this.state.d3introspectdata);
           });
       });
