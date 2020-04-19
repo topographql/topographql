@@ -100,7 +100,6 @@ class App extends React.Component {
             const highlightedSchema = highlightQuery(schemaCopy, queryPath);
             this.setState({ d3introspectdata: highlightedSchema });
             d3.select('#svg-network').remove();
-            console.log(this.state.d3introspectdata)
             drawNetworkGraph(this.state.d3introspectdata);
           });
       });

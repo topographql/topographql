@@ -17,8 +17,6 @@ const drawNetworkGraph = (data) => {
     }
     link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.target.highlighted, t: link.target.type, parent: [link.target.parent] });
   });
-  console.log(links)
-  console.log(nodes)
   const w = 960;
   const h = 500;
 
@@ -68,7 +66,6 @@ const drawNetworkGraph = (data) => {
     .append('svg:path')
     .attr('class', (d) => {
       if (d.target.name.split('&')[1] === 'multiple' && d.target.parent) {
-        console.log(d)
         if (d.target.parent.includes(d.source.name) || d.target.parent === d.source.name) return 'link h-true';
         return 'link h-false';
       }

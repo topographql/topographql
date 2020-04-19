@@ -55,6 +55,5 @@ export const highlightQuery = (schemaCopy, queryPath) => {
       }
     }
   }
-  console.log(schemaCopy);
   return schemaCopy;
 }
