@@ -39,7 +39,7 @@ export const highlightQuery = (schemaCopy, queryPath) => {
         const queryTarget = queryPath[pathSource][currentLink.target.name];
         if (typeof queryTarget === 'object'
           && currentLink.target.name.split('&')[1] === 'multiple') {
-          currentLink.target.parent = queryTarget.parentPath + '&';
+            currentLink.target.parent = queryTarget.parentPath + '&';
         }
         currentLink.source.highlighted = true;
         currentLink.target.highlighted = true;
