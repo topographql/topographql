@@ -42,7 +42,8 @@ class App extends React.Component {
   onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
-    this.setState({ query: {}, querydata: {} });
+    this.setState({ querydata: {} });
+    d3.select('#svg-trace').remove();
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
