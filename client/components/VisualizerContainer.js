@@ -6,7 +6,7 @@ function VisualizerContainer(props) {
   return (
       <div id="visualizer-container">
           <div id="myD3"></div>
-          { props.showResults === true ? <QueryResult result={props.result}/> : null }
+          { props.showResults === true ? <QueryResult id="query-result" result={props.result}/> : null }
       </div>
   );
 }

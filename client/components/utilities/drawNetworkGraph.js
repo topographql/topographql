@@ -55,7 +55,7 @@ const drawNetworkGraph = (data) => {
     .attr('width', w)
     .attr('height', h)
     // .attr('preserveAspectRatio', 'xMinYmin meet')
-    // .attr('viewBox', '0 0 1000 1000')
+    // .attr('viewBox', '0 0 600 600')
     .classed('svg-content', true)
     .call(
       d3.behavior.zoom().on('zoom', () => {
