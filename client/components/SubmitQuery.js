@@ -27,7 +27,6 @@ function SubmitQuery(props) {
   const isError = props.queryError;
   let errMessage;
 
-  // '' || JSON.parse(localStorage.getItem('query'))
   const codeMirrorOptions = {
     lineNumbers: true,
     tabSize: 2,
