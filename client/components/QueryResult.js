@@ -26,7 +26,7 @@ function QueryResult(props) {
 
   return (
       <CM
-        value={props.result || ''}
+        value={JSON.stringify(props.result.data, null, 2) || ''}
         options={options}
       />
   );
