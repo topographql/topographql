@@ -7,15 +7,33 @@ const drawNetworkGraph = (data) => {
   const { links } = copyData; // add object passed from state here
 
   links.forEach((link) => {
-    link.source = nodes[link.source.name] || (nodes[link.source.name] = { name: link.source.name, h: link.source.highlighted, t: link.source.type, parent: link.source.parent });
+    link.source =
+      nodes[link.source.name] ||
+      (nodes[link.source.name] = {
+        name: link.source.name,
+        h: link.source.highlighted,
+        t: link.source.type,
+        parent: link.source.parent,
+      });
     if (nodes[link.target.name]) {
       if (nodes[link.target.name].parent) {
-        if (Array.isArray(nodes[link.target.name].parent) && link.target.parent) {
+        if (
+          Array.isArray(nodes[link.target.name].parent) &&
+          link.target.parent
+        ) {
           nodes[link.target.name].parent.push(link.target.parent);
-        } else if (link.target.parent) nodes[link.target.name].parent = [link.target.parent];
+        } else if (link.target.parent)
+          nodes[link.target.name].parent = [link.target.parent];
       }
     }
-    link.target = nodes[link.target.name] || (nodes[link.target.name] = { name: link.target.name, h: link.target.highlighted, t: link.target.type, parent: [link.target.parent] });
+    link.target =
+      nodes[link.target.name] ||
+      (nodes[link.target.name] = {
+        name: link.target.name,
+        h: link.target.highlighted,
+        t: link.target.type,
+        parent: [link.target.parent],
+      });
   });
   const w = 960;
   const h = 500;
@@ -34,11 +52,20 @@ const drawNetworkGraph = (data) => {
     .select('#myD3')
     .append('svg:svg')
     .attr('id', 'svg-network')
-    .attr('width', w)
-    .attr('height', h);
-    // .attr('preserveAspectRatio', 'xMinYmin meet')
-    // .attr('viewBox', '0 0 1000 1000')
-    // .classed('svg-content', true);
+    // .attr('width', w)
+    // .attr('height', h);
+    .attr('preserveAspectRatio', 'xMinYmin meet')
+    .attr('viewBox', '0 0 1000 1000')
+    .classed('svg-content', true)
+    .call(
+      d3.behavior.zoom().on('zoom', () => {
+        svg.attr(
+          'transform',
+          `translate(${d3.event.translate})` + ` scale(${d3.event.scale})`,
+        );
+      }),
+    )
+    .append('g');
 
   // Per-type markers, as they don't inherit styles.
   svg
@@ -57,7 +84,6 @@ const drawNetworkGraph = (data) => {
     .append('svg:path')
     .attr('d', 'M0,-5L10,0L0,5');
 
-
   const path = svg
     .append('svg:g')
     .selectAll('path')
@@ -66,14 +92,18 @@ const drawNetworkGraph = (data) => {
     .append('svg:path')
     .attr('class', (d) => {
       if (d.target.name.split('&')[1] === 'multiple' && d.target.parent) {
-        if (d.target.parent.includes(d.source.name) || d.target.parent === d.source.name) return 'link h-true';
+        if (
+          d.target.parent.includes(d.source.name) ||
+          d.target.parent === d.source.name
+        )
+          return 'link h-true';
         return 'link h-false';
       }
       if (d.source.h && d.target.h) return 'link h-true';
       if (d.target.h && d.source.name.split('&')[1] === 'multiple') {
         d.source.h = true;
         return 'link h-true';
-      } 
+      }
       return 'link h-false';
     })
     .attr('marker-end', () => 'url(#child)');
