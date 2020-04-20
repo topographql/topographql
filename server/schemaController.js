@@ -15,7 +15,7 @@ schemaController.introspect = (req, res, next) => {
     })
     .catch(() => next({
       log: 'There was a problem running the introspection query',
-      status: 500,
+      status: 400,
       message: { err: 'There was a problem running the introspection query' },
     }));
 };
