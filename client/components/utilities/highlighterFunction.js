@@ -23,20 +23,26 @@ export const highlightQuery = (schemaCopy, queryPath) => {
   if (schemaCopy.links.length) {
     for (let i = 0; i < schemaCopy.links.length; i++) {
       // check for matches with the keys in the query path
-      const pathSource = schemaCopy.links[i].source.name;
-      const pathTarget = schemaCopy.links[i].target.name
+      const currentLink = schemaCopy.links[i];
+      const pathSource = currentLink.source.name;
+      const pathTarget = currentLink.target.name
       const parentNodes = Object.keys(queryPath);
       // highlights all parent nodes if they are the source/target node
       if (parentNodes.includes(pathSource)) {
-        schemaCopy.links[i].source.highlighted = true;
+        currentLink.source.highlighted = true;
       }
       if (parentNodes.includes(pathTarget)) {
-        schemaCopy.links[i].target.highlighted = true;
+        currentLink.target.highlighted = true;
       }
       // checks whether the schema target exists as a key in d3querydata 
-      if (queryPath[pathSource] && queryPath[pathSource][schemaCopy.links[i].target.name]) {
-        schemaCopy.links[i].source.highlighted = true;
-        schemaCopy.links[i].target.highlighted = true;
+      if (queryPath[pathSource] && queryPath[pathSource][currentLink.target.name]) {
+        const queryTarget = queryPath[pathSource][currentLink.target.name];
+        if (typeof queryTarget === 'object'
+          && currentLink.target.name.split('&')[1] === 'multiple') {
+            currentLink.target.parent = queryTarget.parentPath + '&';
+        }
+        currentLink.source.highlighted = true;
+        currentLink.target.highlighted = true;
       }
       // Highlights the links between fields that point to other Type nodes
       const queryPathVals = Object.values(queryPath);
@@ -44,8 +50,8 @@ export const highlightQuery = (schemaCopy, queryPath) => {
       // and values of each path's execution time 
       const queryPathValsObj = Object.assign(...queryPathVals);
       if (queryPathValsObj[pathSource]) {
-        schemaCopy.links[i].source.highlighted = true;
-        schemaCopy.links[i].target.highlighted = true;
+        currentLink.source.highlighted = true;
+        currentLink.target.highlighted = true;
       }
     }
   }

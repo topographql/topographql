@@ -74,6 +74,7 @@ class App extends React.Component {
     resetSchema.links.forEach((element) => {
       element.source.highlighted = false;
       element.target.highlighted = false;
+      element.target.parent = null; 
     });
 
     fetch(this.state.endpoint, {
