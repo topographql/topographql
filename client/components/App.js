@@ -18,7 +18,7 @@ class App extends React.Component {
       endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
       querydata: {}, // query results retrieved from server
-      queryError: false,
+      queryError: null,
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
@@ -72,7 +72,7 @@ class App extends React.Component {
       });
       const querydata = await response.json();
 
-      this.setState({ querydata, queryError: false });
+      this.setState({ querydata, queryError: null });
       const converted = convertTraceData(querydata);
       d3.select('#svg-trace').remove();
       drawTracerGraph(converted);
@@ -111,7 +111,9 @@ class App extends React.Component {
       element.target.highlighted = false;
       element.target.parent = null; 
     });
-    this.postQuery().then(() => this.updateD3WithQuery());
+    this.postQuery().then(() => {
+      if (!this.state.queryError) this.updateD3WithQuery();
+    });
   }
 
   render() {
