@@ -62,6 +62,7 @@ class App extends React.Component {
       });
   }
 
+  // sends query to client's GraphQL endpoint and saves the query result in state
   async postQuery() {
     try {
       const response = await fetch(this.state.endpoint, {
@@ -80,6 +81,7 @@ class App extends React.Component {
     }
   }
 
+  // takes GraphQL query result from state and fetches /getquery endpoint to update D3 visualization
   async updateD3WithQuery() {
     try {
       const response = await fetch('/gql/getquery', {

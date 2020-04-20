@@ -24,8 +24,7 @@ require('codemirror-graphql/mode');
 
 function SubmitQuery(props) {
   const [editorMounted, setEditorMounted] = useState(false);
-  const isError = props.queryError;
-  let errMessage;
+  const [errMessage, setErrorMessage] = useState(null);
 
   const codeMirrorOptions = {
     lineNumbers: true,
@@ -56,8 +55,17 @@ function SubmitQuery(props) {
   }, [props.schema]);
 
   // query error handling logic
-  if (isError === null) errMessage = null;
-  else if (isError) errMessage = <Alert message={`Error Submitting Query:  `} type="error" showIcon />;
+  useEffect(() => {
+    if (props.queryError) {
+      setErrorMessage(<Alert message={`Error Submitting Query: `} type="error" showIcon />);
+    }
+  }, [props.result]);
+  // if (isError === null) errMessage = null;
+  // else if (isError) {
+  //  console.log(props.result.errors[0].message)
+  //   errMessage = <Alert message={`Error Submitting Query: `} type="error" showIcon />;
+  // }
+  
 
   return (
       <div id="submitquery">

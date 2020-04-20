@@ -28,10 +28,6 @@ export const highlightQuery = (schemaCopy, queryPath) => {
       const pathTarget = currentLink.target.name
       const parentNodes = Object.keys(queryPath);
       // highlights all parent nodes if they are the source/target node
-<<<<<<< HEAD
-      // console.log('parent', parentNodes);
-=======
->>>>>>> dev
       if (parentNodes.includes(pathSource)) {
         currentLink.source.highlighted = true;
       }
