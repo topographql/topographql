@@ -56,19 +56,15 @@ function SubmitQuery(props) {
 
   // query error handling logic
   useEffect(() => {
-    if (props.result.errors) {
-      console.log(props.result.errors[0]);
+    // if GraphQL server sent back a 400 response, the result object would have only an errors property
+    if (props.result.errors && !props.result.data) {
       setErrorMessage(<Alert 
-        message={`Error Submitting Query: ${JSON.stringify(props.result.errors[0].message, 2)}`}
-        type="error" showIcon />);
-    }
+          message={`Error Submitting Query: ${JSON.stringify(props.result.errors[0].message, 2)}`}
+          type="error"
+          showIcon
+          />);
+    } else if (props.result.data) setErrorMessage(null);
   }, [props.result]);
-  // if (isError === null) errMessage = null;
-  // else if (isError) {
-  //  console.log(props.result.errors[0].message)
-  //   errMessage = <Alert message={`Error Submitting Query: `} type="error" showIcon />;
-  // }
-  
 
   return (
       <div id="submitquery">
