@@ -17,7 +17,6 @@ class App extends React.Component {
       endpoint: '', // user's GraphQL endpoint
       endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
-      queryError: null, // if query fetched an error
       querydata: {}, // query results retrieved from server
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
@@ -127,7 +126,6 @@ class App extends React.Component {
             onSubmitQuery={this.onSubmitQuery}
             onChangeQuery={this.onChangeQuery}
             query={this.state.query}
-            queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
           />

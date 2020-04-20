@@ -56,8 +56,11 @@ function SubmitQuery(props) {
 
   // query error handling logic
   useEffect(() => {
-    if (props.queryError) {
-      setErrorMessage(<Alert message={`Error Submitting Query: `} type="error" showIcon />);
+    if (props.result.errors) {
+      console.log(props.result.errors[0]);
+      setErrorMessage(<Alert 
+        message={`Error Submitting Query: ${JSON.stringify(props.result.errors[0].message, 2)}`}
+        type="error" showIcon />);
     }
   }, [props.result]);
   // if (isError === null) errMessage = null;

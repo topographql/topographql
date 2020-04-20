@@ -14,7 +14,6 @@ function ControlPanelContainer(props) {
           onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
           query={props.query}
-          queryError={props.queryError}
           schema={props.schema}
           result={props.result}
         />

@@ -24,14 +24,6 @@ function QueryResult(props) {
     gutters: ['CodeMirror-foldgutter'],
   };
 
-  // if(props.result.errors) {
-  //   const message = props.result.errors[0].message;
-  //   console.log(message)
-  //   return (
-  //     <div>Message</div>
-  //   )
-  // } 
-
   return (
       <CM
         value={JSON.stringify(props.result.data, null, 2) || ''}
