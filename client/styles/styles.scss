@@ -44,7 +44,8 @@ $base-green: green;
 
 #flex-wrapper-2 {
     display: flex; // flex's visualizer containers and trace display
-    flex: 3.5;
+    flex: 3;
+    flex-basis: 0;
     flex-direction: column;
     #settings-bar {
         padding: 10px;
