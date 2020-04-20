@@ -27,6 +27,7 @@ function SubmitQuery(props) {
   const isError = props.queryError;
   let errMessage;
 
+  // '' || JSON.parse(localStorage.getItem('query'))
   const codeMirrorOptions = {
     lineNumbers: true,
     tabSize: 2,
@@ -50,6 +51,7 @@ function SubmitQuery(props) {
   useEffect(() => {
     if (!editorMounted) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+      if (localStorage.getItem('query')) editor.setValue(JSON.parse(localStorage.getItem('query')));
       editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
       setEditorMounted(true);
     }

@@ -37,9 +37,12 @@ class App extends React.Component {
           const converted = convertTraceData(this.state.querydata);
           d3.select('#svg-trace').remove();
           drawTracerGraph(converted);
-          if (localStorage.getItem('query') !== '' && document.getElementById('queryeditor')) {
-            document.getElementById('queryeditor').value = JSON.parse(localStorage.getItem('query'));
-          }
+          console.log(document.getElementById('queryeditor'));
+          // if (localStorage.getItem('query') !== '' && document.getElementById('queryeditor')) {
+          //   console.log(document.getElementById('queryeditor'));
+          //   console.log(JSON.parse(localStorage.getItem('query')));
+          //   document.getElementById('queryeditor').innerHTML = JSON.parse(localStorage.getItem('query'));
+          // }
           if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
             document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
           }
