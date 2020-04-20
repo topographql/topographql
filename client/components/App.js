@@ -28,12 +28,8 @@ class App extends React.Component {
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
     this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
-<<<<<<< HEAD
-
     this.postQuery = this.postQuery.bind(this);
-=======
     this.handleShowResults = this.handleShowResults.bind(this);
->>>>>>> dev
   }
 
   // onchange handler for endpoint input
@@ -152,7 +148,7 @@ class App extends React.Component {
               showResults={this.state.showResults} />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
-              result={JSON.stringify(this.state.querydata.data, null, 2)}
+              result={this.state.querydata}
               showResults={this.state.showResults}
             />
             <TraceDisplay />
