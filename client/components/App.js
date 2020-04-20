@@ -42,9 +42,9 @@ class App extends React.Component {
 
   handleShowResults() {
     console.log('hi')
-    if(!this.state.showResults) this.setState({ showResults: "true" });
-    else this.setState({ showResults: "false" });
-    
+    if(!this.state.showResults) this.setState({ showResults: true });
+    else this.setState({ showResults: false });
+    console.log(this.state.showResults)
   }
 
   onSubmitEndpoint(e) {
@@ -131,10 +131,13 @@ class App extends React.Component {
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
           <div id="flex-wrapper-2">
+            {/* <SettingsBar /> */}
+          <button onClick={this.handleShowResults}>Show Results</button>
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
               result={JSON.stringify(this.state.querydata.data, null, 2)}
               handleShowResults={this.handleShowResults}
+              showResults={this.state.showResults}
             />
             <TraceDisplay />
           </div>

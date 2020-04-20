@@ -3,13 +3,11 @@ import React from 'react';
 import QueryResult from './QueryResult';
 
 function VisualizerContainer(props) {
-  console.log(props)
   return (
-    <div id="visualizer-container">
-      <button onClick={props.handleShowResults}>Results View</button>
-      <div id="myD3"></div>
-      { props.showResults ? <QueryResult result={props.result}/> : null }
-    </div>
+      <div id="visualizer-container">
+          <div id="myD3"></div>
+          { props.showResults === true ? <QueryResult result={props.result}/> : null }
+      </div>
   );
 }
 
