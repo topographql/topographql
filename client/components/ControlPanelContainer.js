@@ -1,7 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
 import SubmitQuery from './SubmitQuery';
-import QueryResult from './QueryResult';
 
 const { TextArea } = Input;
 
@@ -17,7 +16,6 @@ function ControlPanelContainer(props) {
           schema={props.schema}
           result={props.result}
         />
-        <QueryResult result={props.result}/>
       </div>
   );
 }
