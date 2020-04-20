@@ -23,16 +23,27 @@ $base-green: green;
   flex: 1;
   .CodeMirror { 
     height:80vh !important
-    }
+  }
 }
 
 #flex-wrapper-2 {
     display: flex; // flex's visualizer containers and trace display
     flex: 3.5;
     flex-direction: column;
+    #settings-bar {
+        padding: 10px;
+        align-self:flex-end;
+        Button {
+            margin: 0 3px 0 3px;
+        }
+    }
     #visualizer-container {
+        display: flex;
         flex: 2;
         height: 100vh;
+        .CodeMirror { 
+            height: 100% !important;
+        }
     }
     #tracedisplay {
         margin: 20px;

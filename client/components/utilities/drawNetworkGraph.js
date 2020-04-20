@@ -52,10 +52,10 @@ const drawNetworkGraph = (data) => {
     .select('#myD3')
     .append('svg:svg')
     .attr('id', 'svg-network')
-    // .attr('width', w)
-    // .attr('height', h);
-    .attr('preserveAspectRatio', 'xMinYmin meet')
-    .attr('viewBox', '0 0 1000 1000')
+    .attr('width', w)
+    .attr('height', h)
+    // .attr('preserveAspectRatio', 'xMinYmin meet')
+    // .attr('viewBox', '0 0 1000 1000')
     .classed('svg-content', true)
     .call(
       d3.behavior.zoom().on('zoom', () => {
