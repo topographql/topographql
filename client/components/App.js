@@ -1,5 +1,4 @@
 import React from 'react';
-import { getIntrospectionQuery } from 'graphql';
 import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
@@ -28,6 +27,56 @@ class App extends React.Component {
     this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
   }
+
+  // loads in with previous state when refreshing browser
+  componentDidMount() {
+    this.loadWithLocalStorage();
+    if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
+      drawNetworkGraph(this.state.d3introspectdata);
+      const converted = convertTraceData(this.state.querydata);
+      d3.select('#svg-trace').remove();
+      drawTracerGraph(converted);
+    }
+
+
+    // event listener for leaving / refreshing the page -  saves state to local storage when 
+    window.addEventListener(
+      'beforeunload',
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'beforeunload',
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    // saves to local storage if component unmounts
+    this.saveStateToLocalStorage();
+  }
+
+  saveStateToLocalStorage() {
+    /* eslint-disable */
+    for (let key in this.state) {
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  };
+
+  loadWithLocalStorage() {
+    for (let key in this.state) {
+      if (localStorage.hasOwnProperty(key)) {
+        const value = localStorage.getItem(key);
+        try {
+          this.setState({[key]: JSON.parse(value)});
+        } catch (err) {
+          // if can't parse an empty ''
+          this.setState( {[key]: value})
+        }
+      }
+    }
+  }
+
 
   // onchange handler for endpoint input
   onChange(e) {
