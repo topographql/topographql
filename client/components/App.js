@@ -6,6 +6,7 @@ import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './utilities/drawNetworkGraph';
+import SettingsBar from './SettingsBar';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
@@ -132,12 +133,10 @@ class App extends React.Component {
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
           <div id="flex-wrapper-2">
-            {/* <SettingsBar /> */}
-          <button onClick={this.handleShowResults}>Show Results</button>
+            <SettingsBar handleShowResults={this.handleShowResults} />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
               result={JSON.stringify(this.state.querydata.data, null, 2)}
-              handleShowResults={this.handleShowResults}
               showResults={this.state.showResults}
             />
             <TraceDisplay />

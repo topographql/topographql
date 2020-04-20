@@ -30,8 +30,12 @@ $base-green: green;
     display: flex; // flex's visualizer containers and trace display
     flex: 3.5;
     flex-direction: column;
-    button {
+    #settings-bar {
+        padding: 10px;
         align-self:flex-end;
+        Button {
+            margin: 0 3px 0 3px;
+        }
     }
     #visualizer-container {
         display: flex;
