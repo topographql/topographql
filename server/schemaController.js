@@ -1,5 +1,7 @@
 const { buildClientSchema, getIntrospectionQuery } = require('graphql');
 const fetch = require('node-fetch');
+// const fs = require('fs');
+// const path = require('path');
 
 const schemaController = {};
 
@@ -29,7 +31,7 @@ schemaController.convertSchema = (req, res, next) => {
     const cleanedSchema = cleanSchema(sourceSchema);
     const d3Json = schemaToD3(cleanedSchema);
     // Writes and saves the JSON file into root folder
-    // fs.writeFileSync(path.resolve(__dirname, 'd3schema.json'), JSON.stringify(d3Json, null, 2));
+    // fs.writeFileSync(path.resolve(__dirname, 'SWschema.json'), JSON.stringify(sourceSchema, null, 2));
     // Stores the file path for future middleware to access to implement in d3
     // res.locals.path = path.resolve(__dirname, 'd3schema.json');
     res.locals.schema = buildClientSchema(sourceSchema);
@@ -131,9 +133,25 @@ const cleanSchema = (sourceSchema) => {
 const schemaToD3 = (cleanedSchema) => {
   const d3Json = {};
   const linksArray = [];
+  const duplicateChecker = {};
+  const duplicateFields = [];
   // name each node with an & followed by the Type that the field belongs to, to solve for cases
   // where multiple fields have the same name across different Types
 /* eslint-disable */
+
+// Loop through the cleanedSchema once to check for duplicate fields
+  for (let key in cleanedSchema) {
+    for (let i = 0; i < cleanedSchema[key].length; i++) {
+      const field = Object.keys(cleanedSchema[key][i]);
+      if (typeof cleanedSchema[key][i] === 'object') {
+        const fieldObject = JSON.stringify(cleanedSchema[key][i]);
+        // if current field element already exists in duplicateTracker
+        if (duplicateChecker[fieldObject]) {
+          duplicateFields.push(field[0]);
+        } else duplicateChecker[fieldObject] = true;
+      }
+    }
+  }
   for (let key in cleanedSchema) {
     for (let i = 0; i < cleanedSchema[key].length; i++) {
       const fieldName = Object.keys(cleanedSchema[key][i]);
@@ -141,22 +159,32 @@ const schemaToD3 = (cleanedSchema) => {
         // create links from each Type to their fields
         let sourceName = key + '&';
         let targetName = cleanedSchema[key][i]+ '&' + key;
+        if (duplicateFields.includes(cleanedSchema[key][i])) {
+          targetName = cleanedSchema[key][i]+ '&multiple';
+        }
         linksArray.push(createNode(sourceName, 'Type', targetName, 'field'))
       } 
       // if an object
       else {
-        // Create link from field to current Type
+        // Create link from current Type to field
         let sourceName = key + '&';
         let targetName = fieldName[0] + '&' + key;
+        if (duplicateFields.includes(fieldName[0])) {
+          targetName = fieldName[0]+ '&multiple';
+        }
         linksArray.push(createNode(sourceName, 'Type', targetName, 'field'));
         // Create link from fields to other Types
         sourceName = fieldName[0] + '&' + key;
+        if (duplicateFields.includes(fieldName[0])) {
+          sourceName = fieldName[0]+ '&multiple';
+        }
         targetName = cleanedSchema[key][i][fieldName[0]] + '&';
         linksArray.push(createNode(sourceName, 'field', targetName, 'Type'));
       }
     }
   }
   d3Json.links = linksArray;
+  d3Json.duplicates = duplicateFields;
   return d3Json;
 };
 
