@@ -6,10 +6,9 @@ import QueryResult from './QueryResult';
 const { TextArea } = Input;
 
 function ControlPanelContainer(props) {
-
   return (
       <div id="control-panel-container">
-        <TextArea id='queryeditor' rows={4} placeholder='GraphQL query'/>
+        <TextArea id='queryeditor' rows={4} placeholder= 'GraphQL query'/>
         <SubmitQuery
           onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}

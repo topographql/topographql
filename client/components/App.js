@@ -30,14 +30,21 @@ class App extends React.Component {
 
   // loads in with previous state when refreshing browser
   componentDidMount() {
-    this.loadWithLocalStorage();
-    if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
-      drawNetworkGraph(this.state.d3introspectdata);
-      const converted = convertTraceData(this.state.querydata);
-      d3.select('#svg-trace').remove();
-      drawTracerGraph(converted);
-    }
-
+    this.loadWithLocalStorage()
+      .then(() => {
+        if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
+          drawNetworkGraph(this.state.d3introspectdata);
+          const converted = convertTraceData(this.state.querydata);
+          d3.select('#svg-trace').remove();
+          drawTracerGraph(converted);
+          if (localStorage.getItem('query') !== '' && document.getElementById('queryeditor')) {
+            document.getElementById('queryeditor').value = JSON.parse(localStorage.getItem('query'));
+          }
+          if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
+            document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+          }
+        }
+      });
 
     // event listener for leaving / refreshing the page -  saves state to local storage when 
     window.addEventListener(
@@ -63,7 +70,7 @@ class App extends React.Component {
     }
   };
 
-  loadWithLocalStorage() {
+  async loadWithLocalStorage() {
     for (let key in this.state) {
       if (localStorage.hasOwnProperty(key)) {
         const value = localStorage.getItem(key);
@@ -162,6 +169,7 @@ class App extends React.Component {
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           endpointError={this.state.endpointError}
+          endpoint = {this.state.endpoint}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
