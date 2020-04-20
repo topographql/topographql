@@ -84,6 +84,7 @@ class App extends React.Component {
   // takes GraphQL query result from state and fetches /getquery endpoint to update D3 visualization
   async updateD3WithQuery() {
     try {
+      console.log(this.state.querydata)
       const response = await fetch('/gql/getquery', {
         method: "Post",
         headers: { 'Content-Type': 'application/json' },
@@ -110,7 +111,7 @@ class App extends React.Component {
       element.target.highlighted = false;
       element.target.parent = null; 
     });
-    this.postQuery().then(this.updateD3WithQuery());
+    this.postQuery().then(() => this.updateD3WithQuery());
   }
 
   render() {
