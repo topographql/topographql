@@ -133,7 +133,9 @@ class App extends React.Component {
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
           <div id="flex-wrapper-2">
-            <SettingsBar handleShowResults={this.handleShowResults} />
+            <SettingsBar 
+              handleShowResults={this.handleShowResults}
+              showResults={this.state.showResults} />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
               result={JSON.stringify(this.state.querydata.data, null, 2)}
