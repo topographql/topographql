@@ -16,11 +16,19 @@ function Header(props) {
     message = (
     <div>
       {visible ? (
-        <Alert message="Server successfully connected" type="success" closable afterClose={handleClose} />
+        <Alert message="Server successfully connected" type="success" closable showIcon afterClose={handleClose} />
       ) : null}
     </div>
     );
-  } else message = <Alert id='endpoint-success' message="Server cannot be reached" type="error" showIcon />;
+  } else {
+    message = (
+    <div>
+      {visible ? (
+        <Alert message="Server cannot be reached" type="error" closable showIcon afterClose={handleClose} />
+      ) : null}
+    </div>
+    );
+  }
 
   return (
       <div id="header">

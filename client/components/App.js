@@ -6,8 +6,8 @@ import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from './utilities/drawNetworkGraph';
+import SettingsBar from './SettingsBar';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
-
 import { highlightQuery } from './utilities/highlighterFunction.js';
 
 class App extends React.Component {
@@ -22,11 +22,13 @@ class App extends React.Component {
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
+      showResults: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
     this.onChangeQuery = this.onChangeQuery.bind(this);
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
+    this.handleShowResults = this.handleShowResults.bind(this);
   }
 
   // onchange handler for endpoint input
@@ -37,6 +39,13 @@ class App extends React.Component {
   // onChange handler for CodeMirror
   onChangeQuery(text) {
     this.setState({ query: text });
+  }
+
+  handleShowResults() {
+    console.log('hi')
+    if(!this.state.showResults) this.setState({ showResults: true });
+    else this.setState({ showResults: false });
+    console.log(this.state.showResults)
   }
 
   onSubmitEndpoint(e) {
@@ -124,8 +133,13 @@ class App extends React.Component {
             result={JSON.stringify(this.state.querydata.data, null, 2)}
           />
           <div id="flex-wrapper-2">
+            <SettingsBar 
+              handleShowResults={this.handleShowResults}
+              showResults={this.state.showResults} />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
+              result={JSON.stringify(this.state.querydata.data, null, 2)}
+              showResults={this.state.showResults}
             />
             <TraceDisplay />
           </div>
