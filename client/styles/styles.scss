@@ -22,13 +22,30 @@ $base-green: green;
   flex-direction: column;
   flex: 1;
   .CodeMirror { 
-    height:80vh !important
+    height: 71vh !important
   }
+}
+
+#myD3 {
+    flex: 2;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    overflow: hidden;
+    #svg-network {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 80vh;
+        width: 100%;
+    }
 }
 
 #flex-wrapper-2 {
     display: flex; // flex's visualizer containers and trace display
-    flex: 3.5;
+    flex: 3;
+    flex-basis: 0;
     flex-direction: column;
     #settings-bar {
         padding: 10px;
@@ -43,6 +60,9 @@ $base-green: green;
         height: 100vh;
         .CodeMirror { 
             height: 100% !important;
+        }
+        .react-codemirror2 {
+            flex: 1;
         }
     }
     #tracedisplay {

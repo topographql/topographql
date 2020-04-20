@@ -30,7 +30,7 @@ export const drawTracerGraph = (rData) => {
   // set up svg using margin conventions - we'll need plenty of room on the left for labels
   const margin = {
     top: 15,
-    right: 25,
+    right: 100,
     bottom: 15,
     left: 60,
   };
