@@ -15,19 +15,21 @@ $base-green: green;
 }
 
 #logo-bar {
-    // background-color: #c43ee1;
     display: flex;
     justify-content: flex-start;
-    padding-left: 50px;
+    padding-left: 80px;
     img {
-        //flex: 1;
         margin: 10px;
-        //width: 150px;
-        height: 30px;
+        height: 35px;
     }
-    .anticon {
-       // flex: 1;
-        margin: auto;
+    #icons {
+        display: flex;
+        padding-right: 80px;
+        margin-left: auto;
+        a, button {
+            padding: 0 10px 0 10px;
+            margin: auto;
+        }
     }
 }
 
