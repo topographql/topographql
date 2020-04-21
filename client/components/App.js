@@ -29,6 +29,7 @@ class App extends React.Component {
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
     this.postQuery = this.postQuery.bind(this);
     this.handleShowResults = this.handleShowResults.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -96,10 +97,30 @@ class App extends React.Component {
   }
 
   handleShowResults() {
-    console.log('hi')
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
     console.log(this.state.showResults)
+  }
+
+  handleReset() {
+    /* eslint-disable */
+    console.log('reset');
+    const defaultState = {
+      endpoint: '', 
+      endpointError: null, 
+      query: '', 
+      querydata: {}, 
+      queryError: null,
+      schema: {}, 
+      d3introspectdata: {}, 
+      d3querydata: {}, 
+      showResults: false,
+    };
+    this.setState(defaultState);
+    d3.select('#svg-network').remove();
+    d3.select('#svg-trace').remove();
+    document.getElementById('endpoint').value = '';
+    console.log(document.getElementById('queryeditor').value);
   }
 
   onSubmitEndpoint(e) {
@@ -196,15 +217,18 @@ class App extends React.Component {
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
+            reset = {this.state.resetStatus}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
-              showResults={this.state.showResults} />
+              showResults={this.state.showResults} 
+              handleReset = {this.handleReset}
+            />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
-              result={this.state.querydata}
-              showResults={this.state.showResults}
+              result={ this.state.querydata}
+              showResults={ this.state.showResults }
             />
             <TraceDisplay />
           </div>
