@@ -1,5 +1,4 @@
 import React from 'react';
-import { getIntrospectionQuery } from 'graphql';
 import * as d3 from 'd3';
 import TraceDisplay from './TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
@@ -30,7 +29,62 @@ class App extends React.Component {
     this.onSubmitQuery = this.onSubmitQuery.bind(this);
     this.postQuery = this.postQuery.bind(this);
     this.handleShowResults = this.handleShowResults.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
+
+  // loads in with previous state when refreshing browser
+  componentDidMount() {
+    this.loadWithLocalStorage()
+      .then(() => {
+        if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
+          drawNetworkGraph(this.state.d3introspectdata);
+          const converted = convertTraceData(this.state.querydata);
+          d3.select('#svg-trace').remove();
+          drawTracerGraph(converted);
+          if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
+            document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+          }
+        }
+      });
+
+    // event listener for leaving / refreshing the page -  saves state to local storage when 
+    window.addEventListener(
+      'beforeunload',
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'beforeunload',
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    // saves to local storage if component unmounts
+    this.saveStateToLocalStorage();
+  }
+
+  saveStateToLocalStorage() {
+    /* eslint-disable */
+    for (let key in this.state) {
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  };
+
+  async loadWithLocalStorage() {
+    for (let key in this.state) {
+      if (localStorage.hasOwnProperty(key)) {
+        const value = localStorage.getItem(key);
+        try {
+          this.setState({[key]: JSON.parse(value)});
+        } catch (err) {
+          // if can't parse an empty ''
+          this.setState( {[key]: value})
+        }
+      }
+    }
+  }
+
 
   // onchange handler for endpoint input
   onChange(e) {
@@ -43,16 +97,37 @@ class App extends React.Component {
   }
 
   handleShowResults() {
-    console.log('hi')
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
     console.log(this.state.showResults)
   }
 
+  handleReset() {
+    /* eslint-disable */
+    console.log('reset');
+    const defaultState = {
+      endpoint: '', 
+      endpointError: null, 
+      query: '', 
+      querydata: {}, 
+      queryError: null,
+      schema: {}, 
+      d3introspectdata: {}, 
+      d3querydata: {}, 
+      showResults: false,
+    };
+    this.setState(defaultState);
+    d3.select('#svg-network').remove();
+    d3.select('#svg-trace').remove();
+    document.getElementById('endpoint').value = '';
+    console.log(document.getElementById('queryeditor').value);
+  }
+
   onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
-    this.setState({ query: {}, querydata: {} });
+    this.setState({ querydata: {} });
+    d3.select('#svg-trace').remove();
     fetch('/gql/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -131,6 +206,7 @@ class App extends React.Component {
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
           endpointError={this.state.endpointError}
+          endpoint = {this.state.endpoint}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
@@ -141,15 +217,18 @@ class App extends React.Component {
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
+            reset = {this.state.resetStatus}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
-              showResults={this.state.showResults} />
+              showResults={this.state.showResults} 
+              handleReset = {this.handleReset}
+            />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
-              result={this.state.querydata}
-              showResults={this.state.showResults}
+              result={ this.state.querydata}
+              showResults={ this.state.showResults }
             />
             <TraceDisplay />
           </div>
