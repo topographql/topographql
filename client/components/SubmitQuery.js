@@ -23,8 +23,8 @@ require('codemirror-graphql/jump');
 require('codemirror-graphql/mode');
 
 function SubmitQuery(props) {
-  const [editorMounted, setEditorMounted] = useState(false);
   const [errMessage, setErrorMessage] = useState(null);
+  const [queryEditor, setQueryEditor] = useState(null);
 
   const codeMirrorOptions = {
     lineNumbers: true,
@@ -47,12 +47,13 @@ function SubmitQuery(props) {
   };
 
   useEffect(() => {
-    console.log('editor', editorMounted);
-    if (!editorMounted) {
+    console.log('editor', queryEditor);
+    // editorMounted state hook prevents extraneous CodeMirror from rendering
+    if (!queryEditor) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
       if (localStorage.getItem('query') !== '') editor.setValue(JSON.parse(localStorage.getItem('query')));
       editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
-      setEditorMounted(true);
+      setQueryEditor(editor);
     }
   }, [props.schema]);
 
@@ -71,6 +72,7 @@ function SubmitQuery(props) {
   return (
       <div id="submitquery">
         <Button onClick={props.onSubmitQuery}>Submit</Button>
+        <Button onClick={() => queryEditor.setValue('')}>Clear Query</Button>
         {errMessage}
       </div>
   );
