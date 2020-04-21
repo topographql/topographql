@@ -36,17 +36,18 @@ class App extends React.Component {
   componentDidMount() {
     this.loadWithLocalStorage()
       .then(() => {
-        if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
+        if (JSON.stringify(this.state.d3introspectdata) !== '{}') {
           drawNetworkGraph(this.state.d3introspectdata);
-          const converted = convertTraceData(this.state.querydata);
-          d3.select('#svg-trace').remove();
-          drawTracerGraph(converted);
-          if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
-            document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+          if (JSON.stringify(this.state.querydata) !== '{}') {
+            const converted = convertTraceData(this.state.querydata);
+            d3.select('#svg-trace').remove();
+            drawTracerGraph(converted);
           }
         }
+        if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
+          document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+        }
       });
-
     // event listener for leaving / refreshing the page -  saves state to local storage when 
     window.addEventListener(
       'beforeunload',
@@ -99,12 +100,10 @@ class App extends React.Component {
   handleShowResults() {
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
-    console.log(this.state.showResults)
   }
 
   handleReset() {
     /* eslint-disable */
-    console.log('reset');
     const defaultState = {
       endpoint: '', 
       endpointError: null, 
@@ -120,7 +119,6 @@ class App extends React.Component {
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
     document.getElementById('endpoint').value = '';
-    console.log(document.getElementById('queryeditor').value);
   }
 
   onSubmitEndpoint(e) {
@@ -167,7 +165,6 @@ class App extends React.Component {
   // takes GraphQL query result from state and fetches /getquery endpoint to update D3 visualization
   async updateD3WithQuery() {
     try {
-      console.log(this.state.querydata)
       const response = await fetch('/gql/getquery', {
         method: "Post",
         headers: { 'Content-Type': 'application/json' },
@@ -177,7 +174,8 @@ class App extends React.Component {
       this.setState({ d3querydata });
       const schemaCopy = this.state.d3introspectdata;
       const queryPath = d3querydata;
-      const highlightedSchema = highlightQuery(schemaCopy, queryPath);
+      const queryData = this.state.querydata;
+      const highlightedSchema = highlightQuery(schemaCopy, queryPath, queryData);
       this.setState({ d3introspectdata: highlightedSchema });
       d3.select('#svg-network').remove();
       drawNetworkGraph(this.state.d3introspectdata);
