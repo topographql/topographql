@@ -36,6 +36,7 @@ class App extends React.Component {
   componentDidMount() {
     this.loadWithLocalStorage()
       .then(() => {
+        document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
         if (JSON.stringify(this.state.d3introspectdata) !== '{}') {
           drawNetworkGraph(this.state.d3introspectdata);
           if (JSON.stringify(this.state.querydata) !== '{}') {
@@ -43,9 +44,6 @@ class App extends React.Component {
             d3.select('#svg-trace').remove();
             drawTracerGraph(converted);
           }
-        }
-        if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
-          document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
         }
       });
     // event listener for leaving / refreshing the page -  saves state to local storage when 
@@ -105,9 +103,9 @@ class App extends React.Component {
   handleReset() {
     /* eslint-disable */
     const defaultState = {
-      endpoint: '', 
+      // endpoint: '', 
       endpointError: null, 
-      query: '', 
+      // query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 
@@ -115,10 +113,9 @@ class App extends React.Component {
       d3querydata: {}, 
       showResults: false,
     };
-    this.setState(defaultState);
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
-    document.getElementById('endpoint').value = '';
+    this.setState(defaultState);
   }
 
   onSubmitEndpoint(e) {
