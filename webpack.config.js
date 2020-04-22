@@ -45,11 +45,17 @@ module.exports = {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },
-          { loader: 'less-loader', options: { javascriptEnabled: true } },
-          // options: {
-          //   modifyVars: themeVariables,
-          //   root: path.resolve(__dirname, './')
-          // }
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'primary-color': '#c43ee1',
+                'link-color': '#c43ee1',
+                'border-radius-base': '2px',
+              },
+              javascriptEnabled: true,
+            },
+          },
         ],
       },
       {
@@ -70,8 +76,8 @@ module.exports = {
     proxy: {
       // '/users': 'http://localhost:3000',
       '/gql/getschema': 'http://localhost:3000',
-      "/gql/getquery": {
-        target: "http://localhost:3000",
+      '/gql/getquery': {
+        target: 'http://localhost:3000',
       },
     },
   },
