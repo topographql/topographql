@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Alert } from 'antd';
 import LoadServer from './LoadServer';
+import LogoBar from './LogoBar';
 
 function Header(props) {
   // error handling logic
@@ -32,6 +33,7 @@ function Header(props) {
 
   return (
       <div id="header">
+          <LogoBar />
           <LoadServer
             onChange={props.onChange}
             onSubmitEndpoint={props.onSubmitEndpoint}
