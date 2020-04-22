@@ -46,19 +46,18 @@ class App extends React.Component {
           }
         }
       });
-    // event listener for leaving / refreshing the page -  saves state to local storage when 
+    // event listener for leaving / refreshing the page -  saves state to local storage when
     window.addEventListener(
       'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage.bind(this),
     );
   }
 
   componentWillUnmount() {
     window.removeEventListener(
       'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage.bind(this),
     );
-
     // saves to local storage if component unmounts
     this.saveStateToLocalStorage();
   }
@@ -135,8 +134,16 @@ class App extends React.Component {
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
       })
+      .then(() => {
+        // if there wasn't an error set endpointError to null after 3 seconds
+        if(this.state.endpointError === false) {
+          setTimeout(() => {
+            this.setState({ endpointError: null });
+          }, 3000);
+        }
+      })
       .catch((err) => {
-        if (err) this.setState({ endpointError: true });
+        if (err) this.setState({ endpointError: true })
       });
   }
 
