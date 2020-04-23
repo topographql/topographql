@@ -70,14 +70,20 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.webpack.js', '.web.js', '.mjs', '.json'],
   },
   devServer: {
+    // Required for Docker to work with dev server
+    host: '0.0.0.0',
+    port: 8080,
+    hot: true,
     historyApiFallback: true,
     publicPath: '/build/',
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
+    headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       // '/users': 'http://localhost:3000',
       '/gql/getschema': 'http://localhost:3000',
       '/gql/getquery': {
         target: 'http://localhost:3000',
+        // secure: false,
       },
     },
   },
