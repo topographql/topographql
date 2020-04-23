@@ -36,30 +36,28 @@ class App extends React.Component {
   componentDidMount() {
     this.loadWithLocalStorage()
       .then(() => {
-        if (JSON.stringify(this.state.d3introspectdata) !== '{}' && JSON.stringify(this.state.querydata) !== '{}') {
+        document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+        if (JSON.stringify(this.state.d3introspectdata) !== '{}') {
           drawNetworkGraph(this.state.d3introspectdata);
-          const converted = convertTraceData(this.state.querydata);
-          d3.select('#svg-trace').remove();
-          drawTracerGraph(converted);
-          if (localStorage.getItem('endpoint') !== '' && document.getElementById('endpoint')) {
-            document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
+          if (JSON.stringify(this.state.querydata) !== '{}') {
+            const converted = convertTraceData(this.state.querydata);
+            d3.select('#svg-trace').remove();
+            drawTracerGraph(converted);
           }
         }
       });
-
-    // event listener for leaving / refreshing the page -  saves state to local storage when 
+    // event listener for leaving / refreshing the page -  saves state to local storage when
     window.addEventListener(
       'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage.bind(this),
     );
   }
 
   componentWillUnmount() {
     window.removeEventListener(
       'beforeunload',
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage.bind(this),
     );
-
     // saves to local storage if component unmounts
     this.saveStateToLocalStorage();
   }
@@ -99,16 +97,14 @@ class App extends React.Component {
   handleShowResults() {
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
-    console.log(this.state.showResults)
   }
 
   handleReset() {
     /* eslint-disable */
-    console.log('reset');
     const defaultState = {
-      endpoint: '', 
+      // endpoint: '', 
       endpointError: null, 
-      query: '', 
+      // query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 
@@ -116,11 +112,9 @@ class App extends React.Component {
       d3querydata: {}, 
       showResults: false,
     };
-    this.setState(defaultState);
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
-    document.getElementById('endpoint').value = '';
-    console.log(document.getElementById('queryeditor').value);
+    this.setState(defaultState);
   }
 
   onSubmitEndpoint(e) {
@@ -140,8 +134,16 @@ class App extends React.Component {
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
       })
+      .then(() => {
+        // if there wasn't an error set endpointError to null after 3 seconds
+        if(this.state.endpointError === false) {
+          setTimeout(() => {
+            this.setState({ endpointError: null });
+          }, 3000);
+        }
+      })
       .catch((err) => {
-        if (err) this.setState({ endpointError: true });
+        if (err) this.setState({ endpointError: true })
       });
   }
 
@@ -167,7 +169,6 @@ class App extends React.Component {
   // takes GraphQL query result from state and fetches /getquery endpoint to update D3 visualization
   async updateD3WithQuery() {
     try {
-      console.log(this.state.querydata)
       const response = await fetch('/gql/getquery', {
         method: "Post",
         headers: { 'Content-Type': 'application/json' },
@@ -177,7 +178,8 @@ class App extends React.Component {
       this.setState({ d3querydata });
       const schemaCopy = this.state.d3introspectdata;
       const queryPath = d3querydata;
-      const highlightedSchema = highlightQuery(schemaCopy, queryPath);
+      const queryData = this.state.querydata;
+      const highlightedSchema = highlightQuery(schemaCopy, queryPath, queryData);
       this.setState({ d3introspectdata: highlightedSchema });
       d3.select('#svg-network').remove();
       drawNetworkGraph(this.state.d3introspectdata);
