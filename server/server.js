@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const schemaController = require('./schemaController.js');
 const queryController = require('./queryController.js');
+const userController = require('./userController.js')
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -16,6 +17,16 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+// User registration
+app.post('/user/register', userController.encrypt, userController.register, (req, res) => {
+  res.status(200).json('Registered user');
+});
+
+// User login
+app.post('/user/login', userController.login, (req, res) => {
+  res.status(200).json(res.locals);
+});
+
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.post('/gql/getschema', schemaController.introspect, schemaController.convertSchema, (req, res, next) => {
   res.status(200).json(res.locals);
@@ -26,7 +37,6 @@ app.post('/gql/getquery', queryController.getQuery, (req, res, next) => {
   res.status(200).json(res.locals.d3querydata);
 });
 
-// Global error handler
 // Global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
