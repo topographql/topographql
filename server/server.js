@@ -24,7 +24,7 @@ app.post('/user/register', userController.encrypt, userController.register, (req
 
 // User login
 app.post('/user/login', userController.login, (req, res) => {
-  res.status(200).json(res.locals);
+  res.status(200).json('Logged in');
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint

@@ -80,6 +80,7 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       // '/users': 'http://localhost:3000',
+      '/user': 'http://localhost:3000',
       '/gql/getschema': 'http://localhost:3000',
       '/gql/getquery': {
         target: 'http://localhost:3000',

@@ -5,10 +5,10 @@ const db = require('./models');
 
 userController.register = (req, res, next) => {
   const { username, email } = req.body;
-  const { encryptedPW } = res.locals;
+  const { hashedPW } = res.locals;
   const query = `INSERT INTO users (username, password, email)
                         VALUES ($1, $2, $3)`;
-  const params = [username, encryptedPW, email];
+  const params = [username, hashedPW, email];
   db.query(query, params)
     .then(() => next())
     .catch(() => next({
@@ -21,10 +21,10 @@ userController.register = (req, res, next) => {
 // Encrypts user password
 userController.encrypt = (req, res, next) => {
   const { password } = req.body;
-  // use bcrypt to hash, then store on res.locals 
+  // use bcrypt to hash, then store on res.locals
   bcrypt.hash(password, 10)
     .then((hash) => {
-      res.locals.encryptedPW = hash;
+      res.locals.hashedPW = hash;
       return next();
     })
     .catch(() => next({
@@ -45,24 +45,26 @@ userController.login = (req, res, next) => {
     .then((data) => {
       // If user exists, authenticate the user
       if (data.rows !== []) {
+        console.log(data.rows[0].password);
         bcrypt.compare(password, data.rows[0].password)
           .then((correct) => {
-          // If password correct, move to next middleware
-            if (correct) return next();
-            // else, handle error
-            return next({
-              log: 'Username or password incorrect',
-              status: 400,
-              message: { err: 'Username or password incorrect' },
-            });
-          });
+            // If password incorrect, handle error
+            if (!correct) {
+              return next({
+                log: 'Username or password incorrect',
+                status: 400,
+                message: { err: 'Username or password incorrect' },
+              });
+            } 
+            return next();
+          })
+          .catch(() => next({
+            log: 'Username or password incorrect',
+            status: 400,
+            message: { err: 'Username or password incorrect' },
+          }));
       }
-      // else, handle error
-      return next({
-        log: 'Username or password incorrect',
-        status: 400,
-        message: { err: 'Username or password incorrect' },
-      });
+
     })
   // Internal server error
     .catch(() => next({
