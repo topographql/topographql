@@ -28,19 +28,13 @@ describe('React unit tests', () => {
   });
 
   describe('Header Conditional Alerts', () => {
+    const wrapper1 = shallow(<Header props={{ endpointError: false }} />);
+    const wrapper2 = shallow(<Header props={{ endpointError: true }} />);
     it('Renders Success Alert if endpointError is false', () => {
-        const props = {
-            endpointError: false,
-        };
-        wrapper = shallow(<Header {...props}/>
-        expect(wrapper.contains(<Alert message="Server successfully connected" type="success" showIcon />)).toBeTruthy();
+      expect(wrapper1.contains(<Alert message="Server successfully connected" type="success" showIcon />)).toBeTruthy();
     });
     it('Renders Error Alert if endpointError is true', () => {
-        const props = {
-            endpointError: true,
-        };
-        wrapper = shallow(<Header {...props}/>
-        expect(wrapper.contains(<Alert message="Server cannot be reached" type="error" showIcon />)).toBeTruthy();
+      expect(wrapper2.contains(<Alert message="Server cannot be reached" type="error" showIcon />)).toBeTruthy();
     });
-  })
+  });
 });
