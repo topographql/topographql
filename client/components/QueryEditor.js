@@ -72,6 +72,7 @@ function SubmitQuery(props) {
       <div id="submitquery">
         <Button onClick={props.onSubmitQuery}>Submit</Button>
         <Button onClick={() => queryEditor.setValue('')}>Clear Query</Button>
+        <Button onClick={props.handleSaveQuery}>Save Query</Button>
         {errMessage}
       </div>
   );
