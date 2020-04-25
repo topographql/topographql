@@ -52,11 +52,8 @@
     "apollo-boost": "^0.4.7",
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
-<<<<<<< HEAD
     "bcrypt": "^4.0.1",
-=======
     "babel-plugin-transform-class-properties": "^6.24.1",
->>>>>>> dev
     "body-parser": "^1.19.0",
     "codemirror": "^5.52.2",
     "codemirror-graphql": "^0.11.6",
