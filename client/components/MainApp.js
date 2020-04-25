@@ -24,6 +24,7 @@ class MainApp extends React.Component {
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
       showResults: false,
+      querySaves: [],
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -32,6 +33,7 @@ class MainApp extends React.Component {
     this.postQuery = this.postQuery.bind(this);
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.handleSaveQuery = this.handleSaveQuery.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -117,6 +119,10 @@ class MainApp extends React.Component {
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
     this.setState(defaultState);
+  }
+
+  handleSaveQuery() {
+    console.log('query save fired')
   }
 
   onSubmitEndpoint(e) {
@@ -232,11 +238,12 @@ class MainApp extends React.Component {
             onChange={this.onChange}
             onSubmitQuery={this.onSubmitQuery}
             onChangeQuery={this.onChangeQuery}
+            handleSaveQuery={this.handleSaveQuery}
             query={this.state.query}
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
-            reset = {this.state.resetStatus}
+            reset={this.state.resetStatus}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 

@@ -10,14 +10,14 @@ class History extends React.Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = (e) => {
     console.log(e);
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
+  handleCancel = (e) => {
     console.log(e);
     this.setState({
       visible: false,
@@ -25,9 +25,11 @@ class History extends React.Component {
   };
 
   render() {
+    const querySaves = ['Save1, time: 2343567', 'Save2, time: 2343567'];
+    const saveButtons = querySaves.map((el) => <Button type="default">{el}</Button>);
     return (
       <div>
-        <Button type="default" onClick={this.showModal}>
+        <Button type="default" size='small' onClick={this.showModal}>
           History
         </Button>
         <Modal
@@ -37,12 +39,7 @@ class History extends React.Component {
           onCancel={this.handleCancel}
         >
         <div id='history-wrap'>
-            <div id='left'>
-                left div
-            </div>
-            <div id="right">
-                right div
-            </div>
+            {saveButtons}
         </div>
         </Modal>
       </div>

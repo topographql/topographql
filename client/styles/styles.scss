@@ -76,6 +76,7 @@ $base-green: green;
     flex-basis: 0;
     flex-direction: column;
     #settings-bar {
+        display: flex;
         padding: 10px;
         align-self:flex-end;
         Button {
@@ -125,6 +126,14 @@ $base-green: green;
     }
 }
 
+#history-wrap {
+    Button {
+        width: 100%;
+    }
+    .ant-btn {
+        margin: 3px;
+    }
+}
 // ____________________ D3 Network Graph _____________________
 
 path.link {
