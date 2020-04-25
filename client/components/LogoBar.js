@@ -8,7 +8,11 @@ function LogoBar(props) {
     <div id="logo-bar">
         <img id='logo' src='../img/logopink2line.svg'></img>
         <div id='icons'>
-            <Link to="/login">Login</Link>
+            {
+              props.isAuthed 
+                ? <Link onClick={props.logout} to="/">Logout</Link> 
+                : <Link to="/login">Login</Link> 
+            }
             <Button type="link">About</Button>
             <Button type="link">Docs</Button>
             <a href='https://github.com/xerographica/gql-health-prototyper'><GithubOutlined /></a>

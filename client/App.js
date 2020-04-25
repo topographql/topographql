@@ -14,12 +14,15 @@ const App = () => {
     setIsAuthed(true);
   };
 
+  const logout = () => {
+    setIsAuthed(false);
+    setGuest(false);
+  };
+
   const continueGuest = () => {
     setGuest(true);
   };
 
-  console.log(isAuthed, guest)
-  console.log(isAuthed || guest)
   return (
 
     <div>
@@ -30,7 +33,7 @@ const App = () => {
           <Route path="/">
             {/* Render homepage if user has not logged in or continued as guest */}
             {(isAuthed || guest)
-              ? <MainApp isAuthed={isAuthed}/>
+              ? <MainApp isAuthed={isAuthed} logout={logout}/>
               : <Homepage continueGuest={continueGuest}/>}
           </Route>
         </Switch>
