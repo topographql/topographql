@@ -25,7 +25,6 @@ class History extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     const savesArray = this.props.querySaves;
     const saveButtons = savesArray.map((el) => {
       const text = `${el[0]} Time: ${el[1]}`;

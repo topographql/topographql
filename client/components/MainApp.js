@@ -123,10 +123,8 @@ class MainApp extends React.Component {
 
   handleSaveQuery() {
     console.log('query save fired')
-
-    console.log(this.state)
+    // take current query root and timestamp and push it into querySaves array
     this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
-    console.log(this.state.querySaves)
   }
 
   onSubmitEndpoint(e) {
