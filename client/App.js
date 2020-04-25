@@ -18,7 +18,7 @@ const App = () => {
 
   const logout = () => {
     setIsAuthed(false);
-    setUser(username);
+    setUser(user);
     setGuest(false);
   };
 
