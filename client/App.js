@@ -1,10 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import MainApp from './components/MainApp';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import MainApp from './containers/MainApp';
 import Register from './components/Register';
 import Login from './components/Login';
 import Homepage from './components/Homepage';
+import LogoBar from './components/LogoBar';
 
 const App = () => {
   const [isAuthed, setIsAuthed] = useState(false);

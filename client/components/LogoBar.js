@@ -11,8 +11,8 @@ function LogoBar(props) {
             {props.user ? <h4>Welcome, {props.user}</h4> : null }
             {
               props.isAuthed 
-                ? <Link onClick={props.logout} to="/">Logout</Link> 
-                : <Link to="/login">Login</Link> 
+                ? <Link onClick={props.logout} to="/">Logout</Link>
+                : <Link to="/login">Login</Link>
             }
             <Button type="link">About</Button>
             <Button type="link">Docs</Button>

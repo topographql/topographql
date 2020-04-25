@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
-import QueryEditor from './QueryEditor';
+import QueryEditor from '../components/QueryEditor';
 
 const { TextArea } = Input;
 

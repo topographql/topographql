@@ -1,15 +1,14 @@
 import React from 'react';
 import * as d3 from 'd3';
-import TraceDisplay from './TraceDisplay';
+import TraceDisplay from '../components/TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
-import drawNetworkGraph from './utilities/drawNetworkGraph';
-import SettingsBar from './SettingsBar';
-import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
-import { highlightQuery } from './utilities/highlighterFunction.js';
-import Login from './Login';
-import Register from './Register';
+import drawNetworkGraph from '../utilities/drawNetworkGraph';
+import SettingsBar from '../components/SettingsBar';
+import LogoBar from '../components/LogoBar';
+import { drawTracerGraph, convertTraceData } from '../utilities/drawTracerGraph';
+import { highlightQuery } from '../utilities/highlighterFunction.js';
 
 class MainApp extends React.Component {
   constructor() {
@@ -132,7 +131,7 @@ class MainApp extends React.Component {
     // clears previous query and query results from state
     this.setState({ querydata: {} });
     d3.select('#svg-trace').remove();
-    fetch('/gql/getschema', {
+    fetch('/api/getschema', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ endpoint: this.state.endpoint }),
@@ -181,7 +180,7 @@ class MainApp extends React.Component {
   // takes GraphQL query result from state and fetches /getquery endpoint to update D3 visualization
   async updateD3WithQuery() {
     try {
-      const response = await fetch('/gql/getquery', {
+      const response = await fetch('/api/getquery', {
         method: "Post",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state.querydata),
@@ -227,6 +226,7 @@ class MainApp extends React.Component {
   render() {
     return (
       <div>
+        <LogoBar isAuthed={this.props.isAuthed} user={this.props.user} logout={this.props.logout}/>
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
