@@ -229,8 +229,6 @@ class MainApp extends React.Component {
   render() {
     return (
       <div>
-        {/* <Login/>
-        <Register/> */}
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}

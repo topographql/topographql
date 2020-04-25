@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link, Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,7 +13,11 @@ const Login = () => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, password }),
     })
-      .then(res => res.json());
+      .then(res => {
+          console.log(res.status)
+        if (res.status === 200) props.history.push('/');
+        else console.log(res.json());
+      });
   };
 
   return (
@@ -52,7 +57,8 @@ const Login = () => {
         <Button onClick={login} type="primary" className="login-form-button">
           Log in
         </Button>
-        Or <a href="">Continue as a guest</a>
+        <Link to="/register">Register</Link>
+        <Link to="/">Or continue as a guest</Link>
       </Form.Item>
     </Form>
   </div>

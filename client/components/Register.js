@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const Register = () => {
+const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -13,7 +13,10 @@ const Register = () => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, password, email }),
     })
-      .then(res => res.json());
+      .then(res => {
+        if (res.status === 200) props.history.push('/login');
+        else console.log(res.json());
+      });
   };
 
   return (
