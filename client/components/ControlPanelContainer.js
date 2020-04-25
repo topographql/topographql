@@ -11,6 +11,7 @@ function ControlPanelContainer(props) {
         <QueryEditor
           onChangeQuery={props.onChangeQuery}
           onSubmitQuery={props.onSubmitQuery}
+          handleSaveQuery={props.handleSaveQuery}
           query={props.query}
           queryError={props.queryError}
           schema={props.schema}

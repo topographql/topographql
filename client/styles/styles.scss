@@ -1,6 +1,7 @@
 $wflightgrey: #dadada;
 $wfgrey: rgb(228, 228, 228);
 $base-green: green;
+$whitesmoke: #f1f3f5;
 
 * {
     box-sizing: border-box;
@@ -26,9 +27,10 @@ $base-green: green;
     display: flex;
     justify-content: flex-start;
     padding-left: 80px;
+    background-color: $whitesmoke;
     img {
-        margin: 12px;
-        height: 30px;
+        margin: 10px;
+        height: 35px;
     }
     #icons {
         display: flex;
@@ -46,7 +48,7 @@ $base-green: green;
   border-bottom: 1px solid $wfgrey;
   border-left: 1px solid $wfgrey;
   border-right: 1px solid $wfgrey;
-  background-color: $wflightgrey;
+  background-color: $whitesmoke;
   flex-direction: column;
   flex: 1;
   .CodeMirror { 
@@ -76,6 +78,7 @@ $base-green: green;
     flex-basis: 0;
     flex-direction: column;
     #settings-bar {
+        display: flex;
         padding: 10px;
         align-self:flex-end;
         Button {
@@ -125,6 +128,14 @@ $base-green: green;
     }
 }
 
+#history-wrap {
+    Button {
+        width: 100%;
+    }
+    .ant-btn {
+        margin: 3px;
+    }
+}
 // ____________________ D3 Network Graph _____________________
 
 path.link {
