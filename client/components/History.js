@@ -25,8 +25,12 @@ class History extends React.Component {
   };
 
   render() {
-    const querySaves = ['Save1, time: 2343567', 'Save2, time: 2343567'];
-    const saveButtons = querySaves.map((el) => <Button type="default">{el}</Button>);
+    console.log(this.props);
+    const savesArray = this.props.querySaves;
+    const saveButtons = savesArray.map((el) => {
+      const text = `${el[0]} Time: ${el[1]}`;
+      return <Button type="default">{text}</Button>;
+    });
     return (
       <div>
         <Button type="default" size='small' onClick={this.showModal}>

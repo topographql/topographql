@@ -123,6 +123,10 @@ class MainApp extends React.Component {
 
   handleSaveQuery() {
     console.log('query save fired')
+
+    console.log(this.state)
+    this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
+    console.log(this.state.querySaves)
   }
 
   onSubmitEndpoint(e) {
@@ -250,6 +254,7 @@ class MainApp extends React.Component {
               handleShowResults={this.handleShowResults}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
+              querySaves={this.state.querySaves}
             />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
