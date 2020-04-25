@@ -39,23 +39,26 @@ E.g. format for querying person/name and species/name in StarWars schema
 }
 */
 const queryToD3 = (sourceResults) => {
-  const tracerData = sourceResults.extensions.tracing.execution.resolvers;
-  // Object to store all the paths / how many calls on that path
-  const pathStorage = {};
-  // Store the root query path and initialize into pathStorage
-  for (let i = 0; i < tracerData.length; i++) {
-    const pathSource = tracerData[i].parentType + '&';
-    const pathTarget = tracerData[i].fieldName + '&' + tracerData[i].parentType;
-  // check if the duration was greater than 1 microsecond (likelier to be database call)  
-    if (!pathStorage[pathSource]) {
-      const traceDetails = {};
-      traceDetails[pathTarget] = tracerData[i].duration;
-      pathStorage[pathSource] = traceDetails;
-    } else if (!pathStorage[pathSource][pathTarget]) {
-      pathStorage[pathSource][pathTarget] = tracerData[i].duration;
+  if (sourceResults.extensions) {
+    const tracerData = sourceResults.extensions.tracing.execution.resolvers;
+    // Object to store all the paths / how many calls on that path
+    const pathStorage = {};
+    // Store the root query path and initialize into pathStorage
+    for (let i = 0; i < tracerData.length; i++) {
+      const pathSource = tracerData[i].parentType + '&';
+      const pathTarget = tracerData[i].fieldName + '&' + tracerData[i].parentType;
+      // check if the duration was greater than 1 microsecond (likelier to be database call)  
+      if (!pathStorage[pathSource]) {
+        const traceDetails = {};
+        traceDetails[pathTarget] = tracerData[i].duration;
+        pathStorage[pathSource] = traceDetails;
+      } else if (!pathStorage[pathSource][pathTarget]) {
+        pathStorage[pathSource][pathTarget] = tracerData[i].duration;
+      }
     }
+    return pathStorage;
   }
-  return pathStorage;
+  return null;
 };
 
 module.exports = queryController;
