@@ -39,7 +39,7 @@ class App extends React.Component {
         document.getElementById('endpoint').value = JSON.parse(localStorage.getItem('endpoint'));
         if (JSON.stringify(this.state.d3introspectdata) !== '{}') {
           drawNetworkGraph(this.state.d3introspectdata);
-          if (JSON.stringify(this.state.querydata) !== '{}') {
+          if (JSON.stringify(this.state.querydata) !== '{}' && this.state.querydata.extensions) {
             const converted = convertTraceData(this.state.querydata);
             d3.select('#svg-trace').remove();
             drawTracerGraph(converted);
@@ -136,6 +136,7 @@ class App extends React.Component {
       })
       .then(() => {
         // if there wasn't an error set endpointError to null after 3 seconds
+        console.log('error', this.state.endpointError);
         if(this.state.endpointError === false) {
           setTimeout(() => {
             this.setState({ endpointError: null });
@@ -185,7 +186,14 @@ class App extends React.Component {
         this.setState({ d3introspectdata: highlightedSchema });
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
-      } else this.setState({ endpointError: "tracingerror" })
+      } else {
+        this.setState({ endpointError: "tracingerror" })
+        if(this.state.endpointError === "tracingerror") {
+          setTimeout(() => {
+            this.setState({ endpointError: null });
+          }, 3000);
+        }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -202,6 +210,7 @@ class App extends React.Component {
     this.postQuery().then(() => {
       if (!this.state.queryError) this.updateD3WithQuery();
     });
+    console.log(this.state);
   }
 
   render() {
