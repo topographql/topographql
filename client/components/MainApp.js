@@ -8,8 +8,10 @@ import drawNetworkGraph from './utilities/drawNetworkGraph';
 import SettingsBar from './SettingsBar';
 import { drawTracerGraph, convertTraceData } from './utilities/drawTracerGraph';
 import { highlightQuery } from './utilities/highlighterFunction.js';
+import Login from './Login';
+import Register from './Register';
 
-class App extends React.Component {
+class MainApp extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -253,4 +255,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default MainApp;
