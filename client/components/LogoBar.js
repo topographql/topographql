@@ -5,7 +5,7 @@ import { Button } from 'antd';
 function LogoBar(props) {
   return (
     <div id="logo-bar">
-        <img id='logo' src='../img/logopink.svg'></img>
+        <img id='logo' src='../img/logopink2line.svg'></img>
         <div id='icons'>
             <Button type="link">About</Button>
             <Button type="link">Docs</Button>
