@@ -186,11 +186,12 @@ class App extends React.Component {
         this.setState({ d3introspectdata: highlightedSchema });
         d3.select('#svg-network').remove();
         drawNetworkGraph(this.state.d3introspectdata);
+        this.setState({ showResults: true});
       } else {
         this.setState({ endpointError: "tracingerror" })
         if(this.state.endpointError === "tracingerror") {
           setTimeout(() => {
-            this.setState({ endpointError: null });
+            this.setState({ endpointError: null, showResults: true });
           }, 3000);
         }
       }
