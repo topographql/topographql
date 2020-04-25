@@ -8,10 +8,12 @@ import Homepage from './components/Homepage';
 
 const App = () => {
   const [isAuthed, setIsAuthed] = useState(false);
+  const [user, setUser] = useState(null);
   const [guest, setGuest] = useState(false);
 
-  const auth = () => {
+  const auth = (username) => {
     setIsAuthed(true);
+    setUser(username);
   };
 
   const logout = () => {
@@ -33,7 +35,7 @@ const App = () => {
           <Route path="/">
             {/* Render homepage if user has not logged in or continued as guest */}
             {(isAuthed || guest)
-              ? <MainApp isAuthed={isAuthed} logout={logout}/>
+              ? <MainApp isAuthed={isAuthed} user={user} logout={logout}/>
               : <Homepage continueGuest={continueGuest}/>}
           </Route>
         </Switch>

@@ -18,7 +18,7 @@ function Header(props) {
 
   return (
       <div id="header">
-          <LogoBar isAuthed={props.isAuthed} logout={props.logout}/>
+          <LogoBar isAuthed={props.isAuthed} user={props.user} logout={props.logout}/>
           <LoadServer
             onChange={props.onChange}
             onSubmitEndpoint={props.onSubmitEndpoint}

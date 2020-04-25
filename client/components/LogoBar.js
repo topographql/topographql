@@ -8,6 +8,7 @@ function LogoBar(props) {
     <div id="logo-bar">
         <img id='logo' src='../img/logopink2line.svg'></img>
         <div id='icons'>
+            {props.user ? <h4>Welcome, {props.user}</h4> : null }
             {
               props.isAuthed 
                 ? <Link onClick={props.logout} to="/">Logout</Link> 
