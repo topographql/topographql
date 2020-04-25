@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
-const schemaController = require('./schemaController.js');
-const queryController = require('./queryController.js');
-const userController = require('./userController.js')
+const schemaController = require('./controllers/schemaController.js');
+const queryController = require('./controllers/queryController.js');
+const userController = require('./controllers/userController.js')
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -18,22 +18,22 @@ app.get('/', (req, res) => {
 });
 
 // User registration
-app.post('/user/register', userController.encrypt, userController.register, (req, res) => {
+app.post('/api/register', userController.encrypt, userController.register, (req, res) => {
   res.status(200).json('Registered user');
 });
 
 // User login
-app.post('/user/login', userController.login, (req, res) => {
+app.post('/api/login', userController.login, (req, res) => {
   res.status(200).json('Logged in');
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
-app.post('/gql/getschema', schemaController.introspect, schemaController.convertSchema, (req, res, next) => {
+app.post('/api/getschema', schemaController.introspect, schemaController.convertSchema, (req, res, next) => {
   res.status(200).json(res.locals);
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
-app.post('/gql/getquery', queryController.getQuery, (req, res, next) => {
+app.post('/api/getquery', queryController.getQuery, (req, res, next) => {
   res.status(200).json(res.locals.d3querydata);
 });
 

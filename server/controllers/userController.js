@@ -1,7 +1,7 @@
 const userController = {};
 const bcrypt = require('bcrypt');
 
-const db = require('./models');
+const db = require('../models/models');
 
 userController.register = (req, res, next) => {
   const { username, email } = req.body;
