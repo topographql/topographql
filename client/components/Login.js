@@ -17,7 +17,7 @@ const Login = (props) => {
       .then(res => {
         console.log(res.status)
         if (res.status === 200) {
-          props.auth(); // set app state to authed
+          props.auth(username); // set app state to authed
           history.push('/'); // redirect to main app
         }
         else console.log(res.json());

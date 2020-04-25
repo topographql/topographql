@@ -232,6 +232,9 @@ class MainApp extends React.Component {
           onSubmitEndpoint={this.onSubmitEndpoint}
           endpointError={this.state.endpointError}
           endpoint = {this.state.endpoint}
+          isAuthed = {this.props.isAuthed}
+          logout = {this.props.logout}
+          user = {this.props.user}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
