@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const history = useHistory();
   const login = () => {
     fetch('/user/login', {
       method: 'POST',
@@ -14,8 +15,11 @@ const Login = (props) => {
       body: JSON.stringify({ username, password }),
     })
       .then(res => {
-          console.log(res.status)
-        if (res.status === 200) props.history.push('/');
+        console.log(res.status)
+        if (res.status === 200) {
+          props.auth(); // set app state to authed
+          history.push('/'); // redirect to main app
+        }
         else console.log(res.json());
       });
   };

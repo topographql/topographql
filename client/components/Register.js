@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -7,6 +8,8 @@ const Register = (props) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
+  const history = useHistory();
+
   const register = () => {
     fetch('/user/register', {
       method: 'POST',
@@ -14,7 +17,7 @@ const Register = (props) => {
       body: JSON.stringify({ username, password, email }),
     })
       .then(res => {
-        if (res.status === 200) props.history.push('/login');
+        if (res.status === 200) history.push('/login'); // redirect to login if successful
         else console.log(res.json());
       });
   };
