@@ -156,11 +156,12 @@ class App extends React.Component {
         body: JSON.stringify({"query": this.state.query }),
       });
       const querydata = await response.json();
-
       this.setState({ querydata, queryError: null });
-      const converted = convertTraceData(querydata);
-      d3.select('#svg-trace').remove();
-      drawTracerGraph(converted);
+      if (this.state.querydata.extensions) {
+        const converted = convertTraceData(querydata);
+        d3.select('#svg-trace').remove();
+        drawTracerGraph(converted);
+      }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
     }
@@ -175,14 +176,16 @@ class App extends React.Component {
         body: JSON.stringify(this.state.querydata),
       });
       const d3querydata = await response.json();
-      this.setState({ d3querydata });
-      const schemaCopy = this.state.d3introspectdata;
-      const queryPath = d3querydata;
-      const queryData = this.state.querydata;
-      const highlightedSchema = highlightQuery(schemaCopy, queryPath, queryData);
-      this.setState({ d3introspectdata: highlightedSchema });
-      d3.select('#svg-network').remove();
-      drawNetworkGraph(this.state.d3introspectdata);
+      if (d3querydata) {
+        this.setState({ d3querydata });
+        const schemaCopy = this.state.d3introspectdata;
+        const queryPath = d3querydata;
+        const queryData = this.state.querydata;
+        const highlightedSchema = highlightQuery(schemaCopy, queryPath, queryData);
+        this.setState({ d3introspectdata: highlightedSchema });
+        d3.select('#svg-network').remove();
+        drawNetworkGraph(this.state.d3introspectdata);
+      } else this.setState({ endpointError: "tracingerror" })
     } catch (err) {
       console.log(err);
     }
