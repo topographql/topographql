@@ -5,9 +5,9 @@ import MainApp from './containers/MainApp';
 import Register from './components/Register';
 import Login from './components/Login';
 import Homepage from './components/Homepage';
-import LogoBar from './components/LogoBar';
+import NavBar from './components/NavBar';
 
-const App = () => {
+const App = (props) => {
   const [isAuthed, setIsAuthed] = useState(false);
   const [user, setUser] = useState(null);
   const [guest, setGuest] = useState(false);
@@ -31,6 +31,7 @@ const App = () => {
 
     <div>
       <Router>
+        <NavBar isAuthed={isAuthed} user={user} logout={logout}/>
         <Switch>
           <Route path="/register"> <Register/> </Route>
           <Route path="/login"> <Login auth={auth}/> </Route>

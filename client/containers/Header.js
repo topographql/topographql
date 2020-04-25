@@ -2,7 +2,6 @@
 import React from 'react';
 import { Alert } from 'antd';
 import LoadServer from '../components/LoadServer';
-import LogoBar from '../components/LogoBar';
 
 function Header(props) {
   // error handling logic

@@ -24,10 +24,6 @@ const Register = () => {
 
   return (
     <div>
-      <div id="logo-bar">
-        <img id='logo' src='../img/logopink2line.svg'></img>
-      </div>
-
       <div className="form">
         <Form name="normal_login" className="login-form">
           <Form.Item

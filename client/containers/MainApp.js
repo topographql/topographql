@@ -6,7 +6,6 @@ import VisualizerContainer from './VisualizerContainer';
 import Header from './Header';
 import drawNetworkGraph from '../utilities/drawNetworkGraph';
 import SettingsBar from '../components/SettingsBar';
-import LogoBar from '../components/LogoBar';
 import { drawTracerGraph, convertTraceData } from '../utilities/drawTracerGraph';
 import { highlightQuery } from '../utilities/highlighterFunction.js';
 
@@ -226,7 +225,6 @@ class MainApp extends React.Component {
   render() {
     return (
       <div>
-        <LogoBar isAuthed={this.props.isAuthed} user={this.props.user} logout={this.props.logout}/>
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
