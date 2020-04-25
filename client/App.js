@@ -18,7 +18,11 @@ const App = () => {
 
   const logout = () => {
     setIsAuthed(false);
+<<<<<<< HEAD
     setUser(null);
+=======
+    setUser(user);
+>>>>>>> 5041aadf3406c93e96fe106a3184f6526034d99a
     setGuest(false);
   };
 
