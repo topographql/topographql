@@ -18,6 +18,7 @@ const App = () => {
 
   const logout = () => {
     setIsAuthed(false);
+    setUser(null);
     setGuest(false);
   };
 
