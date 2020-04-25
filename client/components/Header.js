@@ -9,6 +9,7 @@ function Header(props) {
   const isError = props.endpointError;
   let message;
   if (isError === null) message = null;
+  else if (isError === 'tracingerror') message = <Alert message="Query successful but tracing data not found" type="warning" showIcon />;
   else if (!isError) {
     message = <Alert message="Server successfully connected" type="success" showIcon />;
   } else {

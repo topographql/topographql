@@ -47,7 +47,6 @@ function SubmitQuery(props) {
   };
 
   useEffect(() => {
-    console.log('editor', queryEditor);
     // editorMounted state hook prevents extraneous CodeMirror from rendering
     if (!queryEditor) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);

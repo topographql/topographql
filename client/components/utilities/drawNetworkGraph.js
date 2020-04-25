@@ -35,6 +35,7 @@ const drawNetworkGraph = (data) => {
         parent: [link.target.parent],
       });
   });
+
   const w = 960;
   const h = 500;
 
@@ -123,6 +124,9 @@ const drawNetworkGraph = (data) => {
       return 6;
     })
     .call(force.drag);
+
+  // stops zoom when clicking on a node to allow dragging
+  circle.on("mousedown", () => d3.event.stopPropagation());
 
   const text = svg
     .append('svg:g')
