@@ -2,6 +2,7 @@
 import React from 'react';
 import QueryResult from './QueryResult';
 
+
 function VisualizerContainer(props) {
   return (
       <div id="visualizer-container">
