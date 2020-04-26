@@ -8,9 +8,9 @@ const History = (props) => {
 
   useEffect(() => {
     const savesArray = props.querySaves;
-    const buttons = savesArray.map((el) => {
+    const buttons = savesArray.map((el, i) => {
       const text = `${el[0]} Time: ${el[1]}`;
-      return <Button type="default">{text}</Button>;
+      return <Button key={i} type="default">{text}</Button>;
     });
     setSaveButtons(buttons);
   }, [props.querySaves]);

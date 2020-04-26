@@ -8,23 +8,26 @@ import Homepage from './components/Homepage';
 import NavBar from './components/NavBar';
 
 const App = () => {
-  const [isAuthed, setIsAuthed] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(sessionStorage.isAuthed || false);
   const [user, setUser] = useState(null);
-  const [isGuest, setIsGuest] = useState(false);
+  const [isGuest, setIsGuest] = useState(sessionStorage.isGuest || false);
 
   const login = (username) => {
     setIsAuthed(true);
     setUser(username);
+    sessionStorage.setItem('isAuthed', true);
   };
 
   const logout = () => {
     setIsAuthed(false);
     setUser(null);
     setIsGuest(false);
+    sessionStorage.clear();
   };
 
   const continueGuest = () => {
     setIsGuest(true);
+    sessionStorage.setItem('isGuest', true);
   };
 
   return (
