@@ -7,12 +7,12 @@ import Login from './components/Login';
 import Homepage from './components/Homepage';
 import NavBar from './components/NavBar';
 
-const App = (props) => {
+const App = () => {
   const [isAuthed, setIsAuthed] = useState(false);
   const [user, setUser] = useState(null);
-  const [guest, setGuest] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
 
-  const auth = (username) => {
+  const login = (username) => {
     setIsAuthed(true);
     setUser(username);
   };
@@ -20,11 +20,11 @@ const App = (props) => {
   const logout = () => {
     setIsAuthed(false);
     setUser(null);
-    setGuest(false);
+    setIsGuest(false);
   };
 
   const continueGuest = () => {
-    setGuest(true);
+    setIsGuest(true);
   };
 
   return (
@@ -34,10 +34,10 @@ const App = (props) => {
         <NavBar isAuthed={isAuthed} user={user} logout={logout}/>
         <Switch>
           <Route path="/register"> <Register/> </Route>
-          <Route path="/login"> <Login auth={auth}/> </Route>
+          <Route path="/login"> <Login auth={login}/> </Route>
           <Route path="/">
             {/* Render homepage if user has not logged in or continued as guest */}
-            {(isAuthed || guest)
+            {(isAuthed || isGuest)
               ? <MainApp isAuthed={isAuthed} user={user} logout={logout}/>
               : <Homepage continueGuest={continueGuest}/>}
           </Route>
