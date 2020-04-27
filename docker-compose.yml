@@ -1,0 +1,9 @@
+version: '3'
+services:
+  bash:
+    image: topographql/tgql-app-dev
+    container_name: 'tgql-dev'
+    ports: [8080:8080]
+    volumes: ['.:/usr/src/app/','node_modules:/usr/src/app/node_modules']
+volumes:
+  node_modules:
