@@ -105,9 +105,9 @@ class MainApp extends React.Component {
   handleReset() {
     /* eslint-disable */
     const defaultState = {
-      // endpoint: '', 
+      endpoint: '', 
       endpointError: null, 
-      // query: '', 
+      query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 

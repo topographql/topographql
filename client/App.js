@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-thiss */
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainApp from './containers/MainApp';
@@ -36,6 +36,7 @@ const App = () => {
       <Router>
         <NavBar isAuthed={isAuthed} user={user} logout={logout}/>
         <Switch>
+          <Route path="/home"><Homepage continueGuest={continueGuest}/></Route>
           <Route path="/register"> <Register/> </Route>
           <Route path="/login"> <Login auth={login}/> </Route>
           <Route path="/">
