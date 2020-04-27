@@ -22,7 +22,7 @@ class MainApp extends React.Component {
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
       showResults: false,
-      querySaves: [],
+      querySaves: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -121,8 +121,26 @@ class MainApp extends React.Component {
 
   handleSaveQuery() {
     console.log('query save fired')
+    // if user exists and therefore we are logged in:
+    const queryHistory = this.state.querySaves;
+    console.log(queryHistory);
+    if (this.props.user) {
+      const queryName = this.state.query.split('\n')[1];
+      fetch('/api/savequery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ user: this.props.user, queryName, queryStr: this.state.query})
+      })
+        .then(res => res.json())
+        .then(data => {
+          queryHistory[queryName] = data;
+        })
+        .catch((err) => console.log(err));
+    }
     // take current query root and timestamp and push it into querySaves array
-    this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
+    // this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
+    this.setState({ querySaves: queryHistory});
+    console.log('state', this.state);
   }
 
   onSubmitEndpoint(e) {
