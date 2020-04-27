@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
-import QueryResult from './QueryResult';
+import QueryResult from '../components/QueryResult';
 
 
 function VisualizerContainer(props) {

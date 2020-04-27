@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const Register = (props) => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -11,9 +11,9 @@ const Register = (props) => {
   const history = useHistory();
 
   const register = () => {
-    fetch('/user/register', {
+    fetch('/api/register', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password, email }),
     })
       .then(res => {
@@ -23,58 +23,42 @@ const Register = (props) => {
   };
 
   return (
-    <div className="form">
-    <Form
-      name="normal_login"
-      className="login-form"
-    >
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            message: 'Please input your Email!',
-          },
-        ]}
-      >
-        <Input onChange={(e) => setEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-      </Form.Item>
+    <div>
+      <div className="form">
+        <Form name="normal_login" className="login-form">
+          <Form.Item
+            name="email"
+            rules={[{ message: 'Please input your Email!' }]}
+          >
+            <Input onChange={(e) => setEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+          </Form.Item>
 
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Username!',
-          },
-        ]}
-      >
-        <Input onChange={(e) => setUsername(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: 'Please input your Username!' }]}
+           >
+            <Input onChange={(e) => setUsername(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+          </Form.Item>
 
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Password!',
-          },
-        ]}
-      >
-        <Input
-          onChange={(e) => setPassword(e.target.value)} 
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: 'Please input your Password!' }]}
+           >
+            <Input
+              onChange={(e) => setPassword(e.target.value)} 
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+             />
+          </Form.Item>
 
-      <Form.Item>
-        <Button onClick={register} type="primary" className="login-form-button">
-          Register
-        </Button>
-      </Form.Item>
-
-    </Form>
+           <Form.Item>
+            <Button onClick={register} type="primary" className="login-form-button">
+              Register
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
   </div>
   );
 };

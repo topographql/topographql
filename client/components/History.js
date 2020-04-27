@@ -1,53 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 
-class History extends React.Component {
-  state = { visible: false };
+const History = (props) => {
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+  const [isVisible, setIsVisible] = useState(false);
+  const [saveButtons, setSaveButtons] = useState(null);
 
-  handleOk = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  };
-
-  handleCancel = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  };
-
-  render() {
-    const savesArray = this.props.querySaves;
-    const saveButtons = savesArray.map((el) => {
+  useEffect(() => {
+    const savesArray = props.querySaves;
+    const buttons = savesArray.map((el, i) => {
       const text = `${el[0]} Time: ${el[1]}`;
-      return <Button type="default">{text}</Button>;
+      return <Button key={i} type="default">{text}</Button>;
     });
-    return (
+    setSaveButtons(buttons);
+  }, [props.querySaves]);
+
+  return (
       <div>
-        <Button type="default" size='small' onClick={this.showModal}>
+        <Button type="default" size='small' onClick={() => setIsVisible(true)}>
           History
         </Button>
         <Modal
           title="History"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          visible={isVisible}
+          onOk={() => setIsVisible(false)}
+          onCancel={() => setIsVisible(false)}
         >
-        <div id='history-wrap'>
+          <div id='history-wrap'>
             {saveButtons}
-        </div>
+          </div>
         </Modal>
       </div>
-    );
-  }
-}
+  );
+  // }
+};
 
 export default History;

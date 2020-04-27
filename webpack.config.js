@@ -79,13 +79,7 @@ module.exports = {
     contentBase: path.join(__dirname, './client'), // path from which static file should be served. if not specified, static files will not be served.
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
-      // '/users': 'http://localhost:3000',
-      '/user': 'http://localhost:3000',
-      '/gql/getschema': 'http://localhost:3000',
-      '/gql/getquery': {
-        target: 'http://localhost:3000',
-        // secure: false,
-      },
+      '/api': 'http://localhost:3000',
     },
   },
 };

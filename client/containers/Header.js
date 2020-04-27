@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Alert } from 'antd';
-import LoadServer from './LoadServer';
-import LogoBar from './LogoBar';
+import LoadServer from '../components/LoadServer';
 
 function Header(props) {
   // error handling logic
@@ -18,7 +17,6 @@ function Header(props) {
 
   return (
       <div id="header">
-          <LogoBar isAuthed={props.isAuthed} user={props.user} logout={props.logout}/>
           <LoadServer
             onChange={props.onChange}
             onSubmitEndpoint={props.onSubmitEndpoint}

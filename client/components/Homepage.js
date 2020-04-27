@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ParserOptions } from '@babel/core';
 
 const Homepage = (props) => {
  return (

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { UnControlled as CM } from 'react-codemirror2';
 
 import '../styles/codemirror.css';
