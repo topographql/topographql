@@ -50,7 +50,9 @@ function SubmitQuery(props) {
     // editorMounted state hook prevents extraneous CodeMirror from rendering
     if (!queryEditor) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-      if (localStorage.getItem('query') !== '') editor.setValue(JSON.parse(localStorage.getItem('query')));
+      if (localStorage.getItem('query')) { 
+        if (localStorage.getItem('query') !== '') editor.setValue(JSON.parse(localStorage.getItem('query')));
+      }
       editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
       setQueryEditor(editor);
     }
