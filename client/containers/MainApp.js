@@ -8,6 +8,7 @@ import drawNetworkGraph from '../utilities/drawNetworkGraph';
 import SettingsBar from '../components/SettingsBar';
 import { drawTracerGraph, convertTraceData } from '../utilities/drawTracerGraph';
 import { highlightQuery } from '../utilities/highlighterFunction.js';
+import { getIntrospectionQuery } from 'graphql';
 
 class MainApp extends React.Component {
   constructor() {
@@ -125,33 +126,42 @@ class MainApp extends React.Component {
     this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
   }
 
-  onSubmitEndpoint(e) {
+ onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
     this.setState({ querydata: {} });
     d3.select('#svg-trace').remove();
-    fetch('/api/getschema', {
+
+    fetch(this.state.endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: this.state.endpoint }),
-    })
-      .then((res) => res.json())
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"query": getIntrospectionQuery()})
+    }).then((res) => res.json())
       .then((data) => {
-        // set state, delete previous svg and draw new svg passing in data
-        this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
-        d3.select('#svg-network').remove();
-        drawNetworkGraph(this.state.d3introspectdata);
-      })
-      .then(() => {
-        // if there wasn't an error set endpointError to null after 3 seconds
-        
-          setTimeout(() => this.setState({ endpointError: null }), 3000);
-        
-      })
-      .catch((err) => {
-        if (err) this.setState({ endpointError: true })
-       // setTimeout(() => this.setState({ endpointError: null }), 3000);
-      });
+        fetch('/api/convertschema', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceSchema: data.data }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // set state, delete previous svg and draw new svg passing in data
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
+            d3.select('#svg-network').remove();
+            drawNetworkGraph(this.state.d3introspectdata);
+          })
+          .then(() => {
+            // if there wasn't an error set endpointError to null after 3 seconds
+            console.log('error', this.state.endpointError);
+            if(this.state.endpointError === false) {
+              setTimeout(() => {
+                this.setState({ endpointError: null });
+              }, 3000);
+            }
+          })
+        }).catch((err) => this.setState({ endpointError: true }))  
   }
 
   // sends query to client's GraphQL endpoint and saves the query result in state

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 
 function LoadServer(props) {
-
   return (
       <div id="loadserver">
         <form>
