@@ -42,6 +42,26 @@ $whitesmoke: #f1f3f5;
     }
 }
 
+
+#login-wrapper {
+    display: flex;
+    padding-top: 120px;
+    .form {
+        margin: auto;
+        width: 350px;
+    }
+}
+
+
+#register-wrapper {
+    display: flex;
+    padding-top: 120px;
+    .form {
+        margin: auto;
+        width: 350px;
+    }
+}
+
 #control-panel-container {
   height: 100%;
   border-bottom: 1px solid $wfgrey;
