@@ -144,15 +144,13 @@ class MainApp extends React.Component {
       })
       .then(() => {
         // if there wasn't an error set endpointError to null after 3 seconds
-        console.log('error', this.state.endpointError);
-        if(this.state.endpointError === false) {
-          setTimeout(() => {
-            this.setState({ endpointError: null });
-          }, 3000);
+        if(!this.state.endpointError) {
+          setTimeout(() => this.setState({ endpointError: null }), 3000);
         }
       })
       .catch((err) => {
         if (err) this.setState({ endpointError: true })
+        setTimeout(() => this.setState({ endpointError: null }), 3000);
       });
   }
 
