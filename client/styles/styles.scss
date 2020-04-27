@@ -16,14 +16,13 @@ $whitesmoke: #f1f3f5;
 }
 
 #header {
-    height: 98px;
     overflow: visible;
     .ant-alert {
         z-index: 10;
     }
 }
 
-#logo-bar {
+#nav-bar {
     display: flex;
     justify-content: flex-start;
     padding-left: 80px;
