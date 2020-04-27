@@ -28,7 +28,6 @@ schemaController.introspect = (req, res, next) => {
 schemaController.convertSchema = (req, res, next) => {
   try {
     const { sourceSchema } = req.body;
-    console.log(sourceSchema)
     const cleanedSchema = cleanSchema(sourceSchema);
     const d3Json = schemaToD3(cleanedSchema);
     // Writes and saves the JSON file into root folder

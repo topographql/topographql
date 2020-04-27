@@ -8,7 +8,7 @@ import drawNetworkGraph from '../utilities/drawNetworkGraph';
 import SettingsBar from '../components/SettingsBar';
 import { drawTracerGraph, convertTraceData } from '../utilities/drawTracerGraph';
 import { highlightQuery } from '../utilities/highlighterFunction.js';
-import { introspect } from '../utilities/introspect';
+import { getIntrospectionQuery } from 'graphql';
 
 class MainApp extends React.Component {
   constructor() {
@@ -132,12 +132,18 @@ class MainApp extends React.Component {
     this.setState({ querydata: {} });
     d3.select('#svg-trace').remove();
 
-    introspect(this.state.endpoint)
-      .then((sourceSchema) => {
+    fetch(this.state.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"query": getIntrospectionQuery()})
+    }).then((res) => res.json())
+      .then((data) => {
         fetch('/api/convertschema', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sourceSchema }),
+          body: JSON.stringify({ sourceSchema: data.data }),
         })
           .then((res) => res.json())
           .then((data) => {
