@@ -104,9 +104,9 @@ class MainApp extends React.Component {
   handleReset() {
     /* eslint-disable */
     const defaultState = {
-      // endpoint: '', 
+      endpoint: '', 
       endpointError: null, 
-      // query: '', 
+      query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 
@@ -144,13 +144,13 @@ class MainApp extends React.Component {
       })
       .then(() => {
         // if there wasn't an error set endpointError to null after 3 seconds
-        if(!this.state.endpointError) {
+        
           setTimeout(() => this.setState({ endpointError: null }), 3000);
-        }
+        
       })
       .catch((err) => {
         if (err) this.setState({ endpointError: true })
-        setTimeout(() => this.setState({ endpointError: null }), 3000);
+       // setTimeout(() => this.setState({ endpointError: null }), 3000);
       });
   }
 
