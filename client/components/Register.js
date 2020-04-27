@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -23,8 +23,9 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div id="register-wrapper">
       <div className="form">
+        <h1>Create an account</h1>
         <Form name="normal_login" className="login-form">
           <Form.Item
             name="email"
@@ -53,10 +54,11 @@ const Register = () => {
           </Form.Item>
 
            <Form.Item>
-            <Button onClick={register} type="primary" className="login-form-button">
-              Register
+            <Button onClick={register} type="primary" className="login-form-button" block>
+              Submit
             </Button>
           </Form.Item>
+          <span>Already have an account? <Link to="/login">Sign in</Link></span>
         </Form>
       </div>
   </div>

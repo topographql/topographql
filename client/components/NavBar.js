@@ -8,7 +8,7 @@ const NavBar = (props) => {
   const location = useLocation();
 
   return (
-    <div id="logo-bar">
+    <div id="nav-bar">
         <img id='logo' src='../img/logopink2line.svg'></img>
         <div id='icons'>
             {props.user ? <h4>Welcome, {props.user}</h4> : null }
