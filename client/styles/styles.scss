@@ -63,6 +63,14 @@ $whitesmoke: #f1f3f5;
     }
 }
 
+#homepage {
+    display: flex;
+    padding-top: 60px;
+    div {
+        margin: auto;
+    }
+}
+
 #control-panel-container {
   height: 100%;
   border-bottom: 1px solid $wfgrey;
