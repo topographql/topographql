@@ -36,6 +36,7 @@ const App = () => {
       <Router>
         <NavBar isAuthed={isAuthed} user={user} logout={logout}/>
         <Switch>
+          <Route path="/home"><Homepage continueGuest={continueGuest}/></Route>
           <Route path="/register"> <Register/> </Route>
           <Route path="/login"> <Login auth={login}/> </Route>
           <Route path="/">
