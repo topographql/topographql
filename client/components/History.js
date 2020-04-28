@@ -13,7 +13,6 @@ const History = (props) => {
       return <Button key={el.id} type="default" onClick={() => props.handleSelectSave(el.query_str)}>{text}</Button>;
     });
     setSaveButtons(buttons);
-    console.log(props.querySaves)
   }, [props.querySaves]);
 
   return (

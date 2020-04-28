@@ -123,9 +123,8 @@ class MainApp extends React.Component {
   }
 
   handleSaveQuery() {
-    console.log('query save fired')
     const { querySaves } = this.state;
-    const tpmUser = 'Kevin'
+    const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
     if (this.props.isAuthed) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
@@ -135,10 +134,8 @@ class MainApp extends React.Component {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data.queryName)
           const addObj = querySaves.concat(data);
-          this.setState({ querySaves: addObj }) 
-          console.log('nstate', this.state.querySaves)   
+          this.setState({ querySaves: addObj })   
         })
         .catch((err) => console.log(err));
     }
