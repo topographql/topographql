@@ -58,7 +58,7 @@ const queryToD3 = (sourceResults) => {
     }
     return pathStorage;
   }
-  return null;
+  return 'tracingerror';
 };
 
 module.exports = queryController;

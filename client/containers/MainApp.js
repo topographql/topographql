@@ -211,7 +211,7 @@ class MainApp extends React.Component {
         body: JSON.stringify(this.state.querydata),
       });
       const d3querydata = await response.json();
-      if (d3querydata) {
+      if (d3querydata !== 'tracingerror') {
         this.setState({ d3querydata });
         const schemaCopy = this.state.d3introspectdata;
         const queryPath = d3querydata;
@@ -223,7 +223,9 @@ class MainApp extends React.Component {
         this.setState({ showResults: true});
       } else {
         this.setState({ endpointError: "tracingerror" })
-        if(this.state.endpointError === "tracingerror") {
+        if (this.state.endpointError === 'tracingerror') {
+
+
           setTimeout(() => {
             this.setState({ endpointError: null, showResults: true });
           }, 3000);
