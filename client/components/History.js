@@ -6,12 +6,10 @@ const History = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [saveButtons, setSaveButtons] = useState(null);
 
-  console.log('saves', props.querySaves);
-
   useEffect(() => {
-    const savesArray = props.querySaves
-    const buttons = Object.values(savesArray).map((el, i) => {
-      const text = `${el.username} Time: ${el.created_at}`;
+    const savesArray = props.querySaves;
+    const buttons = savesArray.map((el, i) => {
+      const text = `${el.query_name} Time: ${el.created_at}`;
       return <Button key={i} type="default">{text}</Button>;
     });
     setSaveButtons(buttons);
@@ -34,7 +32,6 @@ const History = (props) => {
         </Modal>
       </div>
   );
-  // }
 };
 
 export default History;
