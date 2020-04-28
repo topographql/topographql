@@ -16,9 +16,10 @@ $whitesmoke: #f1f3f5;
 }
 
 #header {
+    height: 44px;
     overflow: visible;
     .ant-alert {
-        z-index: 10;
+        z-index: 11;
     }
 }
 
@@ -35,7 +36,7 @@ $whitesmoke: #f1f3f5;
         display: flex;
         padding-right: 80px;
         margin-left: auto;
-        a, button {
+        a, button, h4 {
             padding: 0 10px 0 10px;
             margin: auto;
         }
@@ -59,6 +60,14 @@ $whitesmoke: #f1f3f5;
     .form {
         margin: auto;
         width: 350px;
+    }
+}
+
+#homepage {
+    display: flex;
+    padding-top: 60px;
+    div {
+        margin: auto;
     }
 }
 
@@ -98,6 +107,9 @@ $whitesmoke: #f1f3f5;
     flex-direction: column;
     #settings-bar {
         display: flex;
+        position: absolute;
+        top: 100px;
+        z-index: 10;
         padding: 10px;
         align-self:flex-end;
         Button {
@@ -109,14 +121,16 @@ $whitesmoke: #f1f3f5;
         flex: 2;
         height: 100vh;
         .CodeMirror { 
-            height: 100% !important;
+           height: 100% !important;
+           //overflow: scroll;
         }
         .react-codemirror2 {
             flex: 1;
+            height: 66vh !important;
         }
     }
     #tracedisplay {
-        margin: 20px;
+        margin: 0 20px 20px 20px;
         border: 1px solid $wfgrey;
         border-radius: 1.5px;
         flex: 1;
