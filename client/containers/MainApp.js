@@ -67,7 +67,7 @@ class MainApp extends React.Component {
 
   saveStateToLocalStorage() {
     /* eslint-disable */
-    for (let key in [this.state]) {
+    for (let key in this.state) {
       localStorage.setItem(key, JSON.stringify(this.state[key]));
     }
   };
