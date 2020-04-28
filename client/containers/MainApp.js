@@ -17,6 +17,7 @@ class MainApp extends React.Component {
       endpoint: '', // user's GraphQL endpoint
       endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
+      selectedQuery: '',
       querydata: {}, // query results retrieved from server
       queryError: null,
       schema: {}, // introspected schema
@@ -124,12 +125,13 @@ class MainApp extends React.Component {
   handleSaveQuery() {
     console.log('query save fired')
     const { querySaves } = this.state;
-    if (this.props.user) {
+    const tpmUser = 'Kevin'
+    if (this.props.isAuthed) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ user: this.props.user, queryName, queryStr: this.state.query})
+        body: JSON.stringify({ user: tpmUser, queryName, queryStr: this.state.query})
       })
         .then(res => res.json())
         .then(data => {
@@ -145,7 +147,7 @@ class MainApp extends React.Component {
   // set query in state to selected save
   handleSelectSave(value) {
     console.log(value)
-    this.setState({ query: value })
+    this.setState({ selectedQuery: value })
   }
 
  onSubmitEndpoint(e) {
@@ -269,6 +271,7 @@ class MainApp extends React.Component {
             onChangeQuery={this.onChangeQuery}
             handleSaveQuery={this.handleSaveQuery}
             query={this.state.query}
+            selectedQuery={this.state.selectedQuery}
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}

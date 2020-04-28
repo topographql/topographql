@@ -47,6 +47,9 @@ function SubmitQuery(props) {
     },
   };
 
+
+
+
   useEffect(() => {
     let editor;
     if (!queryEditor) {
@@ -59,10 +62,10 @@ function SubmitQuery(props) {
     //     editor.setValue(JSON.parse(localStorage.getItem('query')));
     //   }
     // }
-    //editor.setValue(props.query);
-    editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
+    editor.setValue(props.selectedQuery);
+    editor.on('change', (e) => props.onChangeQuery(e.getValue()));
     setQueryEditor(editor);
-  }, [props.query, props.schema]);
+  }, [props.selectedQuery, props.schema]);
 
   // query error handling logic
   useEffect(() => {
