@@ -37,8 +37,14 @@ app.post('/api/getquery', queryController.getQuery, (req, res, next) => {
   res.status(200).json(res.locals.d3querydata);
 });
 
+// Allows user to save query to database and returns the saved data
 app.post('/api/savequery', userController.saveQuery, (req, res, next) => {
   res.status(200).json(res.locals.saved);
+});
+
+// Retrieves user's saved queries from the database
+app.post('/api/gethistory', userController.getHistory, (req, res, next) => {
+  res.status(200).json(res.locals.history);
 });
 
 // Global error handler

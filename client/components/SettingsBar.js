@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import History from './History';
 
 function SettingsBar(props) {
-  console.log(props)
   return (
     <div id="settings-bar">
         <History querySaves={props.querySaves} />
