@@ -55,7 +55,7 @@ userController.login = (req, res, next) => {
                 status: 400,
                 message: { err: 'Username or password incorrect' },
               });
-            } 
+            }
             return next();
           })
           .catch(() => next({
@@ -71,6 +71,25 @@ userController.login = (req, res, next) => {
       log: 'A problem occured logging in user',
       status: 500,
       message: { err: 'A problem occured logging in user' }
+    }));
+};
+
+
+userController.saveQuery = (req, res, next) => {
+  const { user, queryName, queryStr } = req.body;
+  const query = `INSERT INTO queries (username, query_name, query_str)
+                    VALUES ($1, $2, $3)
+                    RETURNING *;`;
+  const params = [user, queryName, queryStr];
+  db.query(query, params)
+    .then((data) => {
+      res.locals.saved = data.rows[0];
+      return next();
+    })
+    .catch(() => next({
+      log: 'Query already exists or cannot be saved',
+      status: 400,
+      message: { err: 'Query already exists or cannot be saved' },
     }));
 };
 
