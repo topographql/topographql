@@ -1,14 +1,14 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 
 const History = (props) => {
-
   const [isVisible, setIsVisible] = useState(false);
   const [saveButtons, setSaveButtons] = useState(null);
 
   useEffect(() => {
-    const savesArray = props.querySaves;
-    const buttons = savesArray.map((el, i) => {
+    const array = props.querySaves;
+    const buttons = array.map((el, i) => {
       const text = `${el.query_name} Time: ${el.created_at}`;
       return <Button key={i} type="default">{text}</Button>;
     });
