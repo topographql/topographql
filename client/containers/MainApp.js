@@ -17,13 +17,14 @@ class MainApp extends React.Component {
       endpoint: '', // user's GraphQL endpoint
       endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
+      selectedQuery: '',
       querydata: {}, // query results retrieved from server
       queryError: null,
       schema: {}, // introspected schema
       d3introspectdata: {}, // d3 file for introspected schema
       d3querydata: {}, // d3 info for query data
       showResults: false,
-      querySaves: {},
+      querySaves: [],
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -33,6 +34,7 @@ class MainApp extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleSaveQuery = this.handleSaveQuery.bind(this);
+    this.handleSelectSave = this.handleSelectSave.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -135,27 +137,28 @@ class MainApp extends React.Component {
   }
 
   handleSaveQuery() {
-    console.log('query save fired')
-    // if user exists and therefore we are logged in:
-    const queryHistory = this.state.querySaves;
-    console.log(queryHistory);
-    if (this.props.user) {
+    const { querySaves } = this.state;
+    const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
+    if (this.props.isAuthed) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ user: this.props.user, queryName, queryStr: this.state.query})
+        body: JSON.stringify({ user: tpmUser, queryName, queryStr: this.state.query})
       })
         .then(res => res.json())
         .then(data => {
-          queryHistory[queryName] = data;
+          const addObj = querySaves.concat(data);
+          this.setState({ querySaves: addObj })   
         })
         .catch((err) => console.log(err));
     }
-    // take current query root and timestamp and push it into querySaves array
-    // this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
-    this.setState({ querySaves: queryHistory});
-    console.log('state', this.state);
+  }
+
+  // set query in state to selected save
+  handleSelectSave(value) {
+    console.log(value)
+    this.setState({ selectedQuery: value })
   }
 
  onSubmitEndpoint(e) {
@@ -185,14 +188,12 @@ class MainApp extends React.Component {
             drawNetworkGraph(this.state.d3introspectdata);
           })
           .then(() => {
-            // if there wasn't an error set endpointError to null after 3 seconds
-            if(this.state.endpointError === false) {
-              setTimeout(() => {
-                this.setState({ endpointError: null });
-              }, 3000);
-            }
+            setTimeout(() => this.setState({ endpointError: null }), 3000);
           })
-        }).catch((err) => this.setState({ endpointError: true }))  
+        }).catch((err) => {
+          this.setState({ endpointError: true }) 
+          setTimeout(() => this.setState({ endpointError: null }), 3000);
+        })
   }
 
   // sends query to client's GraphQL endpoint and saves the query result in state
@@ -212,6 +213,7 @@ class MainApp extends React.Component {
       }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
+
     }
   }
 
@@ -237,8 +239,6 @@ class MainApp extends React.Component {
       } else {
         this.setState({ endpointError: "tracingerror" })
         if (this.state.endpointError === 'tracingerror') {
-
-
           setTimeout(() => {
             this.setState({ endpointError: null, showResults: true });
           }, 3000);
@@ -282,6 +282,7 @@ class MainApp extends React.Component {
             onChangeQuery={this.onChangeQuery}
             handleSaveQuery={this.handleSaveQuery}
             query={this.state.query}
+            selectedQuery={this.state.selectedQuery}
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
@@ -290,6 +291,7 @@ class MainApp extends React.Component {
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
+              handleSelectSave={this.handleSelectSave}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}

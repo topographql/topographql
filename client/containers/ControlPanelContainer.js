@@ -13,6 +13,7 @@ function ControlPanelContainer(props) {
           onSubmitQuery={props.onSubmitQuery}
           handleSaveQuery={props.handleSaveQuery}
           query={props.query}
+          selectedQuery={props.selectedQuery}
           queryError={props.queryError}
           schema={props.schema}
           result={props.result}

@@ -31,7 +31,6 @@ const App = () => {
   };
 
   return (
-
     <div>
       <Router>
         <NavBar isAuthed={isAuthed} user={user} logout={logout}/>
@@ -47,9 +46,8 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-
     </div>
-  )
-}
+  );
+};
 
 export default App;

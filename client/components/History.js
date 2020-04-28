@@ -1,18 +1,16 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 
 const History = (props) => {
-
   const [isVisible, setIsVisible] = useState(false);
   const [saveButtons, setSaveButtons] = useState(null);
 
-  console.log('saves', props.querySaves);
-
   useEffect(() => {
-    const savesArray = props.querySaves
-    const buttons = Object.values(savesArray).map((el, i) => {
-      const text = `${el.username} Time: ${el.created_at}`;
-      return <Button key={i} type="default">{text}</Button>;
+    const array = props.querySaves;
+    const buttons = array.map((el) => {
+      const text = `${el.query_name} Time: ${el.created_at}`;
+      return <Button key={el.id} type="default" onClick={() => props.handleSelectSave(el.query_str)}>{text}</Button>;
     });
     setSaveButtons(buttons);
   }, [props.querySaves]);
@@ -31,10 +29,12 @@ const History = (props) => {
           <div id='history-wrap'>
             {saveButtons}
           </div>
+          <div id='query-prev'>
+            <h3></h3>
+          </div>
         </Modal>
       </div>
   );
-  // }
 };
 
 export default History;
