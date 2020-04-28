@@ -47,32 +47,22 @@ function SubmitQuery(props) {
     },
   };
 
-  // useEffect(() => {
-  //   console.log('test', props.query);
-  //   const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-  //   if (props.query !== undefined) {
-  //     editor.clearHistory();
-  //     editor.clearGutter(".CodeMirror-gutter")
-  //    // editor.setValue(props.query);
-  //     setTimeout(() => {
-  //       editor.codeMirrorInstance.refresh();
-  //     }, 1);
-  //   }
-  // }, [props.query]);
-
   useEffect(() => {
-    // editorMounted state hook prevents extraneous CodeMirror from rendering
+    let editor;
     if (!queryEditor) {
-      const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-      // if (localStorage.getItem('query')) {
-      //   if (localStorage.getItem('query') !== '') {
-      //     editor.setValue(JSON.parse(localStorage.getItem('query')));
-      //   }
-      // }
-      editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
-      setQueryEditor(editor);
+      editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+    } else {
+      editor = queryEditor;
     }
-  }, [props.schema]);
+    // if (localStorage.getItem('query')) {
+    //   if (localStorage.getItem('query') !== '') {
+    //     editor.setValue(JSON.parse(localStorage.getItem('query')));
+    //   }
+    // }
+    //editor.setValue(props.query);
+    editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
+    setQueryEditor(editor);
+  }, [props.query, props.schema]);
 
   // query error handling logic
   useEffect(() => {
