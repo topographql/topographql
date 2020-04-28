@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, Alert } from 'antd';
 import React, { useState, useEffect } from 'react';
 import CodeMirror from 'codemirror';
@@ -47,11 +48,37 @@ function SubmitQuery(props) {
   };
 
   useEffect(() => {
+    console.log('test', props.query);
+    const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+    if (props.query !== undefined) {
+      editor.setValue(props.query);
+      editor.clearHistory();
+      editor.clearGutter(".CodeMirror-gutter")
+      setTimeout(() => {
+        editor.codeMirrorInstance.refresh();
+      }, 1);
+    } else {
+      editor.clearHistory();
+      editor.clearGutter(".CodeMirror-gutter")
+      setTimeout(() => {
+        editor.codeMirrorInstance.refresh();
+      }, 1);
+    }
+  }, [props.query]);
+
+  useEffect(() => {
     // editorMounted state hook prevents extraneous CodeMirror from rendering
     if (!queryEditor) {
       const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-      if (localStorage.getItem('query')) { 
-        if (localStorage.getItem('query') !== '') editor.setValue(JSON.parse(localStorage.getItem('query')));
+      if (localStorage.getItem('query')) {
+        if (localStorage.getItem('query') !== '') {
+          editor.setValue(JSON.parse(localStorage.getItem('query')));
+          editor.clearHistory();
+          editor.clearGutter(".CodeMirror-gutter")
+          setTimeout(() => {
+            editor.codeMirrorInstance.refresh();
+          }, 1);
+        }
       }
       editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
       setQueryEditor(editor);
@@ -62,7 +89,7 @@ function SubmitQuery(props) {
   useEffect(() => {
     // if GraphQL server sent back a 400 response, the result object would have only an errors property
     if (props.result.errors && !props.result.data) {
-      setErrorMessage(<Alert 
+      setErrorMessage(<Alert
           message={`Error Submitting Query: ${JSON.stringify(props.result.errors[0].message, 2)}`}
           type="error"
           showIcon

@@ -8,11 +8,12 @@ const History = (props) => {
 
   useEffect(() => {
     const array = props.querySaves;
-    const buttons = array.map((el, i) => {
+    const buttons = array.map((el) => {
       const text = `${el.query_name} Time: ${el.created_at}`;
-      return <Button key={i} type="default">{text}</Button>;
+      return <Button key={el.id} type="default" onClick={() => props.handleSelectSave(el.query_str)}>{text}</Button>;
     });
     setSaveButtons(buttons);
+    console.log(props.querySaves)
   }, [props.querySaves]);
 
   return (
@@ -28,6 +29,9 @@ const History = (props) => {
         >
           <div id='history-wrap'>
             {saveButtons}
+          </div>
+          <div id='query-prev'>
+            <h3></h3>
           </div>
         </Modal>
       </div>

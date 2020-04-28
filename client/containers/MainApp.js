@@ -33,6 +33,7 @@ class MainApp extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleSaveQuery = this.handleSaveQuery.bind(this);
+    this.handleSelectSave = this.handleSelectSave.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -141,6 +142,12 @@ class MainApp extends React.Component {
     }
   }
 
+  // set query in state to selected save
+  handleSelectSave(value) {
+    console.log(value)
+    this.setState({ query: value })
+  }
+
  onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
@@ -168,15 +175,12 @@ class MainApp extends React.Component {
             drawNetworkGraph(this.state.d3introspectdata);
           })
           .then(() => {
-            // if there wasn't an error set endpointError to null after 3 seconds
-            console.log('error', this.state.endpointError);
-            if(this.state.endpointError === false) {
-              setTimeout(() => {
-                this.setState({ endpointError: null });
-              }, 3000);
-            }
+            setTimeout(() => this.setState({ endpointError: null }), 3000);
           })
-        }).catch((err) => this.setState({ endpointError: true }))  
+        }).catch((err) => {
+          this.setState({ endpointError: true }) 
+          setTimeout(() => this.setState({ endpointError: null }), 3000);
+        })
   }
 
   // sends query to client's GraphQL endpoint and saves the query result in state
@@ -196,6 +200,7 @@ class MainApp extends React.Component {
       }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
+
     }
   }
 
@@ -221,8 +226,6 @@ class MainApp extends React.Component {
       } else {
         this.setState({ endpointError: "tracingerror" })
         if (this.state.endpointError === 'tracingerror') {
-
-
           setTimeout(() => {
             this.setState({ endpointError: null, showResults: true });
           }, 3000);
@@ -274,6 +277,7 @@ class MainApp extends React.Component {
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
+              handleSelectSave={this.handleSelectSave}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}
