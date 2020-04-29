@@ -93,4 +93,20 @@ userController.saveQuery = (req, res, next) => {
     }));
 };
 
+userController.getHistory = (req, res, next) => {
+  const { user } = req.body;
+  const query = 'SELECT * FROM queries WHERE username = $1;';
+  const params = [user];
+  db.query(query, params)
+    .then((data) => {
+      res.locals.history = data.rows;
+      return next();
+    })
+    .catch(() => next({
+      log: 'Query history cannot be retrieved',
+      status: 400,
+      message: { err: 'Query history cannot be retrieved' },
+    }));
+};
+
 module.exports = userController;

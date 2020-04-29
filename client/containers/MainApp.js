@@ -51,6 +51,19 @@ class MainApp extends React.Component {
           }
         }
       });
+    // checks if user logged in and will populate state with 
+    if (this.props.user) {
+      fetch('/api/gethistory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: this.props.user }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.setState({ querySaves: data });
+        })
+        .catch(err => console.log(err));
+    }
     // event listener for leaving / refreshing the page -  saves state to local storage when
     window.addEventListener(
       'beforeunload',
@@ -102,6 +115,7 @@ class MainApp extends React.Component {
   handleShowResults() {
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
+    console.log('check', this.state);
   }
 
   handleReset() {
