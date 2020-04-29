@@ -10,7 +10,7 @@ schemaController.introspect = (req, res, next) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({"query": getIntrospectionQuery()})
-  }).then((res) => res.json())
+  }).then((res) =>res.json())
     .then((data) => {
       res.locals.introspectionResult = data.data;
       return next();
@@ -27,7 +27,7 @@ schemaController.introspect = (req, res, next) => {
 
 schemaController.convertSchema = (req, res, next) => {
   try {
-    const sourceSchema = res.locals.introspectionResult;
+    const { sourceSchema } = req.body;
     const cleanedSchema = cleanSchema(sourceSchema);
     const d3Json = schemaToD3(cleanedSchema);
     // Writes and saves the JSON file into root folder

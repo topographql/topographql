@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, Alert } from 'antd';
 import React, { useState, useEffect } from 'react';
 import CodeMirror from 'codemirror';
@@ -46,21 +47,31 @@ function SubmitQuery(props) {
     },
   };
 
+
+
+
   useEffect(() => {
-    // editorMounted state hook prevents extraneous CodeMirror from rendering
+    let editor;
     if (!queryEditor) {
-      const editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
-      if (localStorage.getItem('query') !== '') editor.setValue(JSON.parse(localStorage.getItem('query')));
-      editor.on('change', (editor) => props.onChangeQuery(editor.getValue()));
-      setQueryEditor(editor);
+      editor = CodeMirror.fromTextArea(document.getElementById('queryeditor'), codeMirrorOptions);
+    } else {
+      editor = queryEditor;
     }
-  }, [props.schema]);
+    // if (localStorage.getItem('query')) {
+    //   if (localStorage.getItem('query') !== '') {
+    //     editor.setValue(JSON.parse(localStorage.getItem('query')));
+    //   }
+    // }
+    editor.setValue(props.selectedQuery);
+    editor.on('change', (e) => props.onChangeQuery(e.getValue()));
+    setQueryEditor(editor);
+  }, [props.selectedQuery, props.schema]);
 
   // query error handling logic
   useEffect(() => {
     // if GraphQL server sent back a 400 response, the result object would have only an errors property
     if (props.result.errors && !props.result.data) {
-      setErrorMessage(<Alert 
+      setErrorMessage(<Alert
           message={`Error Submitting Query: ${JSON.stringify(props.result.errors[0].message, 2)}`}
           type="error"
           showIcon

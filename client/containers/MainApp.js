@@ -8,6 +8,7 @@ import drawNetworkGraph from '../utilities/drawNetworkGraph';
 import SettingsBar from '../components/SettingsBar';
 import { drawTracerGraph, convertTraceData } from '../utilities/drawTracerGraph';
 import { highlightQuery } from '../utilities/highlighterFunction.js';
+import { getIntrospectionQuery } from 'graphql';
 
 class MainApp extends React.Component {
   constructor() {
@@ -16,6 +17,7 @@ class MainApp extends React.Component {
       endpoint: '', // user's GraphQL endpoint
       endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
+      selectedQuery: '',
       querydata: {}, // query results retrieved from server
       queryError: null,
       schema: {}, // introspected schema
@@ -32,6 +34,7 @@ class MainApp extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleSaveQuery = this.handleSaveQuery.bind(this);
+    this.handleSelectSave = this.handleSelectSave.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -66,7 +69,7 @@ class MainApp extends React.Component {
 
   saveStateToLocalStorage() {
     /* eslint-disable */
-    for (let key in [this.state]) {
+    for (let key in this.state) {
       localStorage.setItem(key, JSON.stringify(this.state[key]));
     }
   };
@@ -104,9 +107,9 @@ class MainApp extends React.Component {
   handleReset() {
     /* eslint-disable */
     const defaultState = {
-      // endpoint: '', 
+      endpoint: '', 
       endpointError: null, 
-      // query: '', 
+      query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 
@@ -120,40 +123,63 @@ class MainApp extends React.Component {
   }
 
   handleSaveQuery() {
-    console.log('query save fired')
-    // take current query root and timestamp and push it into querySaves array
-    this.setState({ querySaves: [['Save1', '2343567'], ['Save2', '2343567']] })
+    const { querySaves } = this.state;
+    const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
+    if (this.props.isAuthed) {
+      const queryName = this.state.query.split('\n')[1];
+      fetch('/api/savequery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ user: tpmUser, queryName, queryStr: this.state.query})
+      })
+        .then(res => res.json())
+        .then(data => {
+          const addObj = querySaves.concat(data);
+          this.setState({ querySaves: addObj })   
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
-  onSubmitEndpoint(e) {
+  // set query in state to selected save
+  handleSelectSave(value) {
+    console.log(value)
+    this.setState({ selectedQuery: value })
+  }
+
+ onSubmitEndpoint(e) {
     e.preventDefault();
     // clears previous query and query results from state
     this.setState({ querydata: {} });
     d3.select('#svg-trace').remove();
-    fetch('/api/getschema', {
+
+    fetch(this.state.endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ endpoint: this.state.endpoint }),
-    })
-      .then((res) => res.json())
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({"query": getIntrospectionQuery()})
+    }).then((res) => res.json())
       .then((data) => {
-        // set state, delete previous svg and draw new svg passing in data
-        this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
-        d3.select('#svg-network').remove();
-        drawNetworkGraph(this.state.d3introspectdata);
-      })
-      .then(() => {
-        // if there wasn't an error set endpointError to null after 3 seconds
-        console.log('error', this.state.endpointError);
-        if(this.state.endpointError === false) {
-          setTimeout(() => {
-            this.setState({ endpointError: null });
-          }, 3000);
-        }
-      })
-      .catch((err) => {
-        if (err) this.setState({ endpointError: true })
-      });
+        fetch('/api/convertschema', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceSchema: data.data }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // set state, delete previous svg and draw new svg passing in data
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
+            d3.select('#svg-network').remove();
+            drawNetworkGraph(this.state.d3introspectdata);
+          })
+          .then(() => {
+            setTimeout(() => this.setState({ endpointError: null }), 3000);
+          })
+        }).catch((err) => {
+          this.setState({ endpointError: true }) 
+          setTimeout(() => this.setState({ endpointError: null }), 3000);
+        })
   }
 
   // sends query to client's GraphQL endpoint and saves the query result in state
@@ -173,6 +199,7 @@ class MainApp extends React.Component {
       }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
+
     }
   }
 
@@ -185,7 +212,7 @@ class MainApp extends React.Component {
         body: JSON.stringify(this.state.querydata),
       });
       const d3querydata = await response.json();
-      if (d3querydata) {
+      if (d3querydata !== 'tracingerror') {
         this.setState({ d3querydata });
         const schemaCopy = this.state.d3introspectdata;
         const queryPath = d3querydata;
@@ -197,7 +224,7 @@ class MainApp extends React.Component {
         this.setState({ showResults: true});
       } else {
         this.setState({ endpointError: "tracingerror" })
-        if(this.state.endpointError === "tracingerror") {
+        if (this.state.endpointError === 'tracingerror') {
           setTimeout(() => {
             this.setState({ endpointError: null, showResults: true });
           }, 3000);
@@ -241,6 +268,7 @@ class MainApp extends React.Component {
             onChangeQuery={this.onChangeQuery}
             handleSaveQuery={this.handleSaveQuery}
             query={this.state.query}
+            selectedQuery={this.state.selectedQuery}
             queryError={this.state.queryError}
             schema={this.state.schema}
             result={this.state.querydata}
@@ -249,6 +277,7 @@ class MainApp extends React.Component {
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
+              handleSelectSave={this.handleSelectSave}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}

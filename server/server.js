@@ -28,13 +28,17 @@ app.post('/api/login', userController.login, (req, res) => {
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
-app.post('/api/getschema', schemaController.introspect, schemaController.convertSchema, (req, res, next) => {
+app.post('/api/convertschema', schemaController.convertSchema, (req, res, next) => {
   res.status(200).json(res.locals);
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.post('/api/getquery', queryController.getQuery, (req, res, next) => {
   res.status(200).json(res.locals.d3querydata);
+});
+
+app.post('/api/savequery', userController.saveQuery, (req, res, next) => {
+  res.status(200).json(res.locals.saved);
 });
 
 // Global error handler

@@ -25,8 +25,9 @@ const Login = (props) => {
   };
 
   return (
-    <div>
+    <div id="login-wrapper">
       <div className="form">
+        <h1>Sign In</h1>
         <Form name="normal_login" className="login-form">
           <Form.Item
               name="username"
@@ -47,13 +48,14 @@ const Login = (props) => {
             />
           </Form.Item>
           <Form.Item>
-            <Button onClick={login} type="primary" className="login-form-button">
-              Log in
+            <Button onClick={login} type="primary" className="login-form-button" block>
+              Sign in
             </Button>
           </Form.Item>
         </Form>
-        <Link to="/register">Register</Link>
-        <Link to="/">Or continue as a guest</Link>
+        <span>New to TopoGraphQL? <Link to="/register">Create an Account</Link></span>
+        <br/>
+        <Link to="/">Continue as a guest</Link>
     </div>
   </div>
   );
