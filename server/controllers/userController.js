@@ -1,7 +1,11 @@
 const userController = {};
 const bcrypt = require('bcrypt');
-
 const db = require('../models/models');
+const jwt = require('jsonwebtoken');
+
+//bcrypt/JWT settings
+const SECRET_KEY =
+  '|pMyM2@4h=hs@|aE5mGCn.P-<KX}sJ!9[TA@>y)jy@-5p/G0(],0,#j,(JHV_q8';
 
 userController.register = (req, res, next) => {
   const { username, email } = req.body;
@@ -72,6 +76,49 @@ userController.login = (req, res, next) => {
       status: 500,
       message: { err: 'A problem occured logging in user' }
     }));
+};
+
+userController.createSession = (req, res, next) => {
+  const { username } = req.body;
+
+  jwt.sign(
+    {
+      username,
+    },
+    SECRET_KEY,
+    (err, token) => {
+      if (err) {
+        return next({
+          code: 500,
+          message: 'Could not log in at this time.',
+          log: `loginController.createSession: failed to create JWT(${username})`,
+        });
+      }
+
+      res.cookie('token', token, {
+        httpOnly: true,
+      });
+      return res.status(200).json('Created session');
+    },
+  );
+};
+
+// validate JWT
+userController.validateJWT = (req, res, next) => {
+  const { token } = req.cookies;
+  jwt.verify(token, SECRET_KEY, (err, usernameObj) => {
+    if (err) {
+      return next({
+        code: 403,
+        message: 'Could not verify user.',
+        log: 'loginController.verifyJWT: user passed invalid JWT to server',
+      });
+    }
+
+    return res.status(200).json(usernameObj.username);
+  });
+  // WARNING: outside JWT validation
+};
 };
 
 module.exports = userController;
