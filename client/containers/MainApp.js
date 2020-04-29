@@ -83,7 +83,9 @@ class MainApp extends React.Component {
   saveStateToLocalStorage() {
     /* eslint-disable */
     for (let key in this.state) {
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
+      if (key !== "querySaves") {
+        localStorage.setItem(key, JSON.stringify(this.state[key]));
+      }
     }
   };
 
@@ -121,9 +123,9 @@ class MainApp extends React.Component {
   handleReset() {
     /* eslint-disable */
     const defaultState = {
-      endpoint: '', 
+      // endpoint: '', 
       endpointError: null, 
-      query: '', 
+      // query: '', 
       querydata: {}, 
       queryError: null,
       schema: {}, 
@@ -139,17 +141,19 @@ class MainApp extends React.Component {
   handleSaveQuery() {
     const { querySaves } = this.state;
     const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
-    if (this.props.isAuthed) {
+    // if (this.props.isAuthed) {
+      if (this.props.user) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ user: tpmUser, queryName, queryStr: this.state.query})
+        body: JSON.stringify({ user: this.props.user, queryName, queryStr: this.state.query})
       })
         .then(res => res.json())
         .then(data => {
           const addObj = querySaves.concat(data);
-          this.setState({ querySaves: addObj })   
+          this.setState({ querySaves: addObj });
+          console.log(addObj);  
         })
         .catch((err) => console.log(err));
     }
