@@ -17,6 +17,7 @@ function ControlPanelContainer(props) {
           queryError={props.queryError}
           schema={props.schema}
           result={props.result}
+          isAuthed={props.isAuthed}
         />
       </div>
   );

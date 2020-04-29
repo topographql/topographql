@@ -273,6 +273,7 @@ class MainApp extends React.Component {
             schema={this.state.schema}
             result={this.state.querydata}
             reset={this.state.resetStatus}
+            isAuthed={this.props.isAuthed}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 
