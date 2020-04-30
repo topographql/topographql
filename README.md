@@ -19,6 +19,9 @@ Visit [topographql.com](http://topographql.com) to get started!
 - Submit your queries and view the query response
 - If your GraphQL server has [Apollo Tracing](https://github.com/apollographql/apollo-tracing) enabled, **TopoGraphQL** will highlight the query response path and display resolver-level response times
 - Login or register to save your queries and view your query history
+----
+- If you don't have a GraphQL server set up, public GraphQL endpoints can be visualized and queried too
+  E.g. https://github.com/lucasbento/graphql-pokemon
 
 Screenshots
 ----
