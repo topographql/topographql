@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import {
+  Form, Input, Button, Alert,
+} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const history = useHistory();
   const login = () => {
     fetch('/api/login', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     })
-      .then(res => {
-        console.log(res.status)
+      .then((res) => {
+        console.log(res.status);
         if (res.status === 200) {
           props.auth(username); // set app state to authed
           history.push('/'); // redirect to main app
+          return res.json();
         }
-        else console.log(res.json());
+        return res.json().then((err) => { throw err; });
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage(err.err);
       });
   };
 
@@ -38,10 +46,10 @@ const Login = (props) => {
 
           <Form.Item
             name="password"
-            rules={[{ required: true, message: 'Please input your Password!'}]}
+            rules={[{ required: true, message: 'Please input your Password!' }]}
           >
             <Input
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => setPassword(e.target.value)}
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
@@ -52,6 +60,7 @@ const Login = (props) => {
               Sign in
             </Button>
           </Form.Item>
+          { message ? <Alert type="error" message={message} banner /> : null }
         </Form>
         <span>New to TopoGraphQL? <Link to="/register">Create an Account</Link></span>
         <br/>
