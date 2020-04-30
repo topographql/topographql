@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/xerographica/gql-health-prototyper/dev/client/img/logopink2line.svg)
+![logo](https://i.imgur.com/1glvQfz.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -23,7 +23,10 @@ Usage
 - If your GraphQL server has [Apollo Tracing](https://github.com/apollographql/apollo-tracing) enabled, TopoGraphQL will highlight the query response path and display resolver-level response times
 - Login or register to save your queries and view your query history
 
-add screenshots here
+Screenshots
+----
+![screenshot1](https://i.imgur.com/Jm0B98f.png)
+![screenshot2](https://i.imgur.com/mcRuG78.png)
 
 Contributing
 ----
@@ -33,11 +36,9 @@ Contributing
   - Support for real-time GraphQL subscriptions
   - 24/7 performance monitoring
   
-
-
 Team
 ----
-[@ksun16](github.com/ksun16) 
-[@mzyau](github.com/mzyau)
-[@t-quartararo](github.com/t-quartararo)
-[@dangchell](github.com/dangchell)
+- Kevin Sun [@ksun16](github.com/ksun16) 
+- Meisze Yau [@mzyau](github.com/mzyau)
+- Taylor Quartararo [@t-quartararo](github.com/t-quartararo)
+- Dan Chell [@dangchell](github.com/dangchell)
