@@ -48,8 +48,6 @@ function SubmitQuery(props) {
   };
 
 
-
-
   useEffect(() => {
     let editor;
     if (!queryEditor) {
@@ -83,7 +81,11 @@ function SubmitQuery(props) {
       <div id="submitquery">
         <Button onClick={props.onSubmitQuery}>Submit</Button>
         <Button onClick={() => queryEditor.setValue('')}>Clear Query</Button>
-        <Button onClick={props.handleSaveQuery}>Save Query</Button>
+        {
+        props.isAuthed
+          ? <Button onClick={props.handleSaveQuery}>Save Query</Button>
+          : <Button disabled>Save Query</Button>
+        }
         {errMessage}
       </div>
   );
