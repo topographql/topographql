@@ -3,7 +3,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div>
+    <div id="about">
 
 <p><img src="https://i.imgur.com/1glvQfz.png" alt="logo"/></p>
 <p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"/></a></p>
