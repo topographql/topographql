@@ -1,9 +1,9 @@
 const userController = {};
 const bcrypt = require('bcrypt');
-const db = require('../models/models');
 const jwt = require('jsonwebtoken');
+const db = require('../models/models');
 
-//bcrypt/JWT settings
+// bcrypt/JWT settings
 const SECRET_KEY =
   '|pMyM2@4h=hs@|aE5mGCn.P-<KX}sJ!9[TA@>y)jy@-5p/G0(],0,#j,(JHV_q8';
 
@@ -66,6 +66,7 @@ userController.login = (req, res, next) => {
                 message: { err: 'Username or password incorrect' },
               });
             }
+            res.locals.username = username;
             return next();
           })
           .catch(() =>
@@ -88,7 +89,7 @@ userController.login = (req, res, next) => {
 };
 
 userController.createSession = (req, res, next) => {
-  const { username } = req.body;
+  const { username } = res.locals;
 
   jwt.sign(
     {
@@ -100,14 +101,15 @@ userController.createSession = (req, res, next) => {
         return next({
           code: 500,
           message: 'Could not log in at this time.',
-          log: `loginController.createSession: failed to create JWT(${username})`,
+          log: `userController.createSession: failed to create JWT(${username})`,
         });
       }
 
       res.cookie('token', token, {
         httpOnly: true,
       });
-      return res.status(200).json('Created session');
+      // return res.status(200).json('Created session');
+      return next();
     },
   );
 };
@@ -123,8 +125,9 @@ userController.validateJWT = (req, res, next) => {
         log: 'loginController.verifyJWT: user passed invalid JWT to server',
       });
     }
-
-    return res.status(200).json(usernameObj.username);
+    res.locals.username = usernameObj;
+    console.log(res.locals.username);
+    return next();
   });
   // WARNING: outside JWT validation
 };

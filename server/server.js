@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const schemaController = require('./controllers/schemaController.js');
 const queryController = require('./controllers/queryController.js');
-const userController = require('./controllers/userController.js')
+const userController = require('./controllers/userController.js');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -18,19 +18,43 @@ app.get('/', (req, res) => {
 });
 
 // User registration
-app.post('/api/register', userController.encrypt, userController.register, (req, res) => {
-  res.status(200).json('Registered user');
-});
+app.post(
+  '/api/register',
+  userController.encrypt,
+  userController.register,
+  (req, res) => {
+    res.status(200).json('Registered user');
+  },
+);
 
 // User login
-app.post('/api/login', userController.login, (req, res) => {
-  res.status(200).json('Logged in');
+app.post(
+  '/api/login',
+  userController.login,
+  userController.createSession,
+  (req, res) => {
+    res.status(200).json('Logged in');
+  },
+);
+
+// User JWT Handoff
+app.post('/api/createsession', userController.createSession, (req, res) => {
+  res.status(200).json('session');
+});
+
+// User validate JWT
+app.post('/api/validate', userController.validateJWT, (req, res) => {
+  res.status(200).json(res.locals.username);
 });
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
-app.post('/api/convertschema', schemaController.convertSchema, (req, res, next) => {
-  res.status(200).json(res.locals);
-});
+app.post(
+  '/api/convertschema',
+  schemaController.convertSchema,
+  (req, res, next) => {
+    res.status(200).json(res.locals);
+  },
+);
 
 // Gets the schema as a JSON file by fetching from the client-provided graphQL endpoint
 app.post('/api/getquery', queryController.getQuery, (req, res, next) => {
