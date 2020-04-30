@@ -31,19 +31,9 @@ Screenshots
   - Analytics for data-loader and caching optimization
   - Support for real-time GraphQL subscriptions
   - 24/7 performance monitoring
-<<<<<<< HEAD
 
 ## Team
 [@ksun16](github.com/ksun16) 
 [@mzyau](github.com/mzyau)
 [@t-quartararo](github.com/t-quartararo)
 [@dangchell](github.com/dangchell)
-=======
-  
-Team
-----
-- Kevin Sun [@ksun16](github.com/ksun16) 
-- Meisze Yau [@mzyau](github.com/mzyau)
-- Taylor Quartararo [@t-quartararo](github.com/t-quartararo)
-- Dan Chell [@dangchell](github.com/dangchell)
->>>>>>> e398dc81c5422dc78a9662d151e54b93d9c694a0

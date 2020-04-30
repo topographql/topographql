@@ -20,7 +20,7 @@ const NavBar = (props) => {
                 : null
             }
             <Link to="/about">About</Link>
-            <a href='https://github.com/xerographica/gql-health-prototyper'><GithubOutlined /></a>
+            <a href='https://github.com/topographql/topographql'><GithubOutlined /></a>
         </div>
     </div>
   );
