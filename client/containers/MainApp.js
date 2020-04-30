@@ -156,7 +156,6 @@ class MainApp extends React.Component {
   handleShowResults() {
     if(!this.state.showResults) this.setState({ showResults: true });
     else this.setState({ showResults: false });
-    console.log('check', this.state);
   }
 
   handleReset() {
@@ -202,7 +201,6 @@ class MainApp extends React.Component {
 
   // set query in state to selected save
   handleSelectSave(value) {
-    console.log(value)
     this.setState({ selectedQuery: value })
   }
 
@@ -298,7 +296,6 @@ class MainApp extends React.Component {
     this.postQuery().then(() => {
       if (!this.state.queryError) this.updateD3WithQuery();
     });
-    console.log(this.state);
   }
 
   render() {

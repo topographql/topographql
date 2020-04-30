@@ -101,7 +101,7 @@ userController.createSession = (req, res, next) => {
       username,
     },
     SECRET_KEY,
-    { expiresIn: '1h' },
+    // { expiresIn: '1h' },
     (err, token) => {
       if (err) {
         return next({
