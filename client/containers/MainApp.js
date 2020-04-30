@@ -113,7 +113,7 @@ class MainApp extends React.Component {
         message.success('Successfully saved query');
         break;
       case 'err-save':
-        message.success('Error saving query');
+        message.error('Error saving query');
         break;
     }
   }
