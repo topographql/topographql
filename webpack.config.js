@@ -64,6 +64,10 @@ module.exports = {
         include: /node_modules/,
         type: 'javascript/auto',
       },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file-loader?name=/client/img/[name].[ext]',
+      },
     ],
   },
   resolve: {
