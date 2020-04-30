@@ -92,13 +92,16 @@ class MainApp extends React.Component {
 
     // handles pop up error messeges
   globalPopupError(type) {
-    console.log('hi')
     const success = () => message.success('Server successfully connected');
     const error = () => message.error('Server cannot be reached');
     const warning = () => message.warning('Query successful but tracing data not found');
+    const warnSigninSave = () => message.warning('You must be signed in to save a query');
+    const warnSigninHistroy = () => message.warning('You must be signed in to use history');
     if (type === 'success') success()
     if (type === 'error') error()
     if (type === 'warning') warning()
+    if (type === 'signin-save') warnSigninSave()
+    if (type === 'signin-history') warnSigninHistroy()
   }
 
   async loadWithLocalStorage() {
@@ -152,7 +155,6 @@ class MainApp extends React.Component {
   handleSaveQuery() {
     const { querySaves } = this.state;
     const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
-    // if (this.props.isAuthed) {
       if (this.props.user) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
@@ -167,6 +169,8 @@ class MainApp extends React.Component {
           console.log(addObj);  
         })
         .catch((err) => console.log(err));
+    } else {
+      this.globalPopupError('signin-save')
     }
   }
 
@@ -294,15 +298,16 @@ class MainApp extends React.Component {
             schema={this.state.schema}
             result={this.state.querydata}
             reset={this.state.resetStatus}
-            isAuthed={this.props.isAuthed}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
               handleSelectSave={this.handleSelectSave}
+              globalPopupError={this.globalPopupError}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}
+              user={this.props.user}
             />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }

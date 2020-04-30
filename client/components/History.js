@@ -15,9 +15,14 @@ const History = (props) => {
     setSaveButtons(buttons);
   }, [props.querySaves]);
 
+  const handleHistory = () => {
+    if (props.user) setIsVisible(true);
+    else props.globalPopupError('signin-history');
+  };
+
   return (
       <div>
-        <Button type="default" size='small' onClick={() => setIsVisible(true)}>
+        <Button type="default" size='small' onClick={handleHistory}>
           History
         </Button>
         <Modal
