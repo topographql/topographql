@@ -88,6 +88,11 @@ userController.login = (req, res, next) => {
     );
 };
 
+userController.logout = (req, res, next) => {
+  res.clearCookie('token');
+  return next();
+}
+
 userController.createSession = (req, res, next) => {
   const { username } = res.locals;
 

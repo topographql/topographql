@@ -41,6 +41,15 @@ app.post(
   },
 );
 
+app.post(
+  '/api/logout',
+  userController.logout,
+  (req, res) => {
+    res.status(200).json('Logged out');
+  },
+);
+
+
 // User JWT Handoff
 app.post('/api/createsession', userController.createSession, (req, res) => {
   res.status(200).json('session');

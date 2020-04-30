@@ -16,6 +16,10 @@ const App = () => {
     setIsAuthed(true);
     setUser(username);
     sessionStorage.setItem('isAuthed', true);
+    // fetch('/api/logout', {
+    //   method: 'POST',
+    //   credentials: 'include'
+    // });
   };
 
   const logout = () => {
