@@ -4,7 +4,6 @@ import { Divider } from 'antd';
 import React from 'react';
 
 function TraceDisplay(props) {
-  console.log(props)
   return (
     <div id="tracedisplay">
       <div id="trace-header">

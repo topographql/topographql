@@ -4,11 +4,14 @@ const schemaController = require('./controllers/schemaController.js');
 const queryController = require('./controllers/queryController.js');
 const userController = require('./controllers/userController.js');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/img', express.static(path.join(__dirname, '../client/img')));
 
@@ -37,6 +40,15 @@ app.post(
     res.status(200).json('Logged in');
   },
 );
+
+app.post(
+  '/api/logout',
+  userController.logout,
+  (req, res) => {
+    res.status(200).json('Logged out');
+  },
+);
+
 
 // User JWT Handoff
 app.post('/api/createsession', userController.createSession, (req, res) => {

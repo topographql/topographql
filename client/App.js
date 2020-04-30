@@ -23,6 +23,11 @@ const App = () => {
     setUser(null);
     setIsGuest(false);
     sessionStorage.clear();
+    fetch('/api/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
   };
 
   const continueGuest = () => {
