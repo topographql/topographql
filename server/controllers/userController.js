@@ -113,6 +113,7 @@ userController.createSession = (req, res, next) => {
 
       res.cookie('token', token, {
         httpOnly: true,
+        maxAge: 3600000
       });
       // return res.status(200).json('Created session');
       return next();
