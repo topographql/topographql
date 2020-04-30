@@ -16,7 +16,6 @@ class MainApp extends React.Component {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
-      endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
       selectedQuery: '',
       querydata: {}, // query results retrieved from server
@@ -79,7 +78,7 @@ class MainApp extends React.Component {
     // handles pop up error messeges
   globalPopupError(type) {
     console.log('hi')
-    const success = () => message.success('Server successfully connected.');
+    const success = () => message.success('Server successfully connected');
     const error = () => message.error('Server cannot be reached');
     const warning = () => message.warning('Query successful but tracing data not found');
     if (type === 'success') success()
@@ -120,7 +119,6 @@ class MainApp extends React.Component {
     /* eslint-disable */
     const defaultState = {
       endpoint: '', 
-      endpointError: null, 
       query: '', 
       querydata: {}, 
       queryError: null,
@@ -181,18 +179,13 @@ class MainApp extends React.Component {
           .then((res) => res.json())
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
-            this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json });
             this.globalPopupError('success')
             d3.select('#svg-network').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           })
-          .then(() => {
-            setTimeout(() => this.setState({ endpointError: null }), 3000);
-          })
         }).catch((err) => {
-          this.setState({ endpointError: true }) 
           this.globalPopupError('error')
-          setTimeout(() => this.setState({ endpointError: null }), 3000);
         })
   }
 
@@ -265,7 +258,6 @@ class MainApp extends React.Component {
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
-          endpointError={this.state.endpointError}
           endpoint = {this.state.endpoint}
           isAuthed = {this.props.isAuthed}
           logout = {this.props.logout}
