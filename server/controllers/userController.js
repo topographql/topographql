@@ -96,6 +96,7 @@ userController.createSession = (req, res, next) => {
       username,
     },
     SECRET_KEY,
+    { expiresIn: '1h' },
     (err, token) => {
       if (err) {
         return next({
@@ -125,11 +126,11 @@ userController.validateJWT = (req, res, next) => {
         log: 'loginController.verifyJWT: user passed invalid JWT to server',
       });
     }
-    res.locals.username = usernameObj;
-    console.log(res.locals.username);
+    res.locals.username = usernameObj.username;
     return next();
   });
   // WARNING: outside JWT validation
+  return next();
 };
 
 userController.saveQuery = (req, res, next) => {

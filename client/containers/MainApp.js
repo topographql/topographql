@@ -51,7 +51,16 @@ class MainApp extends React.Component {
           }
         }
       });
-    // checks if user logged in and will populate state with 
+    // checks if user logged in and will populate querySaves with user's history 
+    fetch('/api/validate', 
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+      })
+      .then(res => res.json())
+      .then(data => console.log('cookie', data));
+      
     if (this.props.user) {
       fetch('/api/gethistory', {
         method: 'POST',

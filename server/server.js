@@ -4,11 +4,14 @@ const schemaController = require('./controllers/schemaController.js');
 const queryController = require('./controllers/queryController.js');
 const userController = require('./controllers/userController.js');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const PORT = 3000;
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/img', express.static(path.join(__dirname, '../client/img')));
 
