@@ -1,5 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
+import { message } from 'antd';
 import TraceDisplay from '../components/TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
@@ -35,6 +36,7 @@ class MainApp extends React.Component {
     this.handleReset = this.handleReset.bind(this);
     this.handleSaveQuery = this.handleSaveQuery.bind(this);
     this.handleSelectSave = this.handleSelectSave.bind(this);
+    this.globalPopupError = this.globalPopupError.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -74,6 +76,17 @@ class MainApp extends React.Component {
     }
   };
 
+    // handles pop up error messeges
+  globalPopupError(type) {
+    console.log('hi')
+    const success = () => message.success('Server successfully connected.');
+    const error = () => message.error('Server cannot be reached');
+    const warning = () => message.warning('Query successful but tracing data not found');
+    if (type === 'success') success()
+    if (type === 'error') error()
+    if (type === 'warning') warning()
+  }
+
   async loadWithLocalStorage() {
     for (let key in this.state) {
       if (localStorage.hasOwnProperty(key)) {
@@ -87,7 +100,6 @@ class MainApp extends React.Component {
       }
     }
   }
-
 
   // onchange handler for endpoint input
   onChange(e) {
@@ -170,6 +182,7 @@ class MainApp extends React.Component {
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
             this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
+            this.globalPopupError('success')
             d3.select('#svg-network').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           })
@@ -178,6 +191,7 @@ class MainApp extends React.Component {
           })
         }).catch((err) => {
           this.setState({ endpointError: true }) 
+          this.globalPopupError('error')
           setTimeout(() => this.setState({ endpointError: null }), 3000);
         })
   }
@@ -223,12 +237,8 @@ class MainApp extends React.Component {
         drawNetworkGraph(this.state.d3introspectdata);
         this.setState({ showResults: true});
       } else {
-        this.setState({ endpointError: "tracingerror" })
-        if (this.state.endpointError === 'tracingerror') {
-          setTimeout(() => {
-            this.setState({ endpointError: null, showResults: true });
-          }, 3000);
-        }
+        // throw global warning error
+        this.globalPopupError('warning')
       }
     } catch (err) {
       console.log(err);
