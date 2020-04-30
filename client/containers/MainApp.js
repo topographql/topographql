@@ -25,7 +25,8 @@ class MainApp extends React.Component {
       d3querydata: {}, // d3 info for query data
       showResults: false,
       querySaves: [],
-      tracingFound: false,
+      // tracingFound: false,
+      username: '',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -54,27 +55,29 @@ class MainApp extends React.Component {
         }
       });
     // checks if user logged in and will populate querySaves with user's history 
-    fetch('/api/validate', 
+    fetch('/api/validate',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
       })
       .then(res => res.json())
-      .then(data => console.log('cookie', data));
-      
-    if (this.props.user) {
-      fetch('/api/gethistory', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: this.props.user }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          this.setState({ querySaves: data });
-        })
-        .catch(err => console.log(err));
-    }
+      .then(data => {
+        this.setState({ username: data })
+        console.log('state', this.state);
+        if (this.state.username) {
+          fetch('/api/gethistory', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: this.state.username }),
+          })
+            .then(res => res.json())
+            .then(data => {
+              this.setState({ querySaves: data });
+            })
+            .catch(err => console.log(err));
+        }
+      });
     // event listener for leaving / refreshing the page -  saves state to local storage when
     window.addEventListener(
       'beforeunload',
@@ -94,7 +97,7 @@ class MainApp extends React.Component {
   saveStateToLocalStorage() {
     /* eslint-disable */
     for (let key in this.state) {
-      if (key !== "querySaves") {
+      if (key !== "querySaves" && key !== "username") {
         localStorage.setItem(key, JSON.stringify(this.state[key]));
       }
     }
@@ -179,12 +182,12 @@ class MainApp extends React.Component {
   handleSaveQuery() {
     const { querySaves } = this.state;
     const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
-      if (this.props.user) {
+      if (this.state.username) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ user: this.props.user, queryName, queryStr: this.state.query})
+        body: JSON.stringify({ user: this.state.username, queryName, queryStr: this.state.query})
       })
         .then(res => res.json())
         .then(data => {
@@ -308,7 +311,7 @@ class MainApp extends React.Component {
           endpoint = {this.state.endpoint}
           isAuthed = {this.props.isAuthed}
           logout = {this.props.logout}
-          user = {this.props.user}
+          user = {this.state.username}
         />
         <div id='flex-wrapper-1'>
           <ControlPanelContainer
@@ -331,7 +334,7 @@ class MainApp extends React.Component {
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}
-              user={this.props.user}
+              user={this.state.username}
             />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
