@@ -9,7 +9,7 @@ const NavBar = (props) => {
 
   return (
     <div id="nav-bar">
-        <Link to="/home"><img id='logo' src='../img/logopink2line.svg'></img></Link>
+        <Link to="/home"><img id='logo' src='../img/logopink.svg'></img></Link>
         <div id='icons'>
             {props.user ? <h4>Welcome, {props.user}</h4> : null }
             {
@@ -20,8 +20,7 @@ const NavBar = (props) => {
                 : null
             }
             <Link to="/about">About</Link>
-            <Button type="link">Docs</Button>
-            <a href='https://github.com/xerographica/gql-health-prototyper'><GithubOutlined /></a>
+            <a href='https://github.com/topographql/topographql'><GithubOutlined /></a>
         </div>
     </div>
   );
