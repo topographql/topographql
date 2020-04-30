@@ -18,7 +18,6 @@ const Login = (props) => {
       body: JSON.stringify({ username, password }),
     })
       .then((res) => {
-        console.log(res.status);
         if (res.status === 200) {
           props.auth(username); // set app state to authed
           history.push('/'); // redirect to main app

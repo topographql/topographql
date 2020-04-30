@@ -19,7 +19,7 @@ const NavBar = (props) => {
                   : <Link to="/login">Login</Link>
                 : null
             }
-            <Button type="link">About</Button>
+            <Link to="/about">About</Link>
             <a href='https://github.com/xerographica/gql-health-prototyper'><GithubOutlined /></a>
         </div>
     </div>
