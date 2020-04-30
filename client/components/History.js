@@ -32,7 +32,7 @@ const History = (props) => {
           onCancel={() => setIsVisible(false)}
         >
           <div id='history-wrap'>
-            {saveButtons}
+            { props.querySaves.length ? saveButtons : 'Your history is empty. Save a query to store it here.' }
           </div>
           <div id='query-prev'>
             <h3></h3>

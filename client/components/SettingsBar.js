@@ -5,7 +5,7 @@ import History from './History';
 function SettingsBar(props) {
   return (
     <div id="settings-bar">
-        <History 
+        <History
           querySaves={props.querySaves}
           handleSelectSave={props.handleSelectSave}
           globalPopupError={props.globalPopupError}

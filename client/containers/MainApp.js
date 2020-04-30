@@ -92,16 +92,18 @@ class MainApp extends React.Component {
 
     // handles pop up error messeges
   globalPopupError(type) {
-    const success = () => message.success('Server successfully connected');
-    const error = () => message.error('Server cannot be reached');
-    const warning = () => message.warning('Query successful but tracing data not found');
-    const warnSigninSave = () => message.warning('You must be signed in to save a query');
-    const warnSigninHistroy = () => message.warning('You must be signed in to use history');
-    if (type === 'success') success()
-    if (type === 'error') error()
-    if (type === 'warning') warning()
-    if (type === 'signin-save') warnSigninSave()
-    if (type === 'signin-history') warnSigninHistroy()
+    // const success = () => message.success('Server successfully connected');
+    // const error = () => message.error('Server cannot be reached');
+    // const warning = () => message.warning('Query successful but tracing data not found');
+    // const warnSigninSave = () => message.warning('You must be signed in to save a query');
+    // const warnSigninHistroy = () => message.warning('You must be signed in to use history');
+    if (type === 'success') message.success('Server successfully connected');
+    if (type === 'error') message.error('Server cannot be reached');
+    if (type === 'warning') message.warning('Query successful but tracing data not found');
+    if (type === 'signin-save') message.warning('You must be signed in to save a query');
+    if (type === 'signin-history') message.warning('You must be signed in to use history');
+    if (type === 'success-save') message.success('Successfully saved query');
+    if (type === 'err-save') message.success('Error saving query');
   }
 
   async loadWithLocalStorage() {
