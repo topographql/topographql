@@ -64,7 +64,6 @@ class MainApp extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ username: data })
-        console.log('state', this.state);
         if (this.state.username) {
           fetch('/api/gethistory', {
             method: 'POST',
