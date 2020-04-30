@@ -1,5 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
+import { message } from 'antd';
 import TraceDisplay from '../components/TraceDisplay';
 import ControlPanelContainer from './ControlPanelContainer';
 import VisualizerContainer from './VisualizerContainer';
@@ -15,7 +16,6 @@ class MainApp extends React.Component {
     super();
     this.state = {
       endpoint: '', // user's GraphQL endpoint
-      endpointError: null, // if endpoint fetched an error
       query: '', // user's query string
       selectedQuery: '',
       querydata: {}, // query results retrieved from server
@@ -25,6 +25,7 @@ class MainApp extends React.Component {
       d3querydata: {}, // d3 info for query data
       showResults: false,
       querySaves: [],
+      tracingFound: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -35,6 +36,7 @@ class MainApp extends React.Component {
     this.handleReset = this.handleReset.bind(this);
     this.handleSaveQuery = this.handleSaveQuery.bind(this);
     this.handleSelectSave = this.handleSelectSave.bind(this);
+    this.globalPopupError = this.globalPopupError.bind(this);
   }
 
   // loads in with previous state when refreshing browser
@@ -89,6 +91,33 @@ class MainApp extends React.Component {
     }
   };
 
+  // handles pop up error messeges
+  globalPopupError(type) {
+    switch(type) {
+      case 'success':
+        message.success('Server successfully connected')
+        break;
+      case 'error':
+        message.error('Server cannot be reached')
+        break;
+      case 'warning':
+        message.warning('Tracing data not found');
+        break;
+      case 'signin-save':
+        message.warning('You must be signed in to save a query');
+        break;
+      case 'signin-history':
+        message.warning('You must be signed in to use history');
+        break;
+      case 'success-save':
+        message.success('Successfully saved query');
+        break;
+      case 'err-save':
+        message.success('Error saving query');
+        break;
+    }
+  }
+
   async loadWithLocalStorage() {
     for (let key in this.state) {
       if (localStorage.hasOwnProperty(key)) {
@@ -102,7 +131,6 @@ class MainApp extends React.Component {
       }
     }
   }
-
 
   // onchange handler for endpoint input
   onChange(e) {
@@ -132,6 +160,7 @@ class MainApp extends React.Component {
       d3introspectdata: {}, 
       d3querydata: {}, 
       showResults: false,
+      tracingFound: false,
     };
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
@@ -141,7 +170,6 @@ class MainApp extends React.Component {
   handleSaveQuery() {
     const { querySaves } = this.state;
     const tpmUser = 'Chevin' // temporariy user because user does not persist with refresh
-    // if (this.props.isAuthed) {
       if (this.props.user) {
       const queryName = this.state.query.split('\n')[1];
       fetch('/api/savequery', {
@@ -153,9 +181,11 @@ class MainApp extends React.Component {
         .then(data => {
           const addObj = querySaves.concat(data);
           this.setState({ querySaves: addObj });
-          console.log(addObj);  
+          this.globalPopupError('success-save');
         })
-        .catch((err) => console.log(err));
+        .catch((err) => this.globalPopupError('err-save'));
+    } else {
+      this.globalPopupError('signin-save')
     }
   }
 
@@ -187,16 +217,13 @@ class MainApp extends React.Component {
           .then((res) => res.json())
           .then((data) => {
             // set state, delete previous svg and draw new svg passing in data
-            this.setState({ schema: data.schema, d3introspectdata: data.d3json, endpointError: false });
+            this.setState({ schema: data.schema, d3introspectdata: data.d3json });
+            this.globalPopupError('success')
             d3.select('#svg-network').remove();
             drawNetworkGraph(this.state.d3introspectdata);
           })
-          .then(() => {
-            setTimeout(() => this.setState({ endpointError: null }), 3000);
-          })
         }).catch((err) => {
-          this.setState({ endpointError: true }) 
-          setTimeout(() => this.setState({ endpointError: null }), 3000);
+          this.globalPopupError('error')
         })
   }
 
@@ -217,7 +244,6 @@ class MainApp extends React.Component {
       }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
-
     }
   }
 
@@ -231,7 +257,7 @@ class MainApp extends React.Component {
       });
       const d3querydata = await response.json();
       if (d3querydata !== 'tracingerror') {
-        this.setState({ d3querydata });
+        this.setState({ d3querydata, tracingFound: true });
         const schemaCopy = this.state.d3introspectdata;
         const queryPath = d3querydata;
         const queryData = this.state.querydata;
@@ -241,12 +267,9 @@ class MainApp extends React.Component {
         drawNetworkGraph(this.state.d3introspectdata);
         this.setState({ showResults: true});
       } else {
-        this.setState({ endpointError: "tracingerror" })
-        if (this.state.endpointError === 'tracingerror') {
-          setTimeout(() => {
-            this.setState({ endpointError: null, showResults: true });
-          }, 3000);
-        }
+        // throw global warning error
+        this.setState({ tracingFound: false })
+        this.globalPopupError('warning')
       }
     } catch (err) {
       console.log(err);
@@ -273,7 +296,6 @@ class MainApp extends React.Component {
         <Header
           onChange={this.onChange}
           onSubmitEndpoint={this.onSubmitEndpoint}
-          endpointError={this.state.endpointError}
           endpoint = {this.state.endpoint}
           isAuthed = {this.props.isAuthed}
           logout = {this.props.logout}
@@ -291,22 +313,23 @@ class MainApp extends React.Component {
             schema={this.state.schema}
             result={this.state.querydata}
             reset={this.state.resetStatus}
-            isAuthed={this.props.isAuthed}
           />
           <div id="flex-wrapper-2">
             <SettingsBar 
               handleShowResults={this.handleShowResults}
               handleSelectSave={this.handleSelectSave}
+              globalPopupError={this.globalPopupError}
               showResults={this.state.showResults} 
               handleReset = {this.handleReset}
               querySaves={this.state.querySaves}
+              user={this.props.user}
             />
             <VisualizerContainer
               d3introspectdata={ this.state.d3introspectdata }
               result={ this.state.querydata}
               showResults={ this.state.showResults }
             />
-            <TraceDisplay />
+            <TraceDisplay tracingFound={this.state.tracingFound} />
           </div>
         </div>
       </div>
