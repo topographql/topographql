@@ -1,6 +1,6 @@
 $wflightgrey: #dadada;
 $wfgrey: rgb(228, 228, 228);
-$base-green: green;
+$base-magenta: #c43ee1;
 $whitesmoke: #f1f3f5;
 
 * {
@@ -183,7 +183,7 @@ path.link.h-false {
 }
 
 path.link.h-true {
-    stroke: green;
+    stroke: $base-magenta;
 }
 
 circle {
@@ -193,7 +193,7 @@ circle {
 }
 
 circle.circle-h-true {
-    fill: $base-green;
+    fill: $base-magenta;
     stroke: #333;
     stroke-width: 1.5px;
 }

@@ -25,6 +25,7 @@ class MainApp extends React.Component {
       d3querydata: {}, // d3 info for query data
       showResults: false,
       querySaves: [],
+      tracingFound: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmitEndpoint = this.onSubmitEndpoint.bind(this);
@@ -90,20 +91,31 @@ class MainApp extends React.Component {
     }
   };
 
-    // handles pop up error messeges
+  // handles pop up error messeges
   globalPopupError(type) {
-    // const success = () => message.success('Server successfully connected');
-    // const error = () => message.error('Server cannot be reached');
-    // const warning = () => message.warning('Query successful but tracing data not found');
-    // const warnSigninSave = () => message.warning('You must be signed in to save a query');
-    // const warnSigninHistroy = () => message.warning('You must be signed in to use history');
-    if (type === 'success') message.success('Server successfully connected');
-    if (type === 'error') message.error('Server cannot be reached');
-    if (type === 'warning') message.warning('Query successful but tracing data not found');
-    if (type === 'signin-save') message.warning('You must be signed in to save a query');
-    if (type === 'signin-history') message.warning('You must be signed in to use history');
-    if (type === 'success-save') message.success('Successfully saved query');
-    if (type === 'err-save') message.success('Error saving query');
+    switch(type) {
+      case 'success':
+        message.success('Server successfully connected')
+        break;
+      case 'error':
+        message.error('Server cannot be reached')
+        break;
+      case 'warning':
+        message.warning('Tracing data not found');
+        break;
+      case 'signin-save':
+        message.warning('You must be signed in to save a query');
+        break;
+      case 'signin-history':
+        message.warning('You must be signed in to use history');
+        break;
+      case 'success-save':
+        message.success('Successfully saved query');
+        break;
+      case 'err-save':
+        message.success('Error saving query');
+        break;
+    }
   }
 
   async loadWithLocalStorage() {
@@ -148,6 +160,7 @@ class MainApp extends React.Component {
       d3introspectdata: {}, 
       d3querydata: {}, 
       showResults: false,
+      tracingFound: false,
     };
     d3.select('#svg-network').remove();
     d3.select('#svg-trace').remove();
@@ -168,9 +181,9 @@ class MainApp extends React.Component {
         .then(data => {
           const addObj = querySaves.concat(data);
           this.setState({ querySaves: addObj });
-          console.log(addObj);  
+          this.globalPopupError('success-save');
         })
-        .catch((err) => console.log(err));
+        .catch((err) => this.globalPopupError('err-save'));
     } else {
       this.globalPopupError('signin-save')
     }
@@ -231,7 +244,6 @@ class MainApp extends React.Component {
       }
     } catch (err) {
       this.setState({ querydata: err, queryError: true });
-
     }
   }
 
@@ -245,7 +257,7 @@ class MainApp extends React.Component {
       });
       const d3querydata = await response.json();
       if (d3querydata !== 'tracingerror') {
-        this.setState({ d3querydata });
+        this.setState({ d3querydata, tracingFound: true });
         const schemaCopy = this.state.d3introspectdata;
         const queryPath = d3querydata;
         const queryData = this.state.querydata;
@@ -256,6 +268,7 @@ class MainApp extends React.Component {
         this.setState({ showResults: true});
       } else {
         // throw global warning error
+        this.setState({ tracingFound: false })
         this.globalPopupError('warning')
       }
     } catch (err) {
@@ -316,7 +329,7 @@ class MainApp extends React.Component {
               result={ this.state.querydata}
               showResults={ this.state.showResults }
             />
-            <TraceDisplay />
+            <TraceDisplay tracingFound={this.state.tracingFound} />
           </div>
         </div>
       </div>
