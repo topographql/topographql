@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Homepage from './components/Homepage';
 import NavBar from './components/NavBar';
+import About from './components/About';
 
 const App = () => {
   const [isAuthed, setIsAuthed] = useState(sessionStorage.isAuthed || false);
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/home"><Homepage continueGuest={continueGuest}/></Route>
           <Route path="/register"> <Register/> </Route>
           <Route path="/login"> <Login auth={login}/> </Route>
+          <Route path="/about"> <About /> </Route>
           <Route path="/">
             {/* Render homepage if user has not logged in or continued as guest */}
             {(isAuthed || isGuest)
