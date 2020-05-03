@@ -36,7 +36,7 @@ Screenshots
   - 24/7 performance monitoring
 
 ## Team
-[@ksun16](github.com/ksun16) 
-[@mzyau](github.com/mzyau)
-[@t-quartararo](github.com/t-quartararo)
-[@dangchell](github.com/dangchell)
+[@ksun16](https://github.com/ksun16) 
+[@mzyau](https://github.com/mzyau)
+[@t-quartararo](https://github.com/t-quartararo)
+[@dangchell](https://github.com/dangchell)
