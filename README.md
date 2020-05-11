@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## TopoGraphQL
-**TopoGraphQL** is an open-source GraphQL IDE, schema visualizer, and endpoint analytics tool. Intuitive and easy-to-use, **TopoGraphQL** provides developers a streamlined, in-browser solution for navigating and testing complex GraphQL APIs and queries.
+**TopoGraphQL** is an open-source GraphQL IDE, schema visualizer, and endpoint analytics tool. Inpsired by GraphiQL, **TopoGraphQL** provides developers a streamlined, in-browser solution for navigating and testing complex GraphQL APIs and queries.
 
 Visit [topographql.com](http://topographql.com) to get started!
 
@@ -36,7 +36,5 @@ Screenshots
   - 24/7 performance monitoring
 
 ## Team
-[@ksun16](https://github.com/ksun16) 
-[@mzyau](https://github.com/mzyau)
-[@t-quartararo](https://github.com/t-quartararo)
-[@dangchell](https://github.com/dangchell)
+Kevin Sun [@ksun16](github.com/ksun16) | Meisze Yau [@mzyau](github.com/mzyau) | Taylor Quartararo [@t-quartararo](github.com/t-quartararo) | Dan Chall [@dangchell](github.com/dangchell)
+
