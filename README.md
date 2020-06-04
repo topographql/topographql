@@ -36,5 +36,5 @@ Screenshots
   - 24/7 performance monitoring
 
 ## Team
-Kevin Sun [@ksun16](github.com/ksun16) | Meisze Yau [@mzyau](github.com/mzyau) | Taylor Quartararo [@t-quartararo](github.com/t-quartararo) | Dan Chall [@dangchell](github.com/dangchell)
+Kevin Sun [@ksun16](github.com/ksun16) | Meisze Yau [@mzyau](github.com/mzyau) | Taylor Quartararo [@t-quartararo](github.com/t-quartararo) | Dan Chell [@dangchell](github.com/dangchell)
 
